@@ -1,2 +1,2 @@
 # cookstagram
-social platform to share recipes 
+Social platform to share recipes 
