@@ -1,6 +1,7 @@
 import { dbConnect } from './dbConnect.js';
 import express from 'express';
 import bcrypt from "bcrypt";
+import Jwt from "jsonwebtoken";
 import User from "./db/userModel.js"
 
 const app = express();
@@ -44,6 +45,55 @@ app.post("/register", (request, response) => {
             });
         });
 });
+
+app.post("/login", (request, response) => {
+    const username = request.body.username;
+    const password = request.body.password;
+
+    User.findOne({ username: username })
+        .then((user) => {
+            if (user) {
+                bcrypt
+                    .compare(password, user.password)
+                    .then((result) => {
+                        if (!result) {
+                            response.status(401).send({
+                                message: "Authentication Failed, password is incorrect",
+                            });
+                        } else {
+                            const token = Jwt.sign(
+                                { username: user.username, userId: user._id },
+                                "RANDOM-TOKEN-SECRET",
+                                { expiresIn: "24h" }
+                            );
+                            response.status(200).send({
+                                message: "Authentication Successful",
+                                token,
+                            });
+                        }
+                    })
+                    .catch((e) => {
+                        response.status(500).send({
+                            message: "Authentication Failed",
+                            e,
+                        });
+                    });
+            } else {
+                response.status(401).send({
+                    message: "Authentication Failed, user not found",
+                });
+            }
+        })
+        .catch((e) => {
+            response.status(500).send({
+                message: "Authentication Failed",
+                e,
+            });
+        });
+});
+
+
+
 
 
 app.listen("3000", () => {
