@@ -3,12 +3,30 @@ import express from 'express';
 import bcrypt from "bcrypt";
 import Jwt from "jsonwebtoken";
 import User from "./db/userModel.js"
+import auth from "./auth.js";
+
+import dotenv from 'dotenv'
+dotenv.config()
 
 const app = express();
 
 app.use(express.json());
 
 dbConnect();
+
+// Curb Cores Error by adding a header here
+app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader(
+        "Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
+    );
+    res.setHeader(
+        "Access-Control-Allow-Methods",
+        "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+    );
+    next();
+});
 
 // register endpoint
 app.post("/register", (request, response) => {
@@ -58,12 +76,12 @@ app.post("/login", (request, response) => {
                     .then((result) => {
                         if (!result) {
                             response.status(401).send({
-                                message: "Authentication Failed, password is incorrect",
+                                message: "cation Failed, password is incorrect",
                             });
                         } else {
                             const token = Jwt.sign(
                                 { username: user.username, userId: user._id },
-                                "RANDOM-TOKEN-SECRET",
+                                process.env.JWT_KEY,
                                 { expiresIn: "24h" }
                             );
                             response.status(200).send({
@@ -80,21 +98,25 @@ app.post("/login", (request, response) => {
                     });
             } else {
                 response.status(401).send({
-                    message: "Authentication Failed, user not found",
+                    message: "Authentication Failed, user not found (401)",
                 });
             }
         })
         .catch((e) => {
             response.status(500).send({
-                message: "Authentication Failed",
+                message: "Authentication Failed, user not found (500)",
                 e,
             });
         });
 });
 
 
+app.get("/auth-endpoint", auth, (request, response) => {
 
-
+    response.status(200).send({
+        message: "You are authorized",
+    });
+});
 
 app.listen("3000", () => {
     console.log("Listening on port 3000");
