@@ -1,0 +1,40 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Titillium Web", sans-serif;
+}
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  --mainColor: #322653;
+  --mainColorSecondary: #8062D6;
+  --mainColorLight: #9288F8;
+  --secondaryColor: #FFD2D7;
+  --textColor: #eee;
+  --backgroundColor: #1a1a1a;
+  --paddingGeneral: 0.5rem;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: var(--backgroundColor);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+
+  margin: 0 auto;
+  width: 100%;
+ 
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
