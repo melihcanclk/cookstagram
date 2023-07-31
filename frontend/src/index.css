@@ -22,6 +22,7 @@
   --socialFontSize: 1.5rem;
   --footerLinkFontSize: 18px;
   --opacityForText: 0.87;
+  --logoHeight: 80px;
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);

@@ -1,6 +1,6 @@
 import { useRef, type MutableRefObject, ReactNode } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
-import "../styles/navbar.css";
+import "../../styles/navbar.css";
 
 interface NavbarItemProps {
     href: string;
@@ -25,7 +25,7 @@ const SignButton = ({ text }: SignButtonProps) => (
 
 export const Navbar = () => {
     const session = true;
-    
+
     const navRef = useRef() as MutableRefObject<HTMLElement>;
 
     const showNavbar = () => {
@@ -37,7 +37,9 @@ export const Navbar = () => {
     return (
         <header>
             <a href="/#">
-                <img src="src/assets/Strawberry-PNG-Picture.png" alt="logo" />
+                <div className="logo-wrapper">
+                    <img src="/src/assets/logo.png" alt="logo" />
+                </div>
             </a>
             <div>
                 <nav ref={navRef}>
@@ -46,11 +48,11 @@ export const Navbar = () => {
                     <NavbarItem href="/#">About</NavbarItem>
 
                     {session ? (
-                        <SignButton text="login" />
+                        <SignButton text="Login" />
                     )
-                    : (
-                        <SignButton text="register" />
-                    )}
+                        : (
+                            <SignButton text="Register" />
+                        )}
 
                     <button
                         className="nav-btn nav-close-btn"

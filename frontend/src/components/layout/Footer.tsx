@@ -1,5 +1,5 @@
-import "../styles/footer.css";
-import { socialMediaAccounts } from "../assets/socialMediaAccounts";
+import "../../styles/footer.css";
+import { socialMediaAccounts } from "../../assets/socialMediaAccounts";
 
 interface FooterItemProps {
     href: string;

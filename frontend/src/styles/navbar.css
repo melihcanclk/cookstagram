@@ -25,8 +25,16 @@ header a {
     height: inherit;
 }
 
+.logo-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
 header a img {
-    height: inherit;
+    height: var(--logoHeight);
+    align-self: center;
     width: inherit;
     object-fit: cover;
     padding: var(--paddingGeneral);

@@ -1,6 +1,6 @@
 import { ReactComponentElement } from "react";
-import { Footer } from "../Footer";
-import { Navbar } from "../Navbar";
+import { Footer } from "./Footer";
+import { Navbar } from "./Navbar";
 
 interface LayoutProps {
     children: ReactComponentElement<any> | ReactComponentElement<any>[];
