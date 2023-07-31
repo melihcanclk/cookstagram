@@ -9,10 +9,12 @@ interface LayoutProps {
 export const Layout = ({ children }: LayoutProps) => {
 
     return (
-        <div className="container">
+        <>
             <Navbar />
-            {children}
+            <main>
+                {children}
+            </main>
             <Footer />
-        </div>
+        </>
     );
 }
