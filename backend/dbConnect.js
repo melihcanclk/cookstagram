@@ -7,8 +7,9 @@ export const dbConnect = async () => {
         await mongoose.connect(process.env.MONGODB_URL, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
+        }).then(() => {
+            console.log('MongoDB connection SUCCESS');
         });
-        console.log('MongoDB connection SUCCESS');
     } catch (error) {
         console.log('MongoDB connection FAIL');
         process.exit(1);
