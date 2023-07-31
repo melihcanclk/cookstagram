@@ -1,0 +1,26 @@
+{
+  "name": "cookstagram",
+  "workspaces": [
+    "frontend/*",
+    "backend/*"
+  ],
+  "version": "1.0.0",
+  "description": "Social platform to share recipes",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"cd backend && npm run start\" \"cd frontend && npm run dev\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/melihcanclk/cookstagram.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/melihcanclk/cookstagram/issues"
+  },
+  "homepage": "https://github.com/melihcanclk/cookstagram#readme",
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
+}
