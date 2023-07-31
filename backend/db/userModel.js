@@ -11,6 +11,11 @@ let UserSchema = new mongoose.Schema({
         required: [true, "Please provide an email"],
         unique: false
     },
+    picture: {
+        type: Object,
+        required: false,
+        unique: false
+    },
     password: {
         type: String,
         required: [true, "Please provide password"],

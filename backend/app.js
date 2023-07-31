@@ -6,11 +6,16 @@ import User from "./db/userModel.js"
 import auth from "./auth.js";
 
 import dotenv from 'dotenv'
+import { upload } from './middleware/upload.js';
 dotenv.config()
 
 const app = express();
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// this is for parsing multipart/form-data
+app.use(upload.array())
 
 dbConnect();
 
@@ -29,16 +34,17 @@ app.use((req, res, next) => {
 });
 
 // register endpoint
-app.post("/register", (request, response) => {
-    const password = request.body.password;
+app.post("/register", upload.single('picture'), async (request, response) => {
+    const { username, email, password } = request.body;
     // hash the password
     bcrypt
         .hash(password, 10)
         .then((hashedPassword) => {
             const user = new User({
-                email: request.body.email,
-                username: request.body.username,
-                password: hashedPassword,
+                email: email,
+                username: username,
+                picture: request.file,
+                password: hashedPassword
             });
 
             user
@@ -64,9 +70,8 @@ app.post("/register", (request, response) => {
         });
 });
 
-app.post("/login", (request, response) => {
-    const username = request.body.username;
-    const password = request.body.password;
+app.post("/login", async (request, response) => {
+    const { username, password } = request.body;
 
     User.findOne({ username: username })
         .then((user) => {
@@ -76,7 +81,7 @@ app.post("/login", (request, response) => {
                     .then((result) => {
                         if (!result) {
                             response.status(401).send({
-                                message: "cation Failed, password is incorrect",
+                                message: "Authentication Failed, password is incorrect",
                             });
                         } else {
                             const token = Jwt.sign(
@@ -84,9 +89,18 @@ app.post("/login", (request, response) => {
                                 process.env.JWT_KEY,
                                 { expiresIn: "24h" }
                             );
+
+                            const payload = {
+                                username: user.username,
+                                email: user.email,
+                                picture: {
+                                    path: user.picture.path,
+                                }
+                            }
                             response.status(200).send({
                                 message: "Authentication Successful",
                                 token,
+                                user: payload
                             });
                         }
                     })
@@ -112,7 +126,6 @@ app.post("/login", (request, response) => {
 
 
 app.get("/auth-endpoint", auth, (request, response) => {
-
     response.status(200).send({
         message: "You are authorized",
     });
