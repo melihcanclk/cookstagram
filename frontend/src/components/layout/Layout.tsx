@@ -3,7 +3,7 @@ import { Footer } from "../Footer";
 import { Navbar } from "../Navbar";
 
 interface LayoutProps {
-    children: ReactComponentElement<any>;
+    children: ReactComponentElement<any> | ReactComponentElement<any>[];
 }
 
 export const Layout = ({ children }: LayoutProps) => {
