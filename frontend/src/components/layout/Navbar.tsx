@@ -1,6 +1,7 @@
 import { useRef, type MutableRefObject, ReactNode } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import "../../styles/navbar.css";
+import { getCookie } from "../../utils/getCookie";
 
 interface NavbarItemProps {
     href: string;
@@ -9,7 +10,6 @@ interface NavbarItemProps {
 interface SignButtonProps {
     text: string;
 }
-
 
 const NavbarItem = ({ href, children }: NavbarItemProps) => (
     <a href={href}>{children}</a>
@@ -24,8 +24,7 @@ const SignButton = ({ text }: SignButtonProps) => (
 );
 
 export const Navbar = () => {
-    const session = true;
-
+    const session = getCookie('session');
     const navRef = useRef() as MutableRefObject<HTMLElement>;
 
     const showNavbar = () => {
@@ -47,14 +46,11 @@ export const Navbar = () => {
                     <NavbarItem href="/#">Services</NavbarItem>
                     <NavbarItem href="/#">About</NavbarItem>
 
-                    {session ? (
-                        <SignButton text="Login" />
-                    )
-                        : (
-                            <SignButton text="Register" />
-                        )}
+                    {session && (
+                        <SignButton text="Logout" />
+                    )}
 
-                    <button
+                    < button
                         className="nav-btn nav-close-btn"
                         onClick={showNavbar}>
                         <FaTimes />
@@ -66,6 +62,6 @@ export const Navbar = () => {
                     <FaBars />
                 </button>
             </div>
-        </header>
+        </header >
     );
 }

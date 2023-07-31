@@ -1,16 +1,19 @@
-import { Layout } from './components/layout/Layout';
+import { Navigate, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { Home } from './pages/Home';
+import { Login } from './pages/Login';
+import { NoMatch } from './pages/NoMatch';
 
 function App() {
 
   return (
-    <Layout>
-      <h1>App</h1>
-      <h1>App</h1>
-      <h1>App</h1>
-      <h1>App</h1>
-      <h1>App</h1>
-      <h1>App</h1>
-    </Layout>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/error" element={<NoMatch />} />
+        <Route path="*" element={<Navigate to="/notmatch" />} />
+      </Routes>
+    </Router>
 
   )
 }
