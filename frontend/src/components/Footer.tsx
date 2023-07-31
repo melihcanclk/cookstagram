@@ -1,5 +1,5 @@
 import "../styles/footer.css";
-import { CiTwitter } from "react-icons/ci";
+import { socialMediaAccounts } from "../assets/socialMediaAccounts";
 
 interface FooterItemProps {
     href: string;
@@ -34,7 +34,13 @@ export const Footer = () => {
             <div className="footer-basic">
 
                 <div className="social">
-                    <SocialIcon href="#"> <CiTwitter /> </SocialIcon>
+                    {
+                        socialMediaAccounts.map((account) => (
+                            <SocialIcon href={account.link} key={account.name}>
+                                {account.icon}
+                            </SocialIcon>
+                        ))
+                    }
                 </div>
                 <ul className="list-inline">
                     <FooterItem href="#" text="Home" />
@@ -43,7 +49,7 @@ export const Footer = () => {
                     <FooterItem href="#" text="Terms" />
                     <FooterItem href="#" text="Privacy Policy" />
                 </ul>
-                <p className="copyright">Cookstagram © 2023</p>
+                <p className="copyright">Melihcan Çilek - Cookstagram © 2023</p>
             </div>
         </footer>
     );

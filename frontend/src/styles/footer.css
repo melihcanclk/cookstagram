@@ -11,7 +11,7 @@
     padding: 0;
     list-style: none;
     text-align: center;
-    font-size: 18px;
+    font-size: var(--footerLinkFontSize);
     line-height: 1.6;
     margin-bottom: 0;
 
@@ -24,11 +24,12 @@
 .footer-basic ul a {
     color: inherit;
     text-decoration: none;
-    opacity: 0.8;
+    opacity: var(--opacityForText);
 }
 
 .footer-basic ul a:hover {
     opacity: 1;
+    color: var(--secondaryColor);
 }
 
 .footer-basic .social {
@@ -57,11 +58,12 @@
     border: 1px solid #ccc;
     margin: 0 8px;
     color: inherit;
-    opacity: 0.75;
+    opacity: var(--opacityForText);
 }
 
 .footer-basic .social>a:hover {
-    opacity: 0.9;
+    opacity: 1;
+    background-color: var(--mainColorSecondary);
 }
 
 .footer-basic .copyright {
