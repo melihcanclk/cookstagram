@@ -1,4 +1,5 @@
 {
+  "name": "@cookstagram/backend",
   "scripts": {
     "start": "node app.js"
   },

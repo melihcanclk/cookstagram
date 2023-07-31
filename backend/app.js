@@ -15,7 +15,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // this is for parsing multipart/form-data
-app.use(upload.array())
 
 dbConnect();
 
@@ -52,14 +51,32 @@ app.post("/register", upload.single('picture'), async (request, response) => {
                 .then((result) => {
                     response.status(201).send({
                         message: "User Created Successfully",
-                        result,
+                        user: {
+                            username: result.username,
+                            email: result.email,
+                            picture: {
+                                name: result.originalname,
+                                path: result.picture.path
+                            }
+                        }
                     });
                 })
                 .catch((error) => {
-                    response.status(500).send({
-                        message: "Error creating user",
-                        error,
-                    });
+                    if (error.errors.email) {
+                        response.status(409).send({
+                            message: error.errors.email.message,
+                        });
+                    } else if (error.errors.username) {
+                        response.status(409).send({
+                            message: error.errors.username.message,
+                        });
+
+                    } else {
+                        response.status(500).send({
+                            message: "User was not created successfully",
+                            error,
+                        });
+                    }
                 });
         })
         .catch((e) => {
