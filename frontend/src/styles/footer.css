@@ -38,7 +38,13 @@
     padding-bottom: 25px;
 }
 
-.footer-basic .social>a {
+.social-icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-basic .social >a {
     font-size: 24px;
     width: 40px;
     height: 40px;

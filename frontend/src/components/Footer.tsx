@@ -1,5 +1,5 @@
 import "../styles/footer.css";
-import { AiOutlineInstagram } from "react-icons/ai";
+import { CiTwitter } from "react-icons/ci";
 
 interface FooterItemProps {
     href: string;
@@ -19,7 +19,11 @@ const FooterItem = ({ href, text }: FooterItemProps) => {
 
 const SocialIcon = ({ href, children }: SocialIconProps) => {
     return (
-        <a href={href}>{children}</a>
+        <a href={href}>
+            <div className="social-icon-container">
+                {children}
+            </div>
+        </a>
     );
 }
 
@@ -30,10 +34,7 @@ export const Footer = () => {
             <div className="footer-basic">
 
                 <div className="social">
-                    <SocialIcon href="#"> <AiOutlineInstagram /> </SocialIcon>
-                    <SocialIcon href="#"> <AiOutlineInstagram /> </SocialIcon>
-                    <SocialIcon href="#"> <AiOutlineInstagram /> </SocialIcon>
-                    <SocialIcon href="#"> <AiOutlineInstagram /> </SocialIcon>
+                    <SocialIcon href="#"> <CiTwitter /> </SocialIcon>
                 </div>
                 <ul className="list-inline">
                     <FooterItem href="#" text="Home" />
