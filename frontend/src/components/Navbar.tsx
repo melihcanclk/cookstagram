@@ -1,12 +1,34 @@
-import { useRef, type MutableRefObject } from "react";
+import { useRef, type MutableRefObject, ReactNode } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import "../styles/navbar.css";
 
+interface NavbarItemProps {
+    href: string;
+    children: ReactNode;
+}
+interface SignButtonProps {
+    text: string;
+}
+
+
+const NavbarItem = ({ href, children }: NavbarItemProps) => (
+    <a href={href}>{children}</a>
+);
+
+const SignButton = ({ text }: SignButtonProps) => (
+    <div className="sign-button-wrapper">
+        <button className="sign-button">
+            {text}
+        </button>
+    </div>
+);
+
 export const Navbar = () => {
+    const session = true;
+    
     const navRef = useRef() as MutableRefObject<HTMLElement>;
 
     const showNavbar = () => {
-
         navRef.current.classList.toggle(
             "responsive_nav"
         );
@@ -19,10 +41,17 @@ export const Navbar = () => {
             </a>
             <div>
                 <nav ref={navRef}>
-                    <a href="/#">Home</a>
-                    <a href="/#">My work</a>
-                    <a href="/#">Blog</a>
-                    <a href="/#">About me</a>
+                    <NavbarItem href="/#">Home</NavbarItem>
+                    <NavbarItem href="/#">Services</NavbarItem>
+                    <NavbarItem href="/#">About</NavbarItem>
+
+                    {session ? (
+                        <SignButton text="login" />
+                    )
+                    : (
+                        <SignButton text="register" />
+                    )}
+
                     <button
                         className="nav-btn nav-close-btn"
                         onClick={showNavbar}>

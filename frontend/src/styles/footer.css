@@ -44,11 +44,11 @@
     align-items: center;
 }
 
-.footer-basic .social >a {
-    font-size: 24px;
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
+.footer-basic .social>a {
+    font-size: var(--socialFontSize);
+    width: var(--socialIconSize);
+    height: var(--socialIconSize);
+    line-height: var(--socialIconSize);
     display: flex;
     justify-content: center;
     align-items: center;
