@@ -9,19 +9,25 @@ interface NavbarItemProps {
 }
 interface SignButtonProps {
     text: string;
+    onClick?: () => void;
 }
 
 const NavbarItem = ({ href, children }: NavbarItemProps) => (
     <a href={href}>{children}</a>
 );
 
-const SignButton = ({ text }: SignButtonProps) => (
+const SignButton = ({ text, onClick }: SignButtonProps) => (
     <div className="sign-button-wrapper">
-        <button className="sign-button">
+        <button onClick={onClick} className="sign-button">
             {text}
         </button>
     </div>
 );
+
+const handleLogout = () => {
+    document.cookie = "session=;"
+    window.location.href = '/login';
+}
 
 export const Navbar = () => {
     const session = getCookie('session');
@@ -47,7 +53,7 @@ export const Navbar = () => {
                     <NavbarItem href="/#">About</NavbarItem>
 
                     {session && (
-                        <SignButton text="Logout" />
+                        <SignButton text="Logout" onClick={handleLogout} />
                     )}
 
                     < button
