@@ -57,6 +57,10 @@ header div,
 nav {
     display: flex;
 }
+.sign-button-wrapper {
+    align-items: center;
+    justify-content: center;
+}
 
 .sign-button {
     background-color: var(--mainColorSecondary);
@@ -79,9 +83,7 @@ nav {
     }
 
 
-    .sign-button-wrapper {
-        padding: var(--paddingGeneral) 0;
-    }
+    
 
     header nav {
         position: fixed;

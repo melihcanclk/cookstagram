@@ -62,15 +62,23 @@ app.post("/register", upload.single('picture'), async (request, response) => {
                     });
                 })
                 .catch((error) => {
-                    if (error.errors.email) {
-                        response.status(409).send({
-                            message: error.errors.email.message,
-                        });
-                    } else if (error.errors.username) {
-                        response.status(409).send({
-                            message: error.errors.username.message,
-                        });
+                    if (error.code === 11000) {
+                        console.log({ error })
+                        if (error.keyValue.email) {
+                            response.status(409).send({
+                                message: error.keyValue.email,
+                            });
+                        } else if (error.keyValue.username) {
+                            response.status(409).send({
+                                message: error.keyValue.username,
+                            });
 
+                        } else {
+                            response.status(500).send({
+                                message: "User was not created successfully",
+                                error,
+                            });
+                        }
                     } else {
                         response.status(500).send({
                             message: "User was not created successfully",

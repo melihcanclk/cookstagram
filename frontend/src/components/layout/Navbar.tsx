@@ -2,32 +2,19 @@ import { useRef, type MutableRefObject, ReactNode } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import "../../styles/navbar.css";
 import { getCookie } from "../../utils/getCookie";
+import ProfileDropdown, { handleOpenProfileDropdown } from "../profile/ProfileDropdown";
 
 interface NavbarItemProps {
     href: string;
     children: ReactNode;
 }
-interface SignButtonProps {
-    text: string;
-    onClick?: () => void;
-}
+
 
 const NavbarItem = ({ href, children }: NavbarItemProps) => (
     <a href={href}>{children}</a>
 );
 
-const SignButton = ({ text, onClick }: SignButtonProps) => (
-    <div className="sign-button-wrapper">
-        <button onClick={onClick} className="sign-button">
-            {text}
-        </button>
-    </div>
-);
 
-const handleLogout = () => {
-    document.cookie = "session=;"
-    window.location.href = '/login';
-}
 
 export const Navbar = () => {
     const session = getCookie('session');
@@ -37,6 +24,10 @@ export const Navbar = () => {
         navRef.current.classList.toggle(
             "responsive_nav"
         );
+
+        // when the navbar is open, close the profile dropdown if close button clicked
+        const profileButton = document.querySelector(".dropdown-content") as HTMLElement;
+        profileButton.classList.contains("show") && handleOpenProfileDropdown();
     };
 
     return (
@@ -52,8 +43,12 @@ export const Navbar = () => {
                     <NavbarItem href="/#">Services</NavbarItem>
                     <NavbarItem href="/#">About</NavbarItem>
 
+
                     {session && (
-                        <SignButton text="Logout" onClick={handleLogout} />
+                        <>
+
+                            <ProfileDropdown />
+                        </>
                     )}
 
                     < button
