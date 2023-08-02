@@ -38,18 +38,24 @@ export const createPost = async (req, res) => {
 
 export const getPosts = async (req, res) => {
     const { id } = req.params;
-    let posts;
+    let user;
     try {
-        posts = await Post.find(
-            { user: id },
-        ).populate("user");
+        user = await User.findOne(
+            { _id: id },
+        ).populate("posts");
     } catch (e) {
         return res.status(500).send({
             message: e.message,
         });
     }
 
-    const postsPayload = posts.map((post) => {
+    if (!user) {
+        return res.status(404).send({
+            message: "User not found",
+        });
+    }
+
+    const postsPayload = user.posts.map((post) => {
         return {
             id: post._id,
             title: post.title,
@@ -65,6 +71,42 @@ export const getPosts = async (req, res) => {
         message: "Posts were fetched successfully",
         posts: postsPayload,
     });
+}
+
+export const getPost = async (req, res) => {
+    const { id } = req.params;
+    let post;
+    try {
+        post = await Post.findOne(
+            { _id: id },
+        ).populate("user");
+    } catch (e) {
+        return res.status(500).send({
+            message: e.message,
+        });
+    }
+
+    if (!post) {
+        return res.status(404).send({
+            message: "Post not found",
+        });
+    }
+
+    const postPayload = {
+        id: post._id,
+        title: post.title,
+        content: post.content,
+        createdAt: post.createdAt,
+        user: {
+            id: post.user._id,
+        },
+    };
+
+    return res.status(200).send({
+        message: "Post was fetched successfully",
+        post: postPayload,
+    });
+
 }
 
 export const deletePost = async (req, res) => {

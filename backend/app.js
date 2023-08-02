@@ -1,11 +1,11 @@
 import { dbConnect } from './dbConnect.js';
 import express from 'express';
 import auth from "./auth.js";
-import { createPost, getPosts, deletePost } from './controllers/postController.js';
+import { createPost, getPosts, getPost, deletePost } from './controllers/postController.js';
 
 import dotenv from 'dotenv'
 import { upload } from './middleware/upload.js';
-import { loginUser, registerUser } from './controllers/userController.js';
+import { loginUser, registerUser, getUser } from './controllers/userController.js';
 dotenv.config()
 
 const app = express();
@@ -34,8 +34,10 @@ app.use((req, res, next) => {
 // register endpoint
 app.post("/register", upload.single('picture'), registerUser)
 app.post("/login", loginUser);
+app.get("/users/:id", auth, getUser);
 app.post("/create-post", auth, createPost);
 app.get("/posts/:id", auth, getPosts);
+app.get("/post/:id", auth, getPost);
 app.delete("/posts/:id", auth, deletePost);
 
 app.get("/auth-endpoint", auth, (request, response) => {

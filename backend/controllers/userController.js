@@ -84,3 +84,38 @@ export const loginUser = async (request, response) => {
         user: payload
     });
 };
+
+export const getUser = async (request, response) => {
+    const { id } = request.params;
+
+    let user;
+    try {
+        user = await User.findOne({ _id: id }).populate("posts");
+    } catch (e) {
+        return response.status(500).send({
+            message: e.message,
+        });
+    }
+
+    const payload = {
+        username: user.username,
+        email: user.email,
+        picture: {
+            path: user.picture?.path,
+        },
+        createdAt: user.createdAt,
+        posts: user.posts.map((post) => {
+            return {
+                id: post._id,
+                title: post.title,
+                content: post.content,
+                createdAt: post.createdAt,
+            }
+        })
+    }
+
+    return response.status(200).send({
+        message: "User found",
+        user: payload,
+    });
+};
