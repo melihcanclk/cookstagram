@@ -1,7 +1,7 @@
 import { dbConnect } from './dbConnect.js';
 import express from 'express';
 import auth from "./auth.js";
-import { createPost, getPostByUser, getAllPosts, getPost, deletePost, getSinglePost } from './controllers/postController.js';
+import { createPost, getPostByUser, getAllPosts,  deletePost, getSinglePost } from './controllers/post/postController.js';
 
 import dotenv from 'dotenv'
 import { upload } from './middleware/upload.js';
@@ -14,7 +14,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // this is for parsing multipart/form-data
-
 dbConnect();
 
 // Curb Cores Error by adding a header here

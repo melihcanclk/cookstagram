@@ -1,6 +1,7 @@
-import { Post } from "../db/postModel.js";
-import User from "../db/userModel.js";
+import { Post } from "../../db/postModel.js";
+import User from "../../db/userModel.js";
 import mongoose from "mongoose";
+import { postPayload } from "./payloads.js";
 
 export const createPost = async (req, res) => {
     const { title, content, author } = req.body;
@@ -57,14 +58,8 @@ export const getPosts = async (req, res) => {
 
     const postsPayload = user.posts.map((post) => {
         return {
-            id: post._id,
-            title: post.title,
-            content: post.content,
-            createdAt: post.createdAt,
-            user: {
-                id: post.user._id,
-            },
-        };
+            post: postPayload(post),
+        }
     });
 
     return res.status(200).send({
@@ -86,19 +81,9 @@ export const getSinglePost = async (req, res) => {
         });
     }
 
-    const postPayload = {
-        id: post._id,
-        title: post.title,
-        content: post.content,
-        createdAt: post.createdAt,
-        user: {
-            id: post.user._id,
-        },
-    };
-
     return res.status(200).send({
         message: "Post was fetched successfully",
-        post: postPayload,
+        post: postPayload(post),
     });
 
 }
@@ -115,13 +100,7 @@ export const getAllPosts = async (req, res) => {
 
     const postsPayload = posts.map((post) => {
         return {
-            id: post._id,
-            title: post.title,
-            content: post.content,
-            createdAt: post.createdAt,
-            user: {
-                id: post.user._id,
-            },
+            post: postPayload(post),
         };
     });
 
@@ -150,20 +129,9 @@ export const getPostByUser = async (req, res) => {
             message: "Post not found",
         });
     }
-
-    const postPayload = {
-        id: post._id,
-        title: post.title,
-        content: post.content,
-        createdAt: post.createdAt,
-        user: {
-            id: post.user._id,
-        },
-    };
-
     return res.status(200).send({
         message: "Post was fetched successfully",
-        post: postPayload,
+        post: postPayload(post),
     });
 
 }
@@ -189,20 +157,9 @@ export const deletePost = async (req, res) => {
         });
     }
 
-    const postPayload = {
-        id: post._id,
-        title: post.title,
-        content: post.content,
-        createdAt: post.createdAt,
-        user: {
-            id: post.user._id,
-        },
-    };
-
-
     return res.status(200).send({
         message: "Post was deleted successfully",
-        post: postPayload,
+        post: postPayload(post),
     });
 
 }
