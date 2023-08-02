@@ -1,6 +1,8 @@
-import User from "../db/userModel.js";
+import User from "../../db/userModel.js";
 import bcrypt from "bcrypt";
 import Jwt from "jsonwebtoken";
+import { userPayload } from "./userayloads.js";
+
 
 export const registerUser = async (request, response) => {
     const { username, email, password } = request.body;
@@ -25,18 +27,10 @@ export const registerUser = async (request, response) => {
             message: e.message,
         });
     }
-    const userPayload = {
-        id: user._id,
-        username: user.username,
-        email: user.email,
-        picture: {
-            path: user.picture?.path,
-        },
-        createdAt: user.createdAt,
-    }
+
     return response.status(201).send({
         message: "User was created successfully",
-        user: userPayload,
+        user: userPayload(user)
     });
 
 };
@@ -69,53 +63,31 @@ export const loginUser = async (request, response) => {
         { expiresIn: "24h" }
     );
 
-    const payload = {
-        username: user.username,
-        email: user.email,
-        picture: {
-            path: user.picture?.path,
-        },
-        createdAt: user.createdAt,
-    }
-
     return response.status(200).send({
         message: "Authentication Successful",
         token,
-        user: payload
+        user: userPayload(user)
     });
 };
 
 export const getUser = async (request, response) => {
-    const { id } = request.params;
+    const { username } = request.params;
 
     let user;
     try {
-        user = await User.findOne({ _id: id }).populate("posts");
+        user = await User.findOne({ username: username }).populate("posts");
+        if (!user) {
+            throw new Error("User not found")
+        }
+
     } catch (e) {
         return response.status(500).send({
             message: e.message,
         });
     }
 
-    const payload = {
-        username: user.username,
-        email: user.email,
-        picture: {
-            path: user.picture?.path,
-        },
-        createdAt: user.createdAt,
-        posts: user.posts.map((post) => {
-            return {
-                id: post._id,
-                title: post.title,
-                content: post.content,
-                createdAt: post.createdAt,
-            }
-        })
-    }
-
     return response.status(200).send({
         message: "User found",
-        user: payload,
+        user: userPayload(user)
     });
 };

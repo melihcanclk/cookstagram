@@ -5,7 +5,7 @@ import { createPost, getPostByUser, getAllPosts,  deletePost, getSinglePost } fr
 
 import dotenv from 'dotenv'
 import { upload } from './middleware/upload.js';
-import { loginUser, registerUser, getUser } from './controllers/userController.js';
+import { loginUser, registerUser, getUser } from './controllers/user/userController.js';
 dotenv.config()
 
 const app = express();
@@ -33,7 +33,7 @@ app.use((req, res, next) => {
 // register endpoint
 app.post("/register", upload.single('picture'), registerUser)
 app.post("/login", loginUser);
-app.get("/users/:id", auth, getUser);
+app.get("/users/:username", auth, getUser);
 app.post("/create-post", auth, createPost);
 app.get("/posts", auth, getAllPosts);
 app.get("/posts/:id", auth, getPostByUser);
