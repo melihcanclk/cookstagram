@@ -1,7 +1,7 @@
 import { dbConnect } from './dbConnect.js';
 import express from 'express';
 import auth from "./auth.js";
-import { createPost, getPosts, getPost, deletePost } from './controllers/postController.js';
+import { createPost, getPostByUser, getAllPosts, getPost, deletePost, getSinglePost } from './controllers/postController.js';
 
 import dotenv from 'dotenv'
 import { upload } from './middleware/upload.js';
@@ -36,8 +36,9 @@ app.post("/register", upload.single('picture'), registerUser)
 app.post("/login", loginUser);
 app.get("/users/:id", auth, getUser);
 app.post("/create-post", auth, createPost);
-app.get("/posts/:id", auth, getPosts);
-app.get("/post/:id", auth, getPost);
+app.get("/posts", auth, getAllPosts);
+app.get("/posts/:id", auth, getPostByUser);
+app.get("/post/:id", auth, getSinglePost);
 app.delete("/posts/:id", auth, deletePost);
 
 app.get("/auth-endpoint", auth, (request, response) => {

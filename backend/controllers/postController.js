@@ -73,7 +73,66 @@ export const getPosts = async (req, res) => {
     });
 }
 
-export const getPost = async (req, res) => {
+export const getSinglePost = async (req, res) => {
+    const { id } = req.params;
+    let post;
+    try {
+        post = await Post.findOne(
+            { _id: id },
+        ).populate("user");
+    } catch (e) {
+        return res.status(500).send({
+            message: e.message,
+        });
+    }
+
+    const postPayload = {
+        id: post._id,
+        title: post.title,
+        content: post.content,
+        createdAt: post.createdAt,
+        user: {
+            id: post.user._id,
+        },
+    };
+
+    return res.status(200).send({
+        message: "Post was fetched successfully",
+        post: postPayload,
+    });
+
+}
+
+export const getAllPosts = async (req, res) => {
+    let posts;
+    try {
+        posts = await Post.find().populate("user");
+    } catch (e) {
+        return res.status(500).send({
+            message: e.message,
+        });
+    }
+
+    const postsPayload = posts.map((post) => {
+        return {
+            id: post._id,
+            title: post.title,
+            content: post.content,
+            createdAt: post.createdAt,
+            user: {
+                id: post.user._id,
+            },
+        };
+    });
+
+    return res.status(200).send({
+        message: "Posts were fetched successfully",
+        posts: postsPayload,
+    });
+}
+
+
+export const getPostByUser = async (req, res) => {
     const { id } = req.params;
     let post;
     try {
