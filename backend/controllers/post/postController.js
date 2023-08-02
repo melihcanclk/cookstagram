@@ -1,7 +1,7 @@
 import { Post } from "../../db/postModel.js";
 import User from "../../db/userModel.js";
 import mongoose from "mongoose";
-import { postPayload } from "./payloads.js";
+import { postPayload } from "./postPayloads.js";
 
 export const createPost = async (req, res) => {
     const { title, content, author } = req.body;
