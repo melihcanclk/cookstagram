@@ -66,3 +66,42 @@ export const getPosts = async (req, res) => {
         posts: postsPayload,
     });
 }
+
+export const deletePost = async (req, res) => {
+    const { id } = req.params;
+    let post;
+    try {
+        post = await Post.findByIdAndRemove({
+            _id: id,
+        }).populate("user");
+        if (!post) {
+            throw new Error("Post not found");
+        }
+
+        const authorRes = await User.findOne({ _id: post.user });
+        authorRes.posts.pull(id);
+        await authorRes.save();
+
+    } catch (e) {
+        return res.status(500).send({
+            message: e.message,
+        });
+    }
+
+    const postPayload = {
+        id: post._id,
+        title: post.title,
+        content: post.content,
+        createdAt: post.createdAt,
+        user: {
+            id: post.user._id,
+        },
+    };
+
+
+    return res.status(200).send({
+        message: "Post was deleted successfully",
+        post: postPayload,
+    });
+
+}
