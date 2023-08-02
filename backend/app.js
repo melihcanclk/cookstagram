@@ -1,9 +1,7 @@
 import { dbConnect } from './dbConnect.js';
 import express from 'express';
-import bcrypt from "bcrypt";
-import Jwt from "jsonwebtoken";
-import User from "./db/userModel.js"
 import auth from "./auth.js";
+import { createPost, getPosts } from './controllers/postController.js';
 
 import dotenv from 'dotenv'
 import { upload } from './middleware/upload.js';
@@ -36,7 +34,8 @@ app.use((req, res, next) => {
 // register endpoint
 app.post("/register", upload.single('picture'), registerUser)
 app.post("/login", loginUser);
-
+app.post("/create-post", auth, createPost);
+app.get("/posts", auth, getPosts);
 
 app.get("/auth-endpoint", auth, (request, response) => {
     response.status(200).send({

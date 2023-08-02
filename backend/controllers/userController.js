@@ -14,7 +14,8 @@ export const registerUser = async (request, response) => {
             email: email,
             username: username,
             picture: request.file,
-            password: hashedPassword
+            password: hashedPassword,
+            createdAt: Date.now(),
         });
 
         await user.save();
@@ -25,11 +26,13 @@ export const registerUser = async (request, response) => {
         });
     }
     const userPayload = {
+        id: user._id,
         username: user.username,
         email: user.email,
         picture: {
             path: user.picture?.path,
-        }
+        },
+        createdAt: user.createdAt,
     }
     return response.status(201).send({
         message: "User was created successfully",
@@ -71,7 +74,8 @@ export const loginUser = async (request, response) => {
         email: user.email,
         picture: {
             path: user.picture?.path,
-        }
+        },
+        createdAt: user.createdAt,
     }
 
     return response.status(200).send({
