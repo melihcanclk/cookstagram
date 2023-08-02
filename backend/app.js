@@ -7,6 +7,7 @@ import auth from "./auth.js";
 
 import dotenv from 'dotenv'
 import { upload } from './middleware/upload.js';
+import { loginUser, registerUser } from './controllers/userController.js';
 dotenv.config()
 
 const app = express();
@@ -33,121 +34,8 @@ app.use((req, res, next) => {
 });
 
 // register endpoint
-app.post("/register", upload.single('picture'), async (request, response) => {
-    const { username, email, password } = request.body;
-    // hash the password
-    bcrypt
-        .hash(password, 10)
-        .then((hashedPassword) => {
-            const user = new User({
-                email: email,
-                username: username,
-                picture: request.file,
-                password: hashedPassword
-            });
-
-            user
-                .save()
-                .then((result) => {
-                    response.status(201).send({
-                        message: "User Created Successfully",
-                        user: {
-                            username: result.username,
-                            email: result.email,
-                            picture: {
-                                name: result.originalname,
-                                path: result.picture.path
-                            }
-                        }
-                    });
-                })
-                .catch((error) => {
-                    if (error.code === 11000) {
-                        console.log({ error })
-                        if (error.keyValue.email) {
-                            response.status(409).send({
-                                message: error.keyValue.email,
-                            });
-                        } else if (error.keyValue.username) {
-                            response.status(409).send({
-                                message: error.keyValue.username,
-                            });
-
-                        } else {
-                            response.status(500).send({
-                                message: "User was not created successfully",
-                                error,
-                            });
-                        }
-                    } else {
-                        response.status(500).send({
-                            message: "User was not created successfully",
-                            error,
-                        });
-                    }
-                });
-        })
-        .catch((e) => {
-            response.status(500).send({
-                message: "Password was not hashed successfully",
-                e,
-            });
-        });
-});
-
-app.post("/login", async (request, response) => {
-    const { username, password } = request.body;
-
-    User.findOne({ username: username })
-        .then((user) => {
-            if (user) {
-                bcrypt
-                    .compare(password, user.password)
-                    .then((result) => {
-                        if (!result) {
-                            response.status(401).send({
-                                message: "Authentication Failed, password is incorrect",
-                            });
-                        } else {
-                            const token = Jwt.sign(
-                                { username: user.username, userId: user._id },
-                                process.env.JWT_KEY,
-                                { expiresIn: "24h" }
-                            );
-
-                            const payload = {
-                                username: user.username,
-                                email: user.email,
-                                picture: {
-                                    path: user.picture.path,
-                                }
-                            }
-                            response.status(200).send({
-                                message: "Authentication Successful",
-                                token,
-                                user: payload
-                            });
-                        }
-                    })
-                    .catch((e) => {
-                        response.status(500).send({
-                            message: "Authentication Failed",
-                            e,
-                        });
-                    });
-            } else {
-                response.status(401).send({
-                    message: "Authentication Failed, user not found (401)",
-                });
-            }
-        })
-        .catch((e) => {
-            response.status(500).send({
-                message: "Authentication Failed, user not found (500)",
-                e,
-            });
-        });
-});
+app.post("/register", upload.single('picture'), registerUser)
+app.post("/login", loginUser);
 
 
 app.get("/auth-endpoint", auth, (request, response) => {

@@ -1,4 +1,4 @@
-import mongoose from "mongoose";    
+import mongoose from "mongoose";
 
 let UserSchema = new mongoose.Schema({
     username: {
@@ -24,4 +24,4 @@ let UserSchema = new mongoose.Schema({
 });
 
 
-export default UserSchema = (mongoose.model.Users || mongoose.model("Users", UserSchema))
+export default UserSchema = (mongoose.model.Users || mongoose.model("User", UserSchema))
