@@ -37,9 +37,12 @@ export const createPost = async (req, res) => {
 };
 
 export const getPosts = async (req, res) => {
+    const { id } = req.params;
     let posts;
     try {
-        posts = await Post.find().populate("user");
+        posts = await Post.find(
+            { user: id },
+        ).populate("user");
     } catch (e) {
         return res.status(500).send({
             message: e.message,
