@@ -12,7 +12,7 @@ let UserSchema = new mongoose.Schema({
         unique: false
     },
     picture: {
-        type: Object,
+        type: String,
         required: false,
         unique: false
     },

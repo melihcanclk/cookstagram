@@ -2,6 +2,7 @@ import User from "../../db/userModel.js";
 import bcrypt from "bcrypt";
 import Jwt from "jsonwebtoken";
 import { userPayload } from "./userPayloads.js";
+import fs from "fs";
 
 
 export const registerUser = async (request, response) => {
@@ -15,7 +16,7 @@ export const registerUser = async (request, response) => {
         user = new User({
             email: email,
             username: username,
-            picture: request.file,
+            picture: request.file.filename,
             password: hashedPassword,
             createdAt: Date.now(),
         });
@@ -23,6 +24,17 @@ export const registerUser = async (request, response) => {
         await user.save();
     }
     catch (e) {
+        // delete the image if the user was not created
+        if (request.file) {
+            // delete the image
+            fs.unlink(request.file.path, (err) => {
+                if (err) {
+                    console.log(err);
+                }
+            });
+        }
+
+
         return response.status(500).send({
             message: e.message,
         });
