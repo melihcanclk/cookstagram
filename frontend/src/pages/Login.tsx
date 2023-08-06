@@ -45,7 +45,6 @@ export const Login = () => {
             if (response.ok) {
                 return response.json();
             } else {
-                console.log('Error!');
                 throw new Error('Something went wrong');
             }
         }).then((data: Response) => {
