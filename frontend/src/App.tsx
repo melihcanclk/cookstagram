@@ -2,6 +2,7 @@ import { Navigate, Route, BrowserRouter as Router, Routes } from 'react-router-d
 import { Home } from './pages/Home';
 import { Login } from './pages/Login';
 import { NoMatch } from './pages/NoMatch';
+import { Register } from './pages/Register';
 
 function App() {
 
@@ -10,6 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/error" element={<NoMatch />} />
         <Route path="*" element={<Navigate to="/notmatch" />} />
       </Routes>

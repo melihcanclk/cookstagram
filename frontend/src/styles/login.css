@@ -59,7 +59,7 @@ button {
 }
 
 .container-form-input {
-    margin: 0 0 30px;
+    margin: 0 0 20px;
     width: 100%;
 }
 
@@ -87,9 +87,17 @@ button {
     color: var(--textColor);
 }
 
+.button-container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: var(--paddingGeneral);
+}
+
 button[class="js-form-btn"] {
     display: block;
-    max-width: 250px;
+    max-width: 150px;
     width: 100%;
     padding: 10px 10px;
     border: none;
@@ -165,4 +173,18 @@ button[class="js-form-btn"]:hover {
     color: var(--red);
     font-size: var(--responsiveButtonWidth);
     margin: 10px 0;
+}
+
+.info-msg-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: var(--paddingGeneral);
+    padding: var(--paddingGeneral);
+}
+
+.info-msg-container span {
+    display: flex;
+    gap: var(--paddingGeneral);
 }

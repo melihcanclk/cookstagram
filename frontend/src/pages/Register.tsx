@@ -1,77 +1,21 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import '../styles/login.css'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
-import { useSession } from '../hooks/useCookie';
 import { handleFocus } from '../utils/handleFocus';
+import { useNavigate } from 'react-router-dom';
+import { useSession } from '../hooks/useCookie';
 import { LeftArrow } from '../components/svg/LeftArrow';
 
-type Response = {
-    message: string,
-    user: UserType,
-    token: string,
-}
-
-type UserType = {
-    username: string,
-    email: string,
-    picture: {
-        fileName: string,
-    },
-    createdAt: string,
-    token: string,
-}
-
-
-export const Login = () => {
-
+export const Register = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const navigate = useNavigate();
     const [error, setError] = useState(false);
     const [session] = useSession();
-
-
+    const navigate = useNavigate();
 
     const onSubmit = (data: any) => {
-        // post data to backend
-        fetch('http://localhost:3000/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-            mode: 'cors',
-        }).then((response) => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw new Error('Something went wrong');
-            }
-        }).then((data: Response) => {
-            // redirect to home page
-            // save session in cookie
-            document.cookie = `session=${data.token}; path=/`;
-            // save user in cookie
-            document.cookie = `user=${JSON.stringify(
-                {
-                    username: data.user.username,
-                    email: data.user.email,
-                    picture: data.user.picture.fileName,
-                    createdAt: data.user.createdAt,
-                }
-            )}; path=/`;
-            navigate('/');
-        }
-        ).catch((error) => {
-            console.log(error);
-            setError(true);
-        });
-
     }
 
     return (
         <div className="container">
-
             <div className="container-msg-modal">
                 <div className="container-modal-content--success container-modal-content">
                     <span>Welcome!</span>
@@ -84,7 +28,6 @@ export const Login = () => {
             }
                 id='form'
             >
-
                 <div className="container-form-userName container-form-input">
                     <label htmlFor="username">Username</label>
                     <input
@@ -104,9 +47,9 @@ export const Login = () => {
                 <div className='button-container'>
                     <button type="button" onClick={
                         () => {
-                            navigate('/register');
+                            navigate('/login');
                         }
-                    } className="js-form-btn">Register</button>
+                    } className="js-form-btn">Login</button>
 
                     <button type="submit" className="js-form-btn">Submit</button>
                 </div>
@@ -124,8 +67,6 @@ export const Login = () => {
                     }
                 </div>
             </form>
-
-
         </div>
-    );
+    )
 }
