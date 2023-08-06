@@ -1,8 +1,14 @@
 import '../../styles/avataritem.css'
 
-const AvatarItem = () => {
+type AvatarItemProps = {
+    src: string,
+    alt?: string,
+}
+
+const AvatarItem = (props: AvatarItemProps) => {
+    const { src } = props;
     return (
-        <img src="../../../../uploads/1690843336502-Strawberry-PNG-Picture.png" alt="Avatar" className="avatar" />
+        <img src={`/uploads/${src}`} alt="Avatar" className="avatar" />
     )
 }
 

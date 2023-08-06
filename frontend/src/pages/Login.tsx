@@ -1,8 +1,25 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/login.css'
-import { get, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useSession } from '../hooks/useCookie';
+
+type Response = {
+    message: string,
+    user: UserType,
+    token: string,
+}
+
+type UserType = {
+    username: string,
+    email: string,
+    picture: {
+        fileName: string,
+    },
+    createdAt: string,
+    token: string,
+}
+
 
 export const Login = () => {
 
@@ -17,7 +34,6 @@ export const Login = () => {
 
     const onSubmit = (data: any) => {
         // post data to backend
-        console.log(data);
         fetch('http://localhost:3000/login', {
             method: 'POST',
             headers: {
@@ -32,11 +48,19 @@ export const Login = () => {
                 console.log('Error!');
                 throw new Error('Something went wrong');
             }
-        }).then((data) => {
+        }).then((data: Response) => {
             // redirect to home page
             // save session in cookie
-            console.log(data);
             document.cookie = `session=${data.token}; path=/`;
+            // save user in cookie
+            document.cookie = `user=${JSON.stringify(
+                {
+                    username: data.user.username,
+                    email: data.user.email,
+                    picture: data.user.picture.fileName,
+                    createdAt: data.user.createdAt,
+                }
+            )}; path=/`;
             navigate('/');
         }
         ).catch((error) => {
