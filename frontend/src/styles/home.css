@@ -3,11 +3,18 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-        
+
 }
 
-.home {
-    width: 50%;
+main[class="input"] {
+    width: 35%;
+    margin-top: var(--paddingGeneral);
+}
+
+.home h1 {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0px;
 }
 
 .card-body {
@@ -22,4 +29,11 @@
     height: 100%;
     border-radius: 50px;
     object-fit: cover;
+}
+
+.feed-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }

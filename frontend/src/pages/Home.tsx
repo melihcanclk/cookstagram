@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react';
 import { Layout } from '../components/layout/Layout'
-import { IndividualPost } from '../components/post/IndividualPost'
-import { getCookie } from '../utils/getCookie';
 import '../styles/home.css'
+import { CreatePostTextbox } from '../components/post/CreatePostTextbox';
 
 export const Home = () => {
 
 
     return (
         <Layout>
-            helllo
+            <div className='feed-container'>
+                <CreatePostTextbox />
+            </div>
         </Layout>
     )
 }

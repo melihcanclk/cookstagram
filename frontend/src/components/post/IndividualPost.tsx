@@ -11,10 +11,12 @@ export const IndividualPost = (props: IndividualPostProps) => {
                     <img src={image} alt="profile" />
                     <p>{post.title}</p>
                     <h5>{post.user?.name} - {
-                        new Date(post.createdAt).toLocaleDateString('en-US', {
+                        new Date(post.createdAt).toLocaleDateString('tr-TR', {
                             year: 'numeric',
                             month: 'long',
-                            day: 'numeric'
+                            day: 'numeric',
+                            hour: 'numeric',
+                            minute: 'numeric'
                         })
                     }</h5>
                     <p>{post.content}</p>

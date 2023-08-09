@@ -5,7 +5,6 @@ export const getImageByName = async (req, res) => {
     const { imageName } = req.params;
     const __dirname = path.resolve();
     const imagePath = path.join(__dirname, `/uploads/${imageName}`);
-    console.log({ imagePath });
     try {
         //check if image exists
         if (fs.existsSync(imagePath)) {

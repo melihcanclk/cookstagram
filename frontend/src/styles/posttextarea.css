@@ -1,0 +1,55 @@
+main>*+* {
+    margin-top: 1rem;
+}
+
+/* have the textarea expand to cover the width of the container, and a fixed height */
+main textarea {
+    display: block;
+    width: 100%;
+    height: 200px;
+    font-family: inherit;
+    resize: none;
+    font-size: 1rem;
+    padding: 0.5rem;
+    line-height: 1.5;
+    border: 2px solid var(--secondaryColor);
+    background-color: var(--mainColorSecondary);
+    color: var(--textColor);
+    /* placeholder text color */
+}
+
+main textarea::placeholder {
+    color: var(--textColor);
+}
+
+/* display the .controls button in a row */
+main .controls {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top: 0.85rem;
+}
+
+/* separate the buttons horizontally */
+main .controls>*+* {
+    margin-left: 0.75rem;
+}
+
+/* style the buttons to have opposing color and background values */
+main .controls button {
+    padding: 0.25rem 1rem;
+    color: var(--textColor);
+    background: var(--secondaryColor);
+    border: 2px solid var(--secondaryColor);
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: inherit;
+    outline-color: var(--mainColorSecondary);
+    cursor: pointer;
+}
+
+main .controls button:last-of-type {
+    color: var(--secondaryColor);
+    background: hsl(0, 0%, 100%);
+}

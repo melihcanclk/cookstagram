@@ -29,6 +29,7 @@ export const Profile = () => {
         <Layout>
             <div className='home-container'>
                 <div className="home">
+                    <h1>My Posts</h1>
                     {
                         posts &&
                         posts.map((post, key) => (
