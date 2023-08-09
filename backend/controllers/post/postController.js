@@ -37,37 +37,6 @@ export const createPost = async (req, res) => {
     });
 };
 
-export const getPosts = async (req, res) => {
-    const { id } = req.params;
-    let user;
-    try {
-        user = await User.findOne(
-            { _id: id },
-        ).populate("posts");
-    } catch (e) {
-        return res.status(500).send({
-            message: e.message,
-        });
-    }
-
-    if (!user) {
-        return res.status(404).send({
-            message: "User not found",
-        });
-    }
-
-    const postsPayload = user.posts.map((post) => {
-        return {
-            post: postPayload(post),
-        }
-    });
-
-    return res.status(200).send({
-        message: "Posts were fetched successfully",
-        posts: postsPayload,
-    });
-}
-
 export const getSinglePost = async (req, res) => {
     const { id } = req.params;
     let post;
@@ -101,6 +70,43 @@ export const getAllPosts = async (req, res) => {
     const postsPayload = posts.map((post) => {
         return {
             post: postPayload(post),
+        };
+    });
+
+    return res.status(200).send({
+        message: "Posts were fetched successfully",
+        posts: postsPayload,
+    });
+}
+
+export const getPostsByUser = async (req, res) => {
+    const { username } = req.params;
+    let posts;
+    let user;
+    try {
+        // get user id with username
+        user = await User.findOne({ username: username }).populate("posts");
+        if (!user) {
+            throw new Error("User not found")
+        }
+
+        posts = user.posts;
+
+    } catch (e) {
+        return res.status(500).send({
+            message: e.message,
+        });
+    }
+
+    const postsPayload = posts.map((post) => {
+        return {
+            ...postPayload(post),
+            user: {
+                name: user.name,
+                surname: user.surname,
+                username: user.username,
+                picture: user.picture,
+            },
         };
     });
 

@@ -1,9 +1,5 @@
 import '../../styles/avataritem.css'
 
-type AvatarItemProps = {
-    src: string,
-    alt?: string,
-}
 
 const AvatarItem = (props: AvatarItemProps) => {
     const { src } = props;

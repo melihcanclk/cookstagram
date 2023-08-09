@@ -4,8 +4,5 @@ export const postPayload = (post) => {
         title: post.title,
         content: post.content,
         createdAt: post.createdAt,
-        user: {
-            id: post.user._id,
-        },
     };
 };

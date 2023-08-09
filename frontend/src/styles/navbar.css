@@ -57,12 +57,18 @@ header div,
 nav {
     display: flex;
 }
+
 .sign-button-wrapper {
     align-items: center;
     justify-content: center;
 }
 
-.sign-button {
+.sign-button-wrapper:hover {
+    background-color: var(--secondaryColor);
+    transition: 0.5s;
+}
+
+.sign-button-wrapper {
     background-color: inherit;
     color: var(--textColor);
     border: none;
@@ -83,7 +89,7 @@ nav {
     }
 
 
-    
+
 
     header nav {
         position: fixed;

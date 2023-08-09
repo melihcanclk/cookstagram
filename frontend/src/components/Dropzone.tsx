@@ -1,12 +1,6 @@
-import { useDropzone, Accept } from 'react-dropzone';
+import { useDropzone } from 'react-dropzone';
 import '../styles/dropzone.css'
 import { useEffect } from 'react';
-
-interface IDropzoneProps {
-    file: any;
-    setFile: (file: any) => void;
-    accept?: Accept;
-}
 
 const Dropzone = (props: IDropzoneProps) => {
     const { file, setFile } = props;

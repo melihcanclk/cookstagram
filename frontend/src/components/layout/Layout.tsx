@@ -1,11 +1,8 @@
-import { ReactComponentElement } from "react";
 import { Footer } from "./Footer";
 import { Navbar } from "./Navbar";
-import { getCookie } from "../../utils/getCookie";
+import { getCookie } from '../../utils/getCookie';
+import '../../styles/layout.css'
 
-interface LayoutProps {
-    children: ReactComponentElement<any> | ReactComponentElement<any>[];
-}
 
 export const Layout = ({ children }: LayoutProps) => {
 

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { useSession } from '../hooks/useCookie';
+import { useSession } from '../hooks/useSession';
 import { LeftArrow } from '../components/svg/LeftArrow';
 import { FormFieldError } from '../components/error/FormFieldErrors';
 import Dropzone from '../components/Dropzone';

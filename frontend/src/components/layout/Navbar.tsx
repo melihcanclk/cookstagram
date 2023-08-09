@@ -1,20 +1,12 @@
-import { useRef, type MutableRefObject, ReactNode } from "react";
+import { useRef, type MutableRefObject } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import "../../styles/navbar.css";
 import { getCookie } from "../../utils/getCookie";
-import ProfileDropdown, { handleOpenProfileDropdown } from "../profile/ProfileDropdown";
-
-interface NavbarItemProps {
-    href: string;
-    children: ReactNode;
-}
-
+import ProfileDropdown, { handleOpenProfileDropdown } from "../../components/profile/ProfileDropdown";
 
 const NavbarItem = ({ href, children }: NavbarItemProps) => (
     <a href={href}>{children}</a>
 );
-
-
 
 export const Navbar = () => {
     const session = getCookie('session');
@@ -32,21 +24,19 @@ export const Navbar = () => {
 
     return (
         <header>
-            <a href="/#">
+            <a href="/">
                 <div className="logo-wrapper">
                     <img src="/src/assets/logo.png" alt="logo" />
                 </div>
             </a>
             <div>
                 <nav ref={navRef}>
-                    <NavbarItem href="/#">Home</NavbarItem>
-                    <NavbarItem href="/#">Services</NavbarItem>
+                    {
+                        // TODO: add search bar here
+                    }
                     <NavbarItem href="/#">About</NavbarItem>
-
-
                     {session && (
                         <>
-
                             <ProfileDropdown />
                         </>
                     )}

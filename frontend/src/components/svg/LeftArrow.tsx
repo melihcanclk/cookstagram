@@ -1,8 +1,3 @@
-export type LeftArrowProps = {
-    fill?: string,
-    height?: string,
-    width?: string,
-}
 
 export const LeftArrow = (props: LeftArrowProps) => {
     const { fill = '#000', height = '800px', width = '800px' } = props;

@@ -2,28 +2,9 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/login.css'
 import { useForm } from 'react-hook-form';
-import { useSession } from '../hooks/useCookie';
+import { useSession } from '../hooks/useSession';
 import { handleFocus } from '../utils/handleFocus';
 import { LeftArrow } from '../components/svg/LeftArrow';
-
-type Response = {
-    message: string,
-    user: UserType,
-    token: string,
-}
-
-type UserType = {
-    name: string,
-    surname: string,
-    username: string,
-    email: string,
-    picture: {
-        fileName: string,
-    },
-    createdAt: string,
-    token: string,
-}
-
 
 export const Login = () => {
 
@@ -31,8 +12,6 @@ export const Login = () => {
     const navigate = useNavigate();
     const [error, setError] = useState(false);
     const [session] = useSession();
-
-
 
     const onSubmit = (data: any) => {
         // post data to backend
@@ -49,7 +28,7 @@ export const Login = () => {
             } else {
                 throw new Error('Something went wrong');
             }
-        }).then((data: Response) => {
+        }).then((data: LoginResponse) => {
             // redirect to home page
             // save session in cookie
             document.cookie = `session=${data.token}; path=/`;

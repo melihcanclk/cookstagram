@@ -1,15 +1,7 @@
-import "../../styles/footer.css";
+import '../../styles/footer.css';
 import { socialMediaAccounts } from "../../assets/socialMediaAccounts";
 
-interface FooterItemProps {
-    href: string;
-    text: string;
-}
 
-interface SocialIconProps {
-    href: string;
-    children: React.ReactNode;
-}
 
 const FooterItem = ({ href, text }: FooterItemProps) => {
     return (
