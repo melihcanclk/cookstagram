@@ -1,0 +1,58 @@
+.dropzone {
+    background-color: var(--color);
+}
+
+.dropzone-container {
+    padding: 10px;
+}
+
+.dropzone-button-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 16px;
+}
+
+.thumb-container {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    margin-top: 16px;
+}
+
+.thumb-container > button {
+    border: none;
+    background-color: var(--mainColorSecondary);
+    border-radius: 5px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.thumb-outer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+}
+.thumb {
+    display: flex;
+    border-radius: 2px;
+    border: 1px solid #eaeaea;
+    margin-bottom: 8px;
+    margin-right: 8px;
+    width: 100px;
+    height: 100px;
+    padding: 4px;
+}
+
+.thumb-inner {
+    display: flex;
+    min-width: 0px;
+    overflow: hidden;
+}
+
+.thumb-img {
+    display: block;
+    width: auto;
+    height: 100%;
+}

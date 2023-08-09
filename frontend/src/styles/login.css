@@ -59,7 +59,7 @@ button {
 }
 
 .container-form-input {
-    margin: 0 0 20px;
+    margin: 0 0 var(--paddingGeneral);
     width: 100%;
 }
 
@@ -172,7 +172,6 @@ button[class="js-form-btn"]:hover {
 .error-msg {
     color: var(--red);
     font-size: var(--responsiveButtonWidth);
-    margin: 10px 0;
 }
 
 .info-msg-container {
