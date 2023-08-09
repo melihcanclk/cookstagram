@@ -1,15 +1,20 @@
-import { useEffect, useState } from 'react'
-import { useDropzone, DropzoneProps, Accept } from 'react-dropzone';
+import { useDropzone, Accept } from 'react-dropzone';
 import '../styles/dropzone.css'
-const Dropzone = () => {
+import { useEffect } from 'react';
 
-    const [file, setFile] = useState<any>(null);
+interface IDropzoneProps {
+    file: any;
+    setFile: (file: any) => void;
+    accept?: Accept;
+}
 
+const Dropzone = (props: IDropzoneProps) => {
+    const { file, setFile } = props;
     const { getRootProps, getInputProps, open } = useDropzone({
         multiple: false,
         accept: {
-            'image/png': ['.png'],
             'image/jpeg': ['.jpeg'],
+            'image/png': ['.png'],
             'image/jpg': ['.jpg']
         },
         onDrop: (acceptedFiles) => {
@@ -37,12 +42,11 @@ const Dropzone = () => {
         </div>
     );
 
-    useEffect(
-        () => () => {
-            // Make sure to revoke the data uris to avoid memory leaks
-            URL.revokeObjectURL(
-                file?.preview
-            );
+    useEffect(() =>
+        () => {
+            if (file) {
+                URL.revokeObjectURL(file.preview);
+            }
         },
         [file]
     );

@@ -6,7 +6,8 @@ import fs from "fs";
 
 
 export const registerUser = async (request, response) => {
-    const { name, surname, username, email, password, file } = request.body;
+    const { name, surname, username, email, password } = request.body;
+    const picture = request.file;
 
     let hashedPassword;
     let user;
@@ -18,7 +19,7 @@ export const registerUser = async (request, response) => {
             surname: surname,
             username: username,
             email: email,
-            picture: file?.filename,
+            picture: picture ? picture.filename : null,
             password: hashedPassword,
             createdAt: Date.now(),
         });

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useSession } from '../hooks/useCookie';
@@ -9,6 +10,7 @@ export const Register = () => {
     const { register, handleSubmit, formState: { errors }, watch } = useForm();
     const [session] = useSession();
     const navigate = useNavigate();
+    const [file, setFile] = useState<any>(null);
 
     const onSubmit = (data: any) => {
         // create FormData object
@@ -19,6 +21,7 @@ export const Register = () => {
         formData.append('username', data.username);
         formData.append('email', data.email);
         formData.append('password', data.password);
+        formData.append('picture', file);
 
         // send FormData object to server
         fetch('http://localhost:3000/register', {
@@ -119,7 +122,7 @@ export const Register = () => {
                 </div>
                 {FormFieldError({ errors, fieldname: 'confirm_password', placeholder: 'Confirm Password', min: 6, validate: true })}
 
-                <Dropzone />
+                <Dropzone setFile={setFile} file={file} />
                 <div className='button-container'>
                     <button type="button" onClick={
                         () => {
