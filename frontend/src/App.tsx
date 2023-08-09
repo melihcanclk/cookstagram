@@ -12,8 +12,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/error" element={<NoMatch />} />
-        <Route path="*" element={<Navigate to="/notmatch" />} />
+        <Route path="*" element={<NoMatch />} />
       </Routes>
     </Router>
 
