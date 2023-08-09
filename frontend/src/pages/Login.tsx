@@ -13,6 +13,8 @@ type Response = {
 }
 
 type UserType = {
+    name: string,
+    surname: string,
     username: string,
     email: string,
     picture: {
@@ -54,6 +56,8 @@ export const Login = () => {
             // save user in cookie
             document.cookie = `user=${JSON.stringify(
                 {
+                    name: data.user.name,
+                    surname: data.user.surname,
                     username: data.user.username,
                     email: data.user.email,
                     picture: data.user.picture.fileName,
