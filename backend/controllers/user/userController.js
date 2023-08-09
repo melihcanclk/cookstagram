@@ -6,20 +6,24 @@ import fs from "fs";
 
 
 export const registerUser = async (request, response) => {
-    const { username, email, password } = request.body;
+    const { name, surname, username, email, password, file } = request.body;
 
     let hashedPassword;
     let user;
     try {
         hashedPassword = await bcrypt.hash(password, 10);
-
+        console.log({ hashedPassword })
         user = new User({
-            email: email,
+            name: name,
+            surname: surname,
             username: username,
-            picture: request.file.filename,
+            email: email,
+            picture: file?.filename,
             password: hashedPassword,
             createdAt: Date.now(),
         });
+
+        console.log({ user })
 
         await user.save();
     }

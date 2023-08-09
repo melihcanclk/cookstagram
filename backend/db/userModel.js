@@ -1,6 +1,16 @@
 import mongoose from "mongoose";
 
 let UserSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: [true, "Please provide a name"],
+        unique: false
+    },
+    surname: {
+        type: String,
+        required: [true, "Please provide a surname"],
+        unique: false
+    },
     username: {
         type: String,
         required: [true, "Please provide a username"],
