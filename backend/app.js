@@ -6,6 +6,7 @@ import { createPost, getPostByUser, getAllPosts, deletePost, getSinglePost, getP
 import dotenv from 'dotenv'
 import { upload } from './middleware/upload.js';
 import { loginUser, registerUser, getUser } from './controllers/user/userController.js';
+import { getImageByName } from './controllers/image/imageController.js';
 dotenv.config()
 
 const app = express();
@@ -40,6 +41,7 @@ app.get("/posts/:id", auth, getPostByUser);
 app.get("/posts/user/:username", auth, getPostsByUser);
 app.get("/post/:id", auth, getSinglePost);
 app.delete("/posts/:id", auth, deletePost);
+app.get("/uploads/:imageName", getImageByName);
 
 app.get("/auth-endpoint", auth, (request, response) => {
     response.status(200).send({

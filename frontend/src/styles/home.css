@@ -16,3 +16,10 @@
     justify-content: center;
     flex-direction: column;
 }
+
+.card-body img {
+    width: 50px;
+    height: 100%;
+    border-radius: 50px;
+    object-fit: cover;
+}

@@ -90,5 +90,6 @@ interface IndividualPost {
 }
 
 interface IndividualPostProps {
+    key: number;
     post: IndividualPost;
 }

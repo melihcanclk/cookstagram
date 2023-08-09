@@ -33,8 +33,8 @@ export const Home = () => {
                 <div className="home">
                     {
                         posts &&
-                        posts.map((post) => (
-                            <IndividualPost post={post} />
+                        posts.map((post, key) => (
+                            <IndividualPost post={post} key={key} />
                         ))
                     }
                 </div>
