@@ -23,6 +23,7 @@ nav a:hover {
 
 header a {
     height: inherit;
+    color: var(--logo-background);
 }
 
 .logo-wrapper {
@@ -56,11 +57,16 @@ header .nav-btn {
 header div,
 nav {
     display: flex;
+    color: var(--logo-background);
 }
 
 .sign-button-wrapper {
     align-items: center;
     justify-content: center;
+}
+
+.sign-button-wrapper p{
+    color: var(--logo-background);
 }
 
 .sign-button-wrapper:hover {
@@ -87,9 +93,6 @@ nav {
         display: flex;
         opacity: 1;
     }
-
-
-
 
     header nav {
         position: fixed;

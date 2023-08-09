@@ -4,7 +4,6 @@ import { CreatePostTextbox } from '../components/post/CreatePostTextbox';
 
 export const Home = () => {
 
-
     return (
         <Layout>
             <div className='feed-container'>

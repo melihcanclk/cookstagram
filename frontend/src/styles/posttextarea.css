@@ -6,20 +6,21 @@ main>*+* {
 main textarea {
     display: block;
     width: 100%;
-    height: 200px;
+    height: 120px;
     font-family: inherit;
     resize: none;
     font-size: 1rem;
     padding: 0.5rem;
     line-height: 1.5;
-    border: 2px solid var(--secondaryColor);
-    background-color: var(--mainColorSecondary);
+    outline: 1px solid black;
+    background-color: white;
     color: var(--textColor);
-    /* placeholder text color */
+    border-radius: 10px;
+    color: black;
 }
 
 main textarea::placeholder {
-    color: var(--textColor);
+    color: black;
 }
 
 /* display the .controls button in a row */
@@ -38,18 +39,6 @@ main .controls>*+* {
 
 /* style the buttons to have opposing color and background values */
 main .controls button {
-    padding: 0.25rem 1rem;
-    color: var(--textColor);
-    background: var(--secondaryColor);
-    border: 2px solid var(--secondaryColor);
-    border-radius: 4px;
-    font-size: 1rem;
-    font-family: inherit;
-    outline-color: var(--mainColorSecondary);
+    
     cursor: pointer;
-}
-
-main .controls button:last-of-type {
-    color: var(--secondaryColor);
-    background: hsl(0, 0%, 100%);
 }

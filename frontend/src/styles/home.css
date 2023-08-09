@@ -8,7 +8,7 @@
 
 main[class="input"] {
     width: 35%;
-    margin-top: var(--paddingGeneral);
+    margin-top: 25px;
 }
 
 .home h1 {

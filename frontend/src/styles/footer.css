@@ -1,7 +1,7 @@
 .footer-basic {
     padding: 40px 0;
     background-color: var(--mainColor);
-    color: var(--textColor);
+    color: var(--logo-background);
 }
 
 .footer-basic ul {
@@ -57,7 +57,7 @@
     border-radius: 50%;
     border: 1px solid #ccc;
     margin: 0 8px;
-    color: inherit;
+    color: var(--logo-background);
     opacity: var(--opacityForText);
 }
 

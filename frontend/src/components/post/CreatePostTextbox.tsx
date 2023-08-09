@@ -12,9 +12,13 @@ export const CreatePostTextbox = () => {
     return (
         <main className="input">
             <form onSubmit={addPost} autoComplete="off">
-                <textarea value={content} onChange={(e) => setContent(e.target.value)} className="form-control" rows={5} placeholder="What do you meow?"></textarea>
+                <textarea value={content} onChange={(e) => setContent(e.target.value)} className="form-control" rows={2} placeholder="What do you meow?"></textarea>
                 <div className="controls">
-                    <button type="submit" className="btn btn-secondary" style={{ float: "right" }}>Share</button>
+                    <button type="submit" className="js-form-btn" >
+                        <p>
+                            Share
+                        </p>
+                    </button>
                 </div>
             </form>
         </main>
