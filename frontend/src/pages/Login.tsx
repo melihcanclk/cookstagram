@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/login.css'
 import { useForm } from 'react-hook-form';
 import { useSession } from '../hooks/useCookie';
+import { handleFocus } from '../utils/handleFocus';
+import { LeftArrow } from '../components/svg/LeftArrow';
 
 type Response = {
     message: string,
@@ -11,6 +13,8 @@ type Response = {
 }
 
 type UserType = {
+    name: string,
+    surname: string,
     username: string,
     email: string,
     picture: {
@@ -28,9 +32,7 @@ export const Login = () => {
     const [error, setError] = useState(false);
     const [session] = useSession();
 
-    const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
-        e.target.value = '';
-    }
+
 
     const onSubmit = (data: any) => {
         // post data to backend
@@ -54,6 +56,8 @@ export const Login = () => {
             // save user in cookie
             document.cookie = `user=${JSON.stringify(
                 {
+                    name: data.user.name,
+                    surname: data.user.surname,
                     username: data.user.username,
                     email: data.user.email,
                     picture: data.user.picture.fileName,
@@ -69,12 +73,9 @@ export const Login = () => {
 
     }
 
-    if (session) {
-        navigate('/');
-    }
-
     return (
         <div className="container">
+
             <div className="container-msg-modal">
                 <div className="container-modal-content--success container-modal-content">
                     <span>Welcome!</span>
@@ -87,6 +88,7 @@ export const Login = () => {
             }
                 id='form'
             >
+
                 <div className="container-form-userName container-form-input">
                     <label htmlFor="username">Username</label>
                     <input
@@ -103,11 +105,31 @@ export const Login = () => {
                         {...register("password", { required: true })}
                     />
                 </div>
-                <button type="submit" className="js-form-btn">Submit</button>
+                <div className='button-container'>
+                    <button type="button" onClick={
+                        () => {
+                            navigate('/register');
+                        }
+                    } className="js-form-btn">Register</button>
+
+                    <button type="submit" className="js-form-btn">Submit</button>
+                </div>
                 {
                     error && <span className="error-msg">Invalid username or password</span>
                 }
+
+                <div className="info-msg-container">
+                    {
+                        session && <span className="
+                        info-msg
+                    ">
+                            <a href="/"><LeftArrow height='24px' width='24px' /></a>
+                            You are already logged in</span>
+                    }
+                </div>
             </form>
+
+
         </div>
     );
 }

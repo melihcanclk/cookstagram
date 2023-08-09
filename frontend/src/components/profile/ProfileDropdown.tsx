@@ -20,6 +20,9 @@ const ProfileDropdown = () => {
 
     return (
         <div className="dropdown">
+            <div>
+                {user.name} {user.surname}
+            </div>
             <button onClick={handleOpenProfileDropdown} className="dropbtn">
                 <AvatarItem src={user.picture} />
             </button>
