@@ -63,7 +63,7 @@ nav {
 }
 
 .sign-button {
-    background-color: var(--mainColorSecondary);
+    background-color: inherit;
     color: var(--textColor);
     border: none;
     border-radius: 5px;

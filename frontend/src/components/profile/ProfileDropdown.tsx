@@ -2,6 +2,7 @@ import { SignButton } from "../button/Buttons";
 import "../../styles/profiledropdown.css"
 import AvatarItem from "./AvatarItem";
 import { getCookie } from "../../utils/getCookie";
+import { deleteCookie } from "../../utils/deleteCookie";
 
 export const handleOpenProfileDropdown = () => {
     const dropdown = document.querySelector(".dropdown-content") as HTMLElement;
@@ -13,19 +14,22 @@ const ProfileDropdown = () => {
     const user = JSON.parse(userString);
 
     const handleLogout = () => {
-        document.cookie = "session=;"
-        document.cookie = "user=;"
+        deleteCookie("session");
+        deleteCookie("user");
+        // redirect to login page
         window.location.href = '/login';
     }
 
     return (
         <div className="dropdown">
-            <div>
-                {user.name} {user.surname}
+            <div className="dropbtn-wrapper">
+                <p>
+                    {user.name} {user.surname}
+                </p>
+                <button onClick={handleOpenProfileDropdown} className="dropbtn">
+                    <AvatarItem src={user.picture} />
+                </button>
             </div>
-            <button onClick={handleOpenProfileDropdown} className="dropbtn">
-                <AvatarItem src={user.picture} />
-            </button>
             <div className="dropdown-content">
                 <SignButton text="Logout" onClick={handleLogout} />
             </div>
