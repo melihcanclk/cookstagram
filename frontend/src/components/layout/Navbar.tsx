@@ -137,7 +137,19 @@ export const Navbar = (props: NavbarProps) => {
                         >
                             {pages.map((page) => (
                                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">{page}</Typography>
+                                    <Typography
+                                        textAlign="center"
+                                        variant="h6"
+                                        component="a"
+                                        href={`/${page.toLowerCase()}`}
+                                        sx={{
+                                            color: 'inherit',
+                                            textDecoration: 'none',
+                                        }}
+                                    >
+                                        {page}
+                                    </Typography>
+
                                 </MenuItem>
                             ))}
                         </Menu>
@@ -180,7 +192,17 @@ export const Navbar = (props: NavbarProps) => {
                                 onClick={handleCloseNavMenu}
                                 sx={{ my: 2, color: 'white', display: 'block' }}
                             >
-                                {page}
+                                <Typography
+                                    variant="span"
+                                    component="a"
+                                    href={`/${page.toLowerCase()}`}
+                                    sx={{
+                                        color: 'inherit',
+                                        textDecoration: 'none',
+                                    }}
+                                >
+                                    {page}
+                                </Typography>
                             </Button>
                         ))}
                     </Box>

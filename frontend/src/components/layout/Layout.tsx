@@ -11,7 +11,7 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 export const Layout = ({ children }: LayoutProps) => {
-    const [themeMode, setThemeMode] = useState<'light' | 'dark'>();
+    const [themeMode, setThemeMode] = useState<'light' | 'dark'>('dark');
 
     const handleThemeChange = () => {
         // get current theme from local storage
@@ -31,7 +31,10 @@ export const Layout = ({ children }: LayoutProps) => {
     }
 
     useEffect(() => {
-        handleThemeChange();
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme) {
+            setThemeMode(currentTheme as 'light' | 'dark');
+        }
     }, []);
 
     const themeSelector = {

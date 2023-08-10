@@ -46,7 +46,6 @@ export const Footer = () => {
                 </ul> */}
                 <Typography
                     variant="body2"
-                    color="textSecondary"
                     align="center"
                     mt={2}
                 >

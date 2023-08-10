@@ -1,6 +1,7 @@
 
 import { Button } from '@mui/material';
 import { purple } from '../../styles/colors';
+import { Typography } from '@mui/material';
 
 export const PurpleButton = ({ variant, width, margin, text, onClick, ...overrides }: ButtonProps) => (
     <Button
@@ -14,6 +15,14 @@ export const PurpleButton = ({ variant, width, margin, text, onClick, ...overrid
         onClick={onClick}
         type='submit'
     >
-        {text}
+        <Typography
+            variant='button'
+            sx={{
+                color: 'white'
+            }}
+        >
+            {text}
+        </Typography>
+
     </Button>
 );
