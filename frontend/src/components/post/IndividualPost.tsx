@@ -5,8 +5,8 @@ import { makeStyles } from '@mui/styles'
 
 const useStyles = makeStyles({
     card: {
-        maxWidth: 345,
-        margin: '0 auto'
+        minWidth: 300,
+        margin: '0 10px 10px 10px'
     },
     media: {
         height: 140,
@@ -23,13 +23,13 @@ const useStyles = makeStyles({
 });
 
 export const IndividualPost = (props: IndividualPostProps) => {
-    const { post } = props;
+    const { post }: IndividualPostProps = props;
     const image = useImage(post.user?.picture);
     const classes = useStyles();
 
     return (
         <>
-            <Grid item xs={12} sm={6} md={4}>
+            <Grid item xs={12} sm={6} md={6}>
                 <Card className={classes.card}>
                     <CardActionArea>
                         <CardMedia
@@ -39,23 +39,22 @@ export const IndividualPost = (props: IndividualPostProps) => {
                         />
                         <CardContent>
                             <Typography gutterBottom variant="h5" component="h2">
-                                React useContext
+                                {post.title}
                             </Typography>
                             <Typography variant="body2" color="textSecondary" component="p">
-                                Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-                                across all continents except Antarctica
+                                {post.content}
                             </Typography>
                         </CardContent>
                     </CardActionArea>
                     <CardActions className={classes.cardActions}>
                         <Box className={classes.author}>
-                            <Avatar src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" />
-                            <Box ml={2}>
+                            <Avatar src={image} />
+                            <Box ml={1}>
                                 <Typography variant="subtitle2" component="p">
-                                    Guy Clemons
+                                    {post.user?.username}
                                 </Typography>
                                 <Typography variant="subtitle2" color="textSecondary" component="p">
-                                    May 14, 2020
+                                    {new Date(post.createdAt).toDateString()}
                                 </Typography>
                             </Box>
                         </Box>

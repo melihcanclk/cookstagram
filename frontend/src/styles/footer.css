@@ -1,6 +1,5 @@
 .footer-basic {
-    padding: 40px 0;
-    background-color: var(--mainColor);
+    padding: 20px 0;
     color: var(--logo-background);
 }
 
@@ -36,7 +35,6 @@
     text-align: center;
     display: flex;
     justify-content: center;
-    padding-bottom: 25px;
 }
 
 .social-icon-container {
@@ -67,7 +65,6 @@
 }
 
 .footer-basic .copyright {
-    margin-top: 15px;
     text-align: center;
     font-size: 13px;
     color: #aaa;

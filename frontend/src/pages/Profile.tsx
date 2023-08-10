@@ -32,7 +32,7 @@ export const Profile = () => {
             <div className='home-container'>
                 <div className="home">
                     <h1>My Posts</h1>
-                    <Grid container spacing={2}>
+                    <Grid container spacing={1}>
                         {
                             posts &&
                             posts.map((post, key) => (

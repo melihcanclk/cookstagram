@@ -1,13 +1,12 @@
 import '../../styles/footer.css';
 import { socialMediaAccounts } from "../../assets/socialMediaAccounts";
+import { purple } from '../../styles/colors';
 
-
-
-const FooterItem = ({ href, text }: FooterItemProps) => {
-    return (
-        <li className="list-inline-item"><a href={href}>{text}</a></li>
-    );
-}
+// const FooterItem = ({ href, text }: FooterItemProps) => {
+//     return (
+//         <li className="list-inline-item"><a href={href}>{text}</a></li>
+//     );
+// }
 
 const SocialIcon = ({ href, children }: SocialIconProps) => {
     return (
@@ -23,8 +22,11 @@ export const Footer = () => {
 
     return (
         <footer>
-            <div className="footer-basic">
-
+            <div
+                style={{
+                    backgroundColor: purple[700]
+                }}
+            className="footer-basic">
                 <div className="social">
                     {
                         socialMediaAccounts.map((account) => (
@@ -34,13 +36,13 @@ export const Footer = () => {
                         ))
                     }
                 </div>
-                <ul className="list-inline">
+                {/* <ul className="list-inline">
                     <FooterItem href="#" text="Home" />
                     <FooterItem href="#" text="Services" />
                     <FooterItem href="#" text="About" />
                     <FooterItem href="#" text="Terms" />
                     <FooterItem href="#" text="Privacy Policy" />
-                </ul>
+                </ul> */}
                 <p className="copyright">Melihcan Çilek - Cookstagram © 2023</p>
             </div>
         </footer>
