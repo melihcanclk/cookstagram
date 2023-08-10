@@ -6,10 +6,10 @@ import { postPayload } from "./postPayloads.js";
 export const createPost = async (req, res) => {
     const { title, content, username } = req.body;
 
-    if(!title || !content || !username){
+    if (!title || !content || !username) {
         return res.status(400).send({
             message: "Missing required fields",
-            field : !title ? "title" : !content ? "content" : "username",
+            field: !title ? "title" : !content ? "content" : "username",
         });
     }
 

@@ -12,6 +12,7 @@ export const PurpleButton = ({ variant, width, margin, text, onClick, ...overrid
             ...overrides
         }}
         onClick={onClick}
+        type='submit'
     >
         {text}
     </Button>

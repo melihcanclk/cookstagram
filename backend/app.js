@@ -1,8 +1,9 @@
 import { dbConnect } from './dbConnect.js';
 import express from 'express';
 import auth from "./auth.js";
+import bodyParser from 'body-parser';
 import { createPost, getPostByUser, getAllPosts, deletePost, getSinglePost, getPostsByUser } from './controllers/post/postController.js';
-
+import multer from 'multer';
 import dotenv from 'dotenv'
 import { upload } from './middleware/upload.js';
 import { loginUser, registerUser, getUser } from './controllers/user/userController.js';
@@ -11,8 +12,11 @@ dotenv.config()
 
 const app = express();
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+const bodyParserJson = bodyParser.json();
+const bodyParserUrlencoded = bodyParser.urlencoded({ extended: true });
+
+app.use(bodyParserJson);
+app.use(bodyParserUrlencoded);
 
 // this is for parsing multipart/form-data
 dbConnect();
@@ -35,7 +39,12 @@ app.use((req, res, next) => {
 app.post("/register", upload.single('picture'), registerUser)
 app.post("/login", loginUser);
 app.get("/users/:username", auth, getUser);
-app.post("/create-post", auth, createPost);
+// the reason we use multer().none() is because we are
+// not sending any files, we are just sending a json object
+// with the post data
+// if we were sending a file, we would use multer().single('picture')
+// or upload.single('picture')
+app.post("/create-post", auth, multer().none(), createPost);
 app.get("/posts", auth, getAllPosts);
 app.get("/posts/:id", auth, getPostByUser);
 app.get("/posts/user/:username", auth, getPostsByUser);

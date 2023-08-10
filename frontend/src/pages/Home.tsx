@@ -11,48 +11,39 @@ import { Grid } from '@mui/material';
 import { StyledTextarea } from '../styles/textarea';
 
 import { TextField } from '@mui/material';
-import { useSession } from '../hooks/useSession';
 import { getCookie } from '../utils/getCookie';
-import { json } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { FormFieldError } from '../components/error/FormFieldErrors';
 
 export const Home = () => {
     const [open, setOpen] = useState(false);
-    const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
 
+    const { register, handleSubmit, formState: { errors }, watch } = useForm();
 
     const handleClose = () => setOpen(false);
     const handleOpen = () => setOpen(true);
 
-    const handlePost = async () => {
+    const onSubmit = (data: any) => {
+        const formData = new FormData();
+        formData.append('title', data.title);
+        formData.append('content', data.content);
         const user = getCookie('user');
         const userJson = JSON.parse(user);
+        formData.append('username', userJson.username);
         const session = getCookie('session');
 
-        const headers = new Headers();
-        headers.append('authorization', `Bearer ${session}`);
-        headers.append('Content-Type', 'application/json');
-
-        try {
-            const res = await fetch("http://localhost:3000/create-post",
-                {
-                    method: 'POST',
-                    headers: headers,
-                    body: JSON.stringify(
-                        {
-                            title: title,
-                            content: content,
-                            username: userJson.username,
-                        }
-                    )
-                }
-            )
-
-            const data = await res.json();
-            console.log(data);
-        } catch (error) {
-            console.log(error);
-        }
+        fetch("http://localhost:3000/create-post",
+            {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${session}`
+                },
+                body: formData
+            }
+        ).then(response => response.json())
+            .then(data => {
+                console.log(data)
+            })
 
     };
 
@@ -92,35 +83,41 @@ export const Home = () => {
                             </IconButton>
                         </Box>
                     </Box>
-                    <Grid container spacing={1}>
-                        <Grid item xs={12}  >
-                            <TextField
-                                key={1}
-                                defaultValue=""
-                                variant="outlined"
-                                fullWidth
-                                placeholder='Title'
-                                onChange={(e) => setTitle(e.target.value)}
-                            />
+                    <form onSubmit={handleSubmit(onSubmit)} encType='multipart/form-data'>
+                        <Grid container spacing={1}>
+                            <Grid item xs={12}  >
+                                <TextField
+                                    key={1}
+                                    id='title'
+                                    defaultValue=""
+                                    variant="outlined"
+                                    fullWidth
+                                    placeholder='Title'
+                                    {...register("title", { required: true })}
+                                />
+                            </Grid>
+                            {FormFieldError({ errors, fieldname: 'title', placeholder: 'Title' })}
+                            <Grid item xs={12}>
+                                <StyledTextarea
+                                    id='content'
+                                    maxRows={4}
+                                    aria-label={"maximum height"}
+                                    placeholder={"Content"}
+                                    defaultValue={""}
+                                    {...register("content", { required: true })}
+                                />
+                            </Grid>
+                            {FormFieldError({ errors, fieldname: 'content', placeholder: 'Content' })}
+                            <Grid item xs={12}>
+                                <PurpleButton
+                                    variant='contained'
+                                    width='100%'
+                                    text='Create Post'
+                                    margin='10px 0px 10px 0px'
+                                />
+                            </Grid>
                         </Grid>
-                        <Grid item xs={12}>
-                            <StyledTextarea
-                                maxRows={4}
-                                aria-label={"maximum height"}
-                                placeholder={"Content"}
-                                onChange={(e) => { setContent(e.target.value) }}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <PurpleButton
-                                variant='contained'
-                                width='100%'
-                                text='Create Post'
-                                margin='10px 0px 10px 0px'
-                                onClick={handlePost}
-                            />
-                        </Grid>
-                    </Grid>
+                    </form>
                 </Box>
             </Modal>
 
