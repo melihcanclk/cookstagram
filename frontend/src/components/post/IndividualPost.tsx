@@ -1,11 +1,12 @@
 import { useImage } from "../../hooks/useImage";
 import { Grid, Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Box, Avatar } from "@mui/material"
-import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { IconButton } from "@mui/material";
 import { makeStyles } from '@mui/styles'
 
 const useStyles = makeStyles({
     card: {
-        minWidth: 300,
+        minWidth: 220,
         margin: '0 10px 10px 10px'
     },
     media: {
@@ -27,9 +28,13 @@ export const IndividualPost = (props: IndividualPostProps) => {
     const image = useImage(post.user?.picture);
     const classes = useStyles();
 
+    const handleDelete = () => {
+        console.log('delete')
+    }
+
     return (
         <>
-            <Grid item xs={12} sm={6} md={6}>
+            <Grid item xs={12} sm={6} md={3}>
                 <Card className={classes.card}>
                     <CardActionArea>
                         <CardMedia
@@ -59,7 +64,15 @@ export const IndividualPost = (props: IndividualPostProps) => {
                             </Box>
                         </Box>
                         <Box>
-                            <BookmarkBorderIcon />
+                            <IconButton onClick={handleDelete}>
+                                <DeleteIcon
+                                    sx={{
+                                        cursor: 'pointer',
+                                        color: 'red'
+                                    }}
+                                />
+                            </IconButton>
+
                         </Box>
                     </CardActions>
                 </Card>
