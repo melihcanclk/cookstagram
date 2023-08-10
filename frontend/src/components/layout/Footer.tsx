@@ -1,6 +1,7 @@
 import '../../styles/footer.css';
 import { socialMediaAccounts } from "../../assets/socialMediaAccounts";
 import { purple } from '../../styles/colors';
+import { Typography } from '@mui/material';
 
 // const FooterItem = ({ href, text }: FooterItemProps) => {
 //     return (
@@ -26,7 +27,7 @@ export const Footer = () => {
                 style={{
                     backgroundColor: purple[700]
                 }}
-            className="footer-basic">
+                className="footer-basic">
                 <div className="social">
                     {
                         socialMediaAccounts.map((account) => (
@@ -43,7 +44,15 @@ export const Footer = () => {
                     <FooterItem href="#" text="Terms" />
                     <FooterItem href="#" text="Privacy Policy" />
                 </ul> */}
-                <p className="copyright">Melihcan Çilek - Cookstagram © 2023</p>
+                <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    align="center"
+                    mt={2}
+                >
+                    Melihcan Çilek - Cookstagram © 2023
+                </Typography>
+
             </div>
         </footer>
     );

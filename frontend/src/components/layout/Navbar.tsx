@@ -11,15 +11,20 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 import Avatar from "@mui/material/Avatar";
 import { useNavigate } from "react-router-dom";
 import { useImage } from "../../hooks/useImage";
-import { useSession } from "../../hooks/useSession";
 import { deleteCookie } from "../../utils/deleteCookie";
 
+interface NavbarProps {
+    icon: React.ReactNode;
+    handleThemeChange: (current: React.Dispatch<React.SetStateAction<"light" | "dark">>) => void;
+}
 
-export const Navbar = () => {
+
+export const Navbar = (props: NavbarProps) => {
+    const { icon, handleThemeChange } = props;
+
     const session = getCookie('session');
     const navigate = useNavigate();
     const user = getCookie('user');
@@ -180,6 +185,9 @@ export const Navbar = () => {
                         ))}
                     </Box>
 
+                    <IconButton onClick={handleThemeChange} >
+                        {icon}
+                    </IconButton>
                     <Box sx={{ flexGrow: 0 }}>
                         {session ? (
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
