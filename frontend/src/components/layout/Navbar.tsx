@@ -75,7 +75,7 @@ export const Navbar = () => {
 
     return (
         <AppBar
-            position="static">
+            position="sticky">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <Typography

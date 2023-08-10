@@ -15,6 +15,30 @@ const theme = createTheme({
           backgroundColor: purple[700]
         }
       }
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          '& label.Mui-focused': {
+            color: 'white',
+          },
+          '& .MuiOutlinedInput-root': {
+            fontSize: '0.875rem',
+            borderRadius: '12px 12px 0px 12px',
+            '& fieldset': {
+              borderColor: purple[900],
+            },
+            '&:hover fieldset': {
+              borderColor: purple[700],
+            },
+            '&.Mui-focused fieldset': {
+              borderColor: purple[400],
+              boxShadow: '0 0 0 3px' + purple[200],
+              border: '1px solid' + purple[400],
+            },
+          },
+        },
+      }
     }
   }
 });

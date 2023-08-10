@@ -3,7 +3,7 @@ import { Layout } from '../components/layout/Layout'
 import { getCookie } from '../utils/getCookie';
 import { IndividualPost } from '../components/post/IndividualPost';
 
-import { Grid } from '@mui/material';
+import { Grid, Typography, Box } from '@mui/material';
 
 export const Profile = () => {
     const [posts, setPosts] = useState<IndividualPost[]>([]);
@@ -31,7 +31,17 @@ export const Profile = () => {
         <Layout>
             <div className='home-container'>
                 <div className="home">
-                    <h1>My Posts</h1>
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            my: 2
+                        }}
+                    >
+                        <Typography variant='h4' sx={{ fontWeight: 'bold' }}>Your Posts</Typography>
+
+                    </Box>
                     <Grid container spacing={1}>
                         {
                             posts &&

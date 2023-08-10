@@ -4,10 +4,24 @@ import mongoose from "mongoose";
 import { postPayload } from "./postPayloads.js";
 
 export const createPost = async (req, res) => {
-    const { title, content, author } = req.body;
+    const { title, content, username } = req.body;
+
+    if(!title || !content || !username){
+        return res.status(400).send({
+            message: "Missing required fields",
+            field : !title ? "title" : !content ? "content" : "username",
+        });
+    }
 
     let post;
     try {
+        const user = await User.findOne({ username: username });
+
+        if (!user) {
+            throw new Error("User not found");
+        }
+        const author = user._id;
+
         post = new Post({
             title: title,
             content: content,
@@ -32,7 +46,7 @@ export const createPost = async (req, res) => {
     }
 
     return res.status(201).send({
-        message: "Post was created successfully",
+        message: "Post created successfully",
         post: post,
     });
 };

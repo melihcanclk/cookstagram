@@ -36,9 +36,14 @@ interface IDropzoneProps {
     accept?: Accept;
 }
 
-interface SignButtonProps {
+interface ButtonProps {
     text: string;
+    onSubmit?: () => void;
     onClick?: () => void;
+    width?: string;
+    variant?: 'contained' | 'outlined' | 'text';
+    margin?: string;
+    
 }
 
 interface PasswordProps {
