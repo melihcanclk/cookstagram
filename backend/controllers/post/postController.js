@@ -4,10 +4,24 @@ import mongoose from "mongoose";
 import { postPayload } from "./postPayloads.js";
 
 export const createPost = async (req, res) => {
-    const { title, content, author } = req.body;
+    const { title, content, username } = req.body;
+
+    if (!title || !content || !username) {
+        return res.status(400).send({
+            message: "Missing required fields",
+            field: !title ? "title" : !content ? "content" : "username",
+        });
+    }
 
     let post;
     try {
+        const user = await User.findOne({ username: username });
+
+        if (!user) {
+            throw new Error("User not found");
+        }
+        const author = user._id;
+
         post = new Post({
             title: title,
             content: content,
@@ -32,41 +46,10 @@ export const createPost = async (req, res) => {
     }
 
     return res.status(201).send({
-        message: "Post was created successfully",
+        message: "Post created successfully",
         post: post,
     });
 };
-
-export const getPosts = async (req, res) => {
-    const { id } = req.params;
-    let user;
-    try {
-        user = await User.findOne(
-            { _id: id },
-        ).populate("posts");
-    } catch (e) {
-        return res.status(500).send({
-            message: e.message,
-        });
-    }
-
-    if (!user) {
-        return res.status(404).send({
-            message: "User not found",
-        });
-    }
-
-    const postsPayload = user.posts.map((post) => {
-        return {
-            post: postPayload(post),
-        }
-    });
-
-    return res.status(200).send({
-        message: "Posts were fetched successfully",
-        posts: postsPayload,
-    });
-}
 
 export const getSinglePost = async (req, res) => {
     const { id } = req.params;
@@ -101,6 +84,43 @@ export const getAllPosts = async (req, res) => {
     const postsPayload = posts.map((post) => {
         return {
             post: postPayload(post),
+        };
+    });
+
+    return res.status(200).send({
+        message: "Posts were fetched successfully",
+        posts: postsPayload,
+    });
+}
+
+export const getPostsByUser = async (req, res) => {
+    const { username } = req.params;
+    let posts;
+    let user;
+    try {
+        // get user id with username
+        user = await User.findOne({ username: username }).populate("posts");
+        if (!user) {
+            throw new Error("User not found")
+        }
+
+        posts = user.posts;
+
+    } catch (e) {
+        return res.status(500).send({
+            message: e.message,
+        });
+    }
+
+    const postsPayload = posts.map((post) => {
+        return {
+            ...postPayload(post),
+            user: {
+                name: user.name,
+                surname: user.surname,
+                username: user.username,
+                picture: user.picture,
+            },
         };
     });
 

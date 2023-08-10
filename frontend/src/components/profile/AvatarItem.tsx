@@ -1,14 +1,14 @@
+import { useImage } from '../../hooks/useImage';
 import '../../styles/avataritem.css'
 
-type AvatarItemProps = {
-    src: string,
-    alt?: string,
-}
 
 const AvatarItem = (props: AvatarItemProps) => {
     const { src } = props;
+
+    const image = useImage(src);
+    
     return (
-        <img src={`/uploads/${src}`} alt="Avatar" className="avatar" />
+        <img src={image} alt="Avatar" className="avatar" />
     )
 }
 

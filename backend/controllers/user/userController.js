@@ -7,7 +7,6 @@ import fs from "fs";
 
 export const registerUser = async (request, response) => {
     const { name, surname, username, email, password } = request.body;
-    const picture = request.file;
 
     let hashedPassword;
     let user;

@@ -1,0 +1,44 @@
+main>*+* {
+    margin-top: 1rem;
+}
+
+/* have the textarea expand to cover the width of the container, and a fixed height */
+main textarea {
+    display: block;
+    width: 100%;
+    height: 120px;
+    font-family: inherit;
+    resize: none;
+    font-size: 1rem;
+    padding: 0.5rem;
+    line-height: 1.5;
+    outline: 1px solid black;
+    background-color: white;
+    color: var(--textColor);
+    border-radius: 10px;
+    color: black;
+}
+
+main textarea::placeholder {
+    color: black;
+}
+
+/* display the .controls button in a row */
+main .controls {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top: 0.85rem;
+}
+
+/* separate the buttons horizontally */
+main .controls>*+* {
+    margin-left: 0.75rem;
+}
+
+/* style the buttons to have opposing color and background values */
+main .controls button {
+    
+    cursor: pointer;
+}

@@ -1,7 +1,6 @@
 .footer-basic {
-    padding: 40px 0;
-    background-color: var(--mainColor);
-    color: var(--textColor);
+    padding: 20px 0;
+    color: var(--logo-background);
 }
 
 .footer-basic ul {
@@ -36,7 +35,6 @@
     text-align: center;
     display: flex;
     justify-content: center;
-    padding-bottom: 25px;
 }
 
 .social-icon-container {
@@ -57,7 +55,7 @@
     border-radius: 50%;
     border: 1px solid #ccc;
     margin: 0 8px;
-    color: inherit;
+    color: var(--logo-background);
     opacity: var(--opacityForText);
 }
 
@@ -67,7 +65,6 @@
 }
 
 .footer-basic .copyright {
-    margin-top: 15px;
     text-align: center;
     font-size: 13px;
     color: #aaa;

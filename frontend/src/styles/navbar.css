@@ -4,7 +4,6 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 100px;
     width: 100%;
     background-color: var(--mainColor);
     color: var(--textColor);
@@ -23,6 +22,7 @@ nav a:hover {
 
 header a {
     height: inherit;
+    color: var(--logo-background);
 }
 
 .logo-wrapper {
@@ -56,13 +56,24 @@ header .nav-btn {
 header div,
 nav {
     display: flex;
+    color: var(--logo-background);
 }
+
 .sign-button-wrapper {
     align-items: center;
     justify-content: center;
 }
 
-.sign-button {
+.sign-button-wrapper p{
+    color: var(--logo-background);
+}
+
+.sign-button-wrapper:hover {
+    background-color: var(--secondaryColor);
+    transition: 0.5s;
+}
+
+.sign-button-wrapper {
     background-color: inherit;
     color: var(--textColor);
     border: none;
@@ -81,9 +92,6 @@ nav {
         display: flex;
         opacity: 1;
     }
-
-
-    
 
     header nav {
         position: fixed;

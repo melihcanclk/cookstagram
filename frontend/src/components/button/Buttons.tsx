@@ -1,12 +1,19 @@
-export interface SignButtonProps {
-    text: string;
-    onClick?: () => void;
-}
 
-export const SignButton = ({ text, onClick }: SignButtonProps) => (
-    <div className="sign-button-wrapper">
-        <button onClick={onClick} className="sign-button">
-            {text}
-        </button>
-    </div>
+import { Button } from '@mui/material';
+import { purple } from '../../styles/colors';
+
+export const PurpleButton = ({ variant, width, margin, text, onClick, ...overrides }: ButtonProps) => (
+    <Button
+        variant={variant}
+        style={{
+            width: width,
+            backgroundColor: purple[700],
+            margin: margin,
+            ...overrides
+        }}
+        onClick={onClick}
+        type='submit'
+    >
+        {text}
+    </Button>
 );

@@ -1,22 +1,3 @@
-import { FieldErrors, FieldValues } from 'react-hook-form'
-
-
-interface PasswordProps {
-    errors: FieldErrors<FieldValues>,
-    fieldname: string,
-    placeholder?: string,
-}
-
-interface RequiredFieldProps extends PasswordProps {
-}
-
-interface NumberProps extends PasswordProps {
-    min?: number,
-    validate?: boolean,
-}
-
-interface Props extends RequiredFieldProps, NumberProps { }
-
 export const FormFieldError = (props: Props) => {
     const { errors, fieldname, placeholder, min } = props;
     return (
