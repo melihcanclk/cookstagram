@@ -7,12 +7,12 @@ import fs from "fs";
 
 export const registerUser = async (request, response) => {
     const { name, surname, username, email, password } = request.body;
+    const picture = request.file;
 
     let hashedPassword;
     let user;
     try {
         hashedPassword = await bcrypt.hash(password, 10);
-        console.log({ hashedPassword })
         user = new User({
             name: name,
             surname: surname,
@@ -23,7 +23,6 @@ export const registerUser = async (request, response) => {
             createdAt: Date.now(),
         });
 
-        console.log({ user })
 
         await user.save();
     }
@@ -104,6 +103,40 @@ export const getUser = async (request, response) => {
 
     return response.status(200).send({
         message: "User found",
+        user: userPayload(user)
+    });
+};
+
+export const updateUser = async (request, response) => {
+    const { username } = request.params;
+
+    let user;
+    try {
+        user = await User.findOne({ username: username });
+        if (!user) {
+            throw new Error("User not found")
+        }
+
+        for (const key in request.body) {
+            if (request.body[key]) {
+                user[key] = request.body[key];
+            }
+        }
+
+        if (request.file) {
+            user.picture = request.file.filename;
+        }
+
+        await user.save();
+
+    } catch (e) {
+        return response.status(500).send({
+            message: e.message,
+        });
+    }
+
+    return response.status(200).send({
+        message: "User updated",
         user: userPayload(user)
     });
 };
