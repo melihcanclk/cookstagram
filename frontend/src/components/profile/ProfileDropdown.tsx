@@ -1,7 +1,7 @@
 import { getCookie } from "../../utils/getCookie";
 import { deleteCookie } from "../../utils/deleteCookie";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Box, Typography, IconButton, Avatar } from "@mui/material";
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -9,7 +9,7 @@ import Divider from '@mui/material/Divider';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
-import { getImage } from "../../utils/getImage";
+import { useImage } from "../../hooks/useImage";
 
 export const handleOpenProfileDropdown = () => {
     const dropdown = document.querySelector(".dropdown-content") as HTMLElement;
@@ -20,16 +20,7 @@ const ProfileDropdown = () => {
 
     const userString = getCookie("user");
     const user = JSON.parse(userString);
-    const [image, setImage] = useState<string>("");
-
-    useEffect(() => {
-        if (user) {
-            getImage({
-                setImageBase64: setImage,
-                user: user
-            })
-        }
-    }, [user])
+    const image = useImage(user.picture);
 
     const navigate = useNavigate();
 

@@ -1,4 +1,9 @@
 // #####TYPES#####
+type AvatarItemProps = {
+    src: string,
+    alt?: string,
+}
+
 type LeftArrowProps = {
     fill?: string,
     height?: string,
@@ -85,11 +90,8 @@ interface IndividualPost {
         name: string;
         surname: string;
         username: string;
-        picture: {
-            fileName: string;
-        }
-        email: string;
-    }
+        picture: string;
+    };
 }
 
 interface IndividualPostProps {
