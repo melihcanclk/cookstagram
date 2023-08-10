@@ -23,6 +23,7 @@ const Dropzone = (props: IDropzoneProps) => {
     const removeFile = () => {
         setFile(null);
     };
+    
     const thumbs = (file: any) => (
         <div className='thumb-container'>
             <button onClick={removeFile}>Remove File</button>
