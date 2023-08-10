@@ -17,7 +17,7 @@ export const StyledTextarea = styled(TextareaAutosize)(
     color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
     background: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};
     border: 1px solid ${purple[900]};
-    box-shadow: 0px 2px 2px ${theme.palette.mode === 'dark' ? purple[900] : purple[100]};
+    box-shadow: 0px 1px 1px ${theme.palette.mode === 'dark' ? purple[900] : purple[100]};
   
     &:hover {
       border-color: ${purple[400]};
@@ -25,6 +25,7 @@ export const StyledTextarea = styled(TextareaAutosize)(
   
     &:focus {
       border-color: ${purple[400]};
+      outline: none;
       box-shadow: 0 0 0 3px ${theme.palette.mode === 'dark' ? purple[500] : purple[200]};
     }
   `,
