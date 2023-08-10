@@ -22,6 +22,7 @@ export const Profile = () => {
 
             });
             const data = await res.json();
+            console.log(data.posts)
             setPosts(data.posts);
         }
         fetchPosts();

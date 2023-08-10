@@ -2,6 +2,7 @@ import { Post } from "../../db/postModel.js";
 import User from "../../db/userModel.js";
 import mongoose from "mongoose";
 import { postPayload } from "./postPayloads.js";
+import { userPayload } from "../user/userPayloads.js";
 
 export const createPost = async (req, res) => {
     const { title, content, username } = req.body;
@@ -115,12 +116,7 @@ export const getPostsByUser = async (req, res) => {
     const postsPayload = posts.map((post) => {
         return {
             ...postPayload(post),
-            user: {
-                name: user.name,
-                surname: user.surname,
-                username: user.username,
-                picture: user.picture,
-            },
+            user: userPayload(user),
         };
     });
 

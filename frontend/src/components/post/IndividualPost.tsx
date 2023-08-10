@@ -1,8 +1,9 @@
-import { useImage } from "../../hooks/useImage";
 import { Grid, Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Box, Avatar } from "@mui/material"
 import DeleteIcon from '@mui/icons-material/Delete';
 import { IconButton } from "@mui/material";
 import { makeStyles } from '@mui/styles'
+import { useEffect, useState } from "react";
+import { getImage } from "../../utils/getImage";
 
 const useStyles = makeStyles({
     card: {
@@ -25,7 +26,14 @@ const useStyles = makeStyles({
 
 export const IndividualPost = (props: IndividualPostProps) => {
     const { post }: IndividualPostProps = props;
-    const image = useImage(post.user?.picture);
+    const [image, setImage] = useState<any>(null);
+
+    useEffect(() => {
+        if (post) {
+            getImage({ setImageBase64: setImage, user: post.user })
+        }
+    }, [post])
+
     const classes = useStyles();
 
     const handleDelete = () => {
@@ -53,7 +61,9 @@ export const IndividualPost = (props: IndividualPostProps) => {
                     </CardActionArea>
                     <CardActions className={classes.cardActions}>
                         <Box className={classes.author}>
-                            <Avatar src={image} />
+                            <Avatar src={
+                                image
+                            } />
                             <Box ml={1}>
                                 <Typography variant="subtitle2" component="p">
                                     {post.user?.username}

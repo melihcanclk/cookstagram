@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../../styles/navbar.css";
 import { getCookie } from "../../utils/getCookie";
 import AppBar from "@mui/material/AppBar";
@@ -13,24 +13,29 @@ import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
 import { useNavigate } from "react-router-dom";
-import { useImage } from "../../hooks/useImage";
 import { deleteCookie } from "../../utils/deleteCookie";
+import { useUser } from "../../hooks/useUser";
+import { getImage } from "../../utils/getImage";
 
 interface NavbarProps {
     icon: React.ReactNode;
     handleThemeChange: (current: React.Dispatch<React.SetStateAction<"light" | "dark">>) => void;
 }
 
-
 export const Navbar = (props: NavbarProps) => {
     const { icon, handleThemeChange } = props;
 
     const session = getCookie('session');
     const navigate = useNavigate();
-    const user = getCookie('user');
-    const userJson = JSON.parse(user);
+    const [user] = useUser();
+    const [imageBase64, setImageBase64] = useState<string | undefined>(undefined);
 
-    const image = useImage(userJson?.picture);
+    useEffect(() => {
+        if (user) {
+            getImage({ setImageBase64, user });
+        }
+
+    }, [user])
 
     const handleLogout = () => {
         deleteCookie('session');
@@ -213,10 +218,20 @@ export const Navbar = (props: NavbarProps) => {
                     <Box sx={{ flexGrow: 0 }}>
                         {session ? (
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                {image ? (
-                                    <Avatar alt="user_picture" src={
-                                        image
-                                    } />
+                                {imageBase64 ? (
+                                    <Box
+                                        component="img"
+                                        sx={{
+                                            height: '50px',
+                                            width: '50px',
+                                            borderRadius: '50%',
+                                            objectFit: 'cover',
+                                            objectPosition: 'center',
+                                        }}
+                                        alt="avatar"
+                                        src={imageBase64}
+                                    />
+
                                 ) :
                                     (
                                         <Avatar alt="user_picture" src="/src/assets/_logo.png" />
