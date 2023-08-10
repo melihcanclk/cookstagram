@@ -10,10 +10,7 @@
 }
 
 #root {
-    display: flex;
-    align-items: center;
-    height: 100vh;
-    width: 100%;
+
     overflow-y: auto;
 }
 
@@ -28,6 +25,14 @@ body {
     height: 100vh;
     overflow: hidden;
     background-color: #EDE9EF
+}
+
+.container-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
 }
 
 .container {
