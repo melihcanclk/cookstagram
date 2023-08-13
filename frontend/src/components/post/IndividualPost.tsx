@@ -4,6 +4,7 @@ import { IconButton } from "@mui/material";
 import { makeStyles } from '@mui/styles'
 import { useEffect, useState } from "react";
 import { getImage } from "../../utils/getImage";
+import { useUser } from "../../hooks/useUser";
 
 const useStyles = makeStyles({
     card: {
@@ -25,12 +26,16 @@ const useStyles = makeStyles({
 });
 
 export const IndividualPost = (props: IndividualPostProps) => {
-    const { post }: IndividualPostProps = props;
+    const { post, user }: IndividualPostProps = props;
+    console.log({ user }, { post })
     const [image, setImage] = useState<any>(null);
 
     useEffect(() => {
         if (post) {
-            getImage({ setImageBase64: setImage, user: post.user })
+            // if post has property user by checking type guard
+            if ('user' in post) {
+                getImage({ setImageBase64: setImage, user: post.user })
+            }
         }
     }, [post])
 
@@ -66,24 +71,31 @@ export const IndividualPost = (props: IndividualPostProps) => {
                             } />
                             <Box ml={1}>
                                 <Typography variant="subtitle2" component="p">
-                                    {post.user?.username}
+                                    {
+                                        // if post has property user by checking type guard
+                                        'user' in post ? post.user.username : ''
+                                    }
                                 </Typography>
                                 <Typography variant="subtitle2" color="textSecondary" component="p">
                                     {new Date(post.createdAt).toDateString()}
                                 </Typography>
                             </Box>
                         </Box>
-                        <Box>
-                            <IconButton onClick={handleDelete}>
-                                <DeleteIcon
-                                    sx={{
-                                        cursor: 'pointer',
-                                        color: 'red'
-                                    }}
-                                />
-                            </IconButton>
+                        {
+                            user?.username === post.user.username && (
+                                <Box>
+                                    <IconButton onClick={handleDelete}>
+                                        <DeleteIcon
+                                            sx={{
+                                                cursor: 'pointer',
+                                                color: 'red'
+                                            }}
+                                        />
+                                    </IconButton>
 
-                        </Box>
+                                </Box>
+                            )
+                        }
                     </CardActions>
                 </Card>
             </Grid>

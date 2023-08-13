@@ -1,10 +1,4 @@
 
-import React from 'react';
-interface GetImageProps {
-    setImageBase64: React.Dispatch<React.SetStateAction<string>>;
-    user: UserType;
-}
-
 
 export const getImage = async ({ setImageBase64, user }: GetImageProps) => {
 

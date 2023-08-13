@@ -43,7 +43,7 @@ interface ButtonProps {
     width?: string;
     variant?: 'contained' | 'outlined' | 'text';
     margin?: string;
-    
+
 }
 
 interface PasswordProps {
@@ -86,15 +86,17 @@ interface IndividualPost {
     title: string;
     content: string;
     createdAt: string;
-    user: {
-        name: string;
-        surname: string;
-        username: string;
-        picture: string;
-    };
+    user: UserType;
 }
+
+interface GetImageProps {
+    setImageBase64: React.Dispatch<React.SetStateAction<string>>;
+    user: UserType;
+}
+
 
 interface IndividualPostProps {
     key: number;
     post: IndividualPost;
+    user: UserType | null;
 }

@@ -4,9 +4,11 @@ import { getCookie } from '../utils/getCookie';
 import { IndividualPost } from '../components/post/IndividualPost';
 
 import { Grid, Typography, Box } from '@mui/material';
+import { useUser } from '../hooks/useUser';
 
 export const Profile = () => {
     const [posts, setPosts] = useState<IndividualPost[]>([]);
+    const [user] = useUser();
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -46,7 +48,11 @@ export const Profile = () => {
                         {
                             posts &&
                             posts.map((post, key) => (
-                                <IndividualPost post={post} key={key} />
+                                <IndividualPost
+                                    post={post}
+                                    key={key}
+                                    user={user}
+                                />
                             ))
                         }
                     </Grid>

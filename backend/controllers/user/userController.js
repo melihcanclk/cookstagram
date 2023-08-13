@@ -2,8 +2,10 @@ import User from "../../db/userModel.js";
 import bcrypt from "bcrypt";
 import Jwt from "jsonwebtoken";
 import { userPayload } from "./userPayloads.js";
+import { postPayload } from "../post/postPayloads.js";
 import fs from "fs";
-
+import { Post } from "../../db/postModel.js";
+import { sortByDate } from "../../utils/sort.js";
 
 export const registerUser = async (request, response) => {
     const { name, surname, username, email, password } = request.body;
@@ -105,6 +107,55 @@ export const getUser = async (request, response) => {
         message: "User found",
         user: userPayload(user)
     });
+};
+
+// get posts of followed users
+export const getFeed = async (request, response) => {
+    const { username } = request.user;
+    try {
+        // get the user
+        const user = await User.findOne({ username: username });
+        if (!user) {
+            throw new Error("User not found")
+        }
+
+        const userPosts = await Post.find({ user: user._id }).populate("user");
+        const followingPosts = await Promise.all(
+            user.following.map((followingUser) => {
+                return Post.find({ user: followingUser._id }).populate("user");
+            })
+        );
+
+        const posts = [
+            ...userPosts,
+            ...followingPosts.flat()
+        ];
+
+        posts.sort(sortByDate);
+
+        const postPayloads = posts.map((post) => {
+            const userPayloadWithoutPosts = {
+                ...userPayload(post.user),
+                posts: undefined,
+            }
+            return {
+                ...postPayload(post),
+                user: userPayloadWithoutPosts,
+            };
+        });
+
+
+        return response.status(200).send({
+            message: "Posts were fetched successfully",
+            posts: postPayloads,
+        });
+
+    } catch (e) {
+        return response.status(500).send({
+            message: e.message,
+        });
+    }
+
 };
 
 export const updateUser = async (request, response) => {

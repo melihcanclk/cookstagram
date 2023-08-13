@@ -3,6 +3,7 @@ import User from "../../db/userModel.js";
 import mongoose from "mongoose";
 import { postPayload } from "./postPayloads.js";
 import { userPayload } from "../user/userPayloads.js";
+import { sortByDate } from "../../utils/sort.js";
 
 export const createPost = async (req, res) => {
     const { title, content, username } = req.body;
@@ -106,6 +107,8 @@ export const getPostsByUser = async (req, res) => {
         }
 
         posts = user.posts;
+
+        posts.sort(sortByDate);
 
     } catch (e) {
         return res.status(500).send({

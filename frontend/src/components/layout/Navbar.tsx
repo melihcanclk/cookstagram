@@ -27,7 +27,7 @@ export const Navbar = (props: NavbarProps) => {
 
     const session = getCookie('session');
     const navigate = useNavigate();
-    const [user] = useUser();
+    const [user] = useUser();   
     const [imageBase64, setImageBase64] = useState<string>("");
 
     useEffect(() => {

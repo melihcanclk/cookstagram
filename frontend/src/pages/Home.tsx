@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import { Layout } from '../components/layout/Layout'
 import '../styles/home.css'
 import { Box } from '@mui/material';
@@ -14,11 +14,16 @@ import { TextField } from '@mui/material';
 import { getCookie } from '../utils/getCookie';
 import { useForm } from 'react-hook-form';
 import { FormFieldError } from '../components/error/FormFieldErrors';
+import { IndividualPost } from '../components/post/IndividualPost';
+import { useGetFeed } from '../hooks/useGetFeed';
+import { useUser } from '../hooks/useUser';
 
 export const Home = () => {
     const [open, setOpen] = useState(false);
 
-    const { register, handleSubmit, formState: { errors }, watch } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const [feed] = useGetFeed();
+    const [user] = useUser();
 
     const handleClose = () => setOpen(false);
     const handleOpen = () => setOpen(true);
@@ -121,6 +126,18 @@ export const Home = () => {
                     </form>
                 </Box>
             </Modal>
+
+            <Box>
+                {feed?.map((post: IndividualPost, key: number) => {
+                    return (
+                        <IndividualPost
+                            key={key}
+                            post={post}
+                            user={user}
+                        />
+                    )
+                })}
+            </Box>
 
         </Layout>
     )
