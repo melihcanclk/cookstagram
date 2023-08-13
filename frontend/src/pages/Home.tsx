@@ -56,87 +56,96 @@ export const Home = () => {
     return (
         <Layout>
             <Box
+                component="div"
                 sx={{
-                    width: '50%',
+                    width: '75%',
                     margin: 'auto',
+                    my: 2
                 }}
             >
-                <PurpleButton
-                    variant='contained'
-                    width='100%'
-                    text='Create Post'
-                    margin='10px 0px 10px 0px'
-                    onClick={handleOpen}
-                />
-            </Box>
-
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={style}>
-                    <Box display="flex" alignItems="center" mb={2}>
-                        <Box flexGrow={1} >
-                            <Typography id="modal-modal-title" variant="h5" component="h2">
-                                Create Post
-                            </Typography>
-                        </Box>
-                        <Box>
-                            <IconButton onClick={handleClose}>
-                                <CloseIcon />
-                            </IconButton>
-                        </Box>
-                    </Box>
-                    <form onSubmit={handleSubmit(onSubmit)} encType='multipart/form-data'>
-                        <Grid container spacing={1}>
-                            <Grid item xs={12}  >
-                                <TextField
-                                    key={1}
-                                    id='title'
-                                    defaultValue=""
-                                    variant="outlined"
-                                    fullWidth
-                                    placeholder='Title'
-                                    {...register("title", { required: true })}
-                                />
-                            </Grid>
-                            {FormFieldError({ errors, fieldname: 'title', placeholder: 'Title' })}
-                            <Grid item xs={12}>
-                                <StyledTextarea
-                                    id='content'
-                                    maxRows={4}
-                                    aria-label={"maximum height"}
-                                    placeholder={"Content"}
-                                    defaultValue={""}
-                                    {...register("content", { required: true })}
-                                />
-                            </Grid>
-                            {FormFieldError({ errors, fieldname: 'content', placeholder: 'Content' })}
-                            <Grid item xs={12}>
-                                <PurpleButton
-                                    variant='contained'
-                                    width='100%'
-                                    text='Create Post'
-                                    margin='10px 0px 10px 0px'
-                                />
-                            </Grid>
-                        </Grid>
-                    </form>
+                <Box
+                    sx={{
+                        width: '50%',
+                        margin: 'auto',
+                    }}
+                >
+                    <PurpleButton
+                        variant='contained'
+                        width='100%'
+                        text='Create Post'
+                        margin='10px 0px 10px 0px'
+                        onClick={handleOpen}
+                    />
                 </Box>
-            </Modal>
 
-            <Box>
-                {feed?.map((post: IndividualPost, key: number) => {
-                    return (
-                        <IndividualPost
-                            key={key}
-                            post={post}
-                            user={user}
-                        />
-                    )
-                })}
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <Box sx={style}>
+                        <Box display="flex" alignItems="center" mb={2}>
+                            <Box flexGrow={1} >
+                                <Typography id="modal-modal-title" variant="h5" component="h2">
+                                    Create Post
+                                </Typography>
+                            </Box>
+                            <Box>
+                                <IconButton onClick={handleClose}>
+                                    <CloseIcon />
+                                </IconButton>
+                            </Box>
+                        </Box>
+                        <form onSubmit={handleSubmit(onSubmit)} encType='multipart/form-data'>
+                            <Grid container spacing={1}>
+                                <Grid item xs={12}  >
+                                    <TextField
+                                        key={1}
+                                        id='title'
+                                        defaultValue=""
+                                        variant="outlined"
+                                        fullWidth
+                                        placeholder='Title'
+                                        {...register("title", { required: true })}
+                                    />
+                                </Grid>
+                                {FormFieldError({ errors, fieldname: 'title', placeholder: 'Title' })}
+                                <Grid item xs={12}>
+                                    <StyledTextarea
+                                        id='content'
+                                        maxRows={4}
+                                        aria-label={"maximum height"}
+                                        placeholder={"Content"}
+                                        defaultValue={""}
+                                        {...register("content", { required: true })}
+                                    />
+                                </Grid>
+                                {FormFieldError({ errors, fieldname: 'content', placeholder: 'Content' })}
+                                <Grid item xs={12}>
+                                    <PurpleButton
+                                        variant='contained'
+                                        width='100%'
+                                        text='Create Post'
+                                        margin='10px 0px 10px 0px'
+                                    />
+                                </Grid>
+                            </Grid>
+                        </form>
+                    </Box>
+                </Modal>
+
+                <Box>
+                    {feed?.map((post: IndividualPost, key: number) => {
+                        return (
+                            <IndividualPost
+                                key={key}
+                                post={post}
+                                user={user}
+                            />
+                        )
+                    })}
+                </Box>
             </Box>
 
         </Layout>

@@ -4,7 +4,6 @@ import { IconButton } from "@mui/material";
 import { makeStyles } from '@mui/styles'
 import { useEffect, useState } from "react";
 import { getImage } from "../../utils/getImage";
-import { useUser } from "../../hooks/useUser";
 
 const useStyles = makeStyles({
     card: {
