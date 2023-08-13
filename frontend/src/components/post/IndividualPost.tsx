@@ -26,7 +26,6 @@ const useStyles = makeStyles({
 
 export const IndividualPost = (props: IndividualPostProps) => {
     const { post, user }: IndividualPostProps = props;
-    console.log({ user }, { post })
     const [image, setImage] = useState<any>(null);
 
     useEffect(() => {

@@ -16,7 +16,6 @@ export const useGetFeed = () => {
 
             })
             const data = await res.json()
-            console.log(data.posts)
             setFeed(data.posts)
         }
         getFeed()

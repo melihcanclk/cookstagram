@@ -2,6 +2,9 @@
 
 export const getImage = async ({ setImageBase64, user }: GetImageProps) => {
 
+    if (!user.picture || !user.picture.fileName) return;
+
+
     const res = await fetch(`http://localhost:3000/uploads/${user.picture.fileName}`, {
         method: 'GET',
         headers: {
