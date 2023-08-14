@@ -305,7 +305,6 @@ export const searchUsers = async (request, response) => {
         return userPayload(user);
     });
 
-    console.log(userPayloads);
     return response.status(200).send({
         message: "Users found",
         users: userPayloads
