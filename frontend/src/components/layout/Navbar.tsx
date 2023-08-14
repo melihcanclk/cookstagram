@@ -48,7 +48,7 @@ export const Navbar = (props: NavbarProps) => {
     const settings = [
         {
             name: 'Profile',
-            function: () => navigate('/profile'),
+            function: () => navigate('/profile/' + user?.username),
         },
         {
             name: 'Settings',

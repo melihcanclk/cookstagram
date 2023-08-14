@@ -4,18 +4,46 @@ import { getCookie } from '../utils/getCookie';
 import { IndividualPost } from '../components/post/IndividualPost';
 
 import { Grid, Typography, Box } from '@mui/material';
-import { useUser } from '../hooks/useUser';
+import { useParams } from 'react-router-dom';
+
+
+const getUser = async (username: string) => {
+    const session = getCookie('session');
+
+    const user = await fetch(`http://localhost:3000/users/${username}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${session}`
+        }
+    })
+
+    const userJson = await user.json();
+    return userJson.user as UserType;
+}
 
 export const Profile = () => {
+    const { username } = useParams();
+
+    const [user, setUser] = useState<UserType | null>(null);
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            if (username) {
+                const user = await getUser(username);
+                setUser(user);
+            }
+        }
+        fetchUser();
+    }, [username]);
+
+
     const [posts, setPosts] = useState<IndividualPost[]>([]);
-    const [user] = useUser();
 
     useEffect(() => {
         const fetchPosts = async () => {
-            const user = getCookie('user');
-            const userJson = JSON.parse(user);
             const session = getCookie('session');
-            const res = await fetch(`http://localhost:3000/posts/user/${userJson.username}`, {
+            const res = await fetch(`http://localhost:3000/posts/user/${user?.username}`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${session}`,
@@ -26,8 +54,8 @@ export const Profile = () => {
             const data = await res.json();
             setPosts(data.posts);
         }
-        fetchPosts();
-    }, []);
+        if (user) fetchPosts();
+    }, [user]);
 
     return (
         <Layout>
@@ -41,7 +69,7 @@ export const Profile = () => {
                             my: 2
                         }}
                     >
-                        <Typography variant='h4' sx={{ fontWeight: 'bold' }}>Your Posts</Typography>
+                        {/* <Typography variant='h4' sx={{ fontWeight: 'bold' }}>Your Posts</Typography> */}
 
                     </Box>
                     <Grid container spacing={1}>
@@ -51,7 +79,6 @@ export const Profile = () => {
                                 <IndividualPost
                                     post={post}
                                     key={key}
-                                    user={user}
                                 />
                             ))
                         }

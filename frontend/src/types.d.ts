@@ -98,24 +98,27 @@ interface GetImageProps {
 interface IndividualPostProps {
     key: number;
     post: IndividualPost;
-    user: UserType | null;
 }
 
 interface MainTextMatchedSubstrings {
-  offset: number;
-  length: number;
+    offset: number;
+    length: number;
 }
 interface StructuredFormatting {
-  main_text: string;
-  secondary_text: string;
-  main_text_matched_substrings?: readonly MainTextMatchedSubstrings[];
+    main_text: string;
+    secondary_text: string;
+    main_text_matched_substrings?: readonly MainTextMatchedSubstrings[];
 }
 interface PlaceType {
-  description: string;
-  structured_formatting: StructuredFormatting;
+    description: string;
+    structured_formatting: StructuredFormatting;
 }
 
 interface SearchBarOptionsType {
     label: string;
     value: string;
 }
+
+type ProfileProps = {
+    user?: UserType | null;
+} 

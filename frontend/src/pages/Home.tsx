@@ -141,7 +141,6 @@ export const Home = () => {
                             <IndividualPost
                                 key={key}
                                 post={post}
-                                user={user}
                             />
                         )
                     })}
