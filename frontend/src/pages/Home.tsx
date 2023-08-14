@@ -46,7 +46,23 @@ export const Home = () => {
             }
         ).then(response => response.json())
             .then(data => {
-                console.log(data);
+                // add data to feed
+                setFeed((prev) => {
+                    const dataPayload = {
+                        ...data.post,
+                        id: data.post._id,
+                        user: {
+                            username: data.user.username,
+                            name: data.user.name,
+                            surname: data.user.surname,
+                            picture: {
+                                ...data.user.picture
+                            }
+                        }
+                    }
+                    return [dataPayload, ...prev];
+                })
+
                 handleClose();
             })
 
@@ -136,6 +152,7 @@ export const Home = () => {
 
                 <Box>
                     {feed?.map((post: IndividualPost, key: number) => {
+                        console.log({ post })
                         return (
                             <IndividualPost
                                 key={key}
