@@ -5,17 +5,14 @@ import { NoMatch } from './pages/NoMatch';
 import { Register } from './pages/Register';
 import { Profile } from './pages/Profile';
 
-
-
 function App() {
-
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile/:username" element={<Profile />} />
         <Route path="*" element={<NoMatch />} />
       </Routes>
     </Router>

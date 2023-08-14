@@ -11,6 +11,10 @@ main[class="input"] {
     margin-top: 25px;
 }
 
+.home {
+    width: 75%;
+}
+
 .home h1 {
     display: flex;
     justify-content: center;

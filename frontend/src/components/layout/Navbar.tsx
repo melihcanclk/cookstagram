@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import "../../styles/navbar.css";
 import { getCookie } from "../../utils/getCookie";
 import AppBar from "@mui/material/AppBar";
@@ -16,6 +16,8 @@ import { useNavigate } from "react-router-dom";
 import { deleteCookie } from "../../utils/deleteCookie";
 import { useUser } from "../../hooks/useUser";
 import { getImage } from "../../utils/getImage";
+import { SearchBar } from "../SearchBar";
+import { Slide, useScrollTrigger } from "@mui/material";
 
 interface NavbarProps {
     icon: React.ReactNode;
@@ -47,7 +49,7 @@ export const Navbar = (props: NavbarProps) => {
     const settings = [
         {
             name: 'Profile',
-            function: () => navigate('/profile'),
+            function: () => navigate('/profile/' + user?.username),
         },
         {
             name: 'Settings',
@@ -85,7 +87,8 @@ export const Navbar = (props: NavbarProps) => {
 
     return (
         <AppBar
-            position="sticky">
+            position="sticky"
+        >
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <Typography
@@ -190,8 +193,8 @@ export const Navbar = (props: NavbarProps) => {
                         }}
                     >
                     </Typography>
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        {pages.map((page) => (
+                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: "flex-end" }}>
+                        {/* {pages.map((page) => (
                             <Button
                                 key={page}
                                 onClick={handleCloseNavMenu}
@@ -209,7 +212,9 @@ export const Navbar = (props: NavbarProps) => {
                                     {page}
                                 </Typography>
                             </Button>
-                        ))}
+                        ))} */}
+
+                        <SearchBar />
                     </Box>
 
                     <IconButton onClick={handleThemeChange} >

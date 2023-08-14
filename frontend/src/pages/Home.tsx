@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import { Layout } from '../components/layout/Layout'
 import '../styles/home.css'
 import { Box } from '@mui/material';
@@ -14,11 +14,15 @@ import { TextField } from '@mui/material';
 import { getCookie } from '../utils/getCookie';
 import { useForm } from 'react-hook-form';
 import { FormFieldError } from '../components/error/FormFieldErrors';
+import { IndividualPost } from '../components/post/IndividualPost';
+import { useGetFeed } from '../hooks/useGetFeed';
+import { handleDelete } from '../utils/handleDeletePost';
 
 export const Home = () => {
     const [open, setOpen] = useState(false);
 
-    const { register, handleSubmit, formState: { errors }, watch } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { feed, setFeed } = useGetFeed();
 
     const handleClose = () => setOpen(false);
     const handleOpen = () => setOpen(true);
@@ -42,7 +46,23 @@ export const Home = () => {
             }
         ).then(response => response.json())
             .then(data => {
-                console.log(data);
+                // add data to feed
+                setFeed((prev) => {
+                    const dataPayload = {
+                        ...data.post,
+                        id: data.post._id,
+                        user: {
+                            username: data.user.username,
+                            name: data.user.name,
+                            surname: data.user.surname,
+                            picture: {
+                                ...data.user.picture
+                            }
+                        }
+                    }
+                    return [dataPayload, ...prev];
+                })
+
                 handleClose();
             })
 
@@ -51,76 +71,100 @@ export const Home = () => {
     return (
         <Layout>
             <Box
+                component="div"
                 sx={{
-                    width: '50%',
+                    width: '75%',
                     margin: 'auto',
+                    my: 2
                 }}
             >
-                <PurpleButton
-                    variant='contained'
-                    width='100%'
-                    text='Create Post'
-                    margin='10px 0px 10px 0px'
-                    onClick={handleOpen}
-                />
-            </Box>
-
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={style}>
-                    <Box display="flex" alignItems="center" mb={2}>
-                        <Box flexGrow={1} >
-                            <Typography id="modal-modal-title" variant="h5" component="h2">
-                                Create Post
-                            </Typography>
-                        </Box>
-                        <Box>
-                            <IconButton onClick={handleClose}>
-                                <CloseIcon />
-                            </IconButton>
-                        </Box>
-                    </Box>
-                    <form onSubmit={handleSubmit(onSubmit)} encType='multipart/form-data'>
-                        <Grid container spacing={1}>
-                            <Grid item xs={12}  >
-                                <TextField
-                                    key={1}
-                                    id='title'
-                                    defaultValue=""
-                                    variant="outlined"
-                                    fullWidth
-                                    placeholder='Title'
-                                    {...register("title", { required: true })}
-                                />
-                            </Grid>
-                            {FormFieldError({ errors, fieldname: 'title', placeholder: 'Title' })}
-                            <Grid item xs={12}>
-                                <StyledTextarea
-                                    id='content'
-                                    maxRows={4}
-                                    aria-label={"maximum height"}
-                                    placeholder={"Content"}
-                                    defaultValue={""}
-                                    {...register("content", { required: true })}
-                                />
-                            </Grid>
-                            {FormFieldError({ errors, fieldname: 'content', placeholder: 'Content' })}
-                            <Grid item xs={12}>
-                                <PurpleButton
-                                    variant='contained'
-                                    width='100%'
-                                    text='Create Post'
-                                    margin='10px 0px 10px 0px'
-                                />
-                            </Grid>
-                        </Grid>
-                    </form>
+                <Box
+                    sx={{
+                        width: '50%',
+                        margin: 'auto',
+                    }}
+                >
+                    <PurpleButton
+                        variant='contained'
+                        width='100%'
+                        text='Create Post'
+                        margin='10px 0px 10px 0px'
+                        onClick={handleOpen}
+                    />
                 </Box>
-            </Modal>
+
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <Box sx={style}>
+                        <Box display="flex" alignItems="center" mb={2}>
+                            <Box flexGrow={1} >
+                                <Typography id="modal-modal-title" variant="h5" component="h2">
+                                    Create Post
+                                </Typography>
+                            </Box>
+                            <Box>
+                                <IconButton onClick={handleClose}>
+                                    <CloseIcon />
+                                </IconButton>
+                            </Box>
+                        </Box>
+                        <form onSubmit={handleSubmit(onSubmit)} encType='multipart/form-data'>
+                            <Grid container spacing={1}>
+                                <Grid item xs={12}  >
+                                    <TextField
+                                        key={1}
+                                        id='title'
+                                        defaultValue=""
+                                        variant="outlined"
+                                        fullWidth
+                                        placeholder='Title'
+                                        {...register("title", { required: true })}
+                                    />
+                                </Grid>
+                                {FormFieldError({ errors, fieldname: 'title', placeholder: 'Title' })}
+                                <Grid item xs={12}>
+                                    <StyledTextarea
+                                        id='content'
+                                        maxRows={4}
+                                        aria-label={"maximum height"}
+                                        placeholder={"Content"}
+                                        defaultValue={""}
+                                        {...register("content", { required: true })}
+                                    />
+                                </Grid>
+                                {FormFieldError({ errors, fieldname: 'content', placeholder: 'Content' })}
+                                <Grid item xs={12}>
+                                    <PurpleButton
+                                        variant='contained'
+                                        width='100%'
+                                        text='Create Post'
+                                        margin='10px 0px 10px 0px'
+                                    />
+                                </Grid>
+                            </Grid>
+                        </form>
+                    </Box>
+                </Modal>
+
+                <Box>
+                    {feed?.map((post: IndividualPost, key: number) => {
+                        console.log({ post })
+                        return (
+                            <IndividualPost
+                                key={key}
+                                post={post}
+                                handleDelete={() => {
+                                    handleDelete(post.id, setFeed)
+                                }}
+                            />
+                        )
+                    })}
+                </Box>
+            </Box>
 
         </Layout>
     )

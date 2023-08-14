@@ -43,7 +43,7 @@ interface ButtonProps {
     width?: string;
     variant?: 'contained' | 'outlined' | 'text';
     margin?: string;
-    
+
 }
 
 interface PasswordProps {
@@ -83,18 +83,44 @@ interface NavbarItemProps {
 }
 
 interface IndividualPost {
+    id: string;
     title: string;
     content: string;
     createdAt: string;
-    user: {
-        name: string;
-        surname: string;
-        username: string;
-        picture: string;
-    };
+    user: UserType;
 }
+
+interface GetImageProps {
+    setImageBase64: React.Dispatch<React.SetStateAction<string>>;
+    user: UserType;
+}
+
 
 interface IndividualPostProps {
     key: number;
     post: IndividualPost;
+    handleDelete: (id: string) => void;
 }
+
+interface MainTextMatchedSubstrings {
+    offset: number;
+    length: number;
+}
+interface StructuredFormatting {
+    main_text: string;
+    secondary_text: string;
+    main_text_matched_substrings?: readonly MainTextMatchedSubstrings[];
+}
+interface PlaceType {
+    description: string;
+    structured_formatting: StructuredFormatting;
+}
+
+interface SearchBarOptionsType {
+    label: string;
+    value: string;
+}
+
+type ProfileProps = {
+    user?: UserType | null;
+} 

@@ -39,7 +39,18 @@ let UserSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Post",
         required: false,
-    }]
+    }],
+    following: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: false,
+    }],
+    followers: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: false,
+    }],
+
 });
 
 

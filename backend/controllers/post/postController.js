@@ -3,6 +3,7 @@ import User from "../../db/userModel.js";
 import mongoose from "mongoose";
 import { postPayload } from "./postPayloads.js";
 import { userPayload } from "../user/userPayloads.js";
+import { sortByDate } from "../../utils/sort.js";
 
 export const createPost = async (req, res) => {
     const { title, content, username } = req.body;
@@ -15,25 +16,28 @@ export const createPost = async (req, res) => {
     }
 
     let post;
+    let user;
     try {
-        const user = await User.findOne({ username: username });
+        user = await User.findOne({ username: username });
 
         if (!user) {
             throw new Error("User not found");
         }
-        const author = user._id;
 
         post = new Post({
+            id: new mongoose.Types.ObjectId(),
             title: title,
             content: content,
             createdAt: Date.now(),
-            user: author,
+            user: user._id,
         });
+
+        console.log(post);
 
         const session = await mongoose.startSession();
         session.startTransaction();
         const postRes = await post.save();
-        const authorRes = await User.findOne({ _id: author });
+        const authorRes = await User.findOne({ username: user.username });
         authorRes.posts.push(postRes._id);
         await authorRes.save();
         await session.commitTransaction();
@@ -49,6 +53,7 @@ export const createPost = async (req, res) => {
     return res.status(201).send({
         message: "Post created successfully",
         post: post,
+        user: userPayload(user),
     });
 };
 
@@ -106,6 +111,8 @@ export const getPostsByUser = async (req, res) => {
         }
 
         posts = user.posts;
+
+        posts.sort(sortByDate);
 
     } catch (e) {
         return res.status(500).send({
