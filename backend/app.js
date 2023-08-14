@@ -6,7 +6,7 @@ import { createPost, getPostByUser, getAllPosts, deletePost, getSinglePost, getP
 import multer from 'multer';
 import dotenv from 'dotenv'
 import { upload } from './middleware/upload.js';
-import { loginUser, registerUser, getUser, getFeed, followUser } from './controllers/user/userController.js';
+import { loginUser, registerUser, getUser, getFeed, followUser, unfollowUser } from './controllers/user/userController.js';
 import { getImageByName } from './controllers/image/imageController.js';
 import { updateUser } from './controllers/user/userController.js';
 
@@ -52,6 +52,7 @@ app.put("/users/:username", auth, upload.single('picture'), updateUser);
 app.post("/create-post", auth, multer().none(), createPost);
 app.get("/feed", auth, getFeed);
 app.post("/follow/:username", auth, followUser);
+app.post("/unfollow/:username", auth, unfollowUser);
 app.get("/posts", auth, getAllPosts);
 app.get("/posts/:id", auth, getPostByUser);
 app.get("/posts/user/:username", auth, getPostsByUser);
