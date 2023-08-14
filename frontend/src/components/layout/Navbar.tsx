@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { deleteCookie } from "../../utils/deleteCookie";
 import { useUser } from "../../hooks/useUser";
 import { getImage } from "../../utils/getImage";
+import { SearchBar } from "../SearchBar";
 
 interface NavbarProps {
     icon: React.ReactNode;
@@ -27,7 +28,7 @@ export const Navbar = (props: NavbarProps) => {
 
     const session = getCookie('session');
     const navigate = useNavigate();
-    const [user] = useUser();   
+    const [user] = useUser();
     const [imageBase64, setImageBase64] = useState<string>("");
 
     useEffect(() => {
@@ -190,8 +191,8 @@ export const Navbar = (props: NavbarProps) => {
                         }}
                     >
                     </Typography>
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        {pages.map((page) => (
+                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: "flex-end" }}>
+                        {/* {pages.map((page) => (
                             <Button
                                 key={page}
                                 onClick={handleCloseNavMenu}
@@ -209,7 +210,9 @@ export const Navbar = (props: NavbarProps) => {
                                     {page}
                                 </Typography>
                             </Button>
-                        ))}
+                        ))} */}
+
+                        <SearchBar />
                     </Box>
 
                     <IconButton onClick={handleThemeChange} >

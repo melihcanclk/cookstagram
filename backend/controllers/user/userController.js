@@ -275,6 +275,43 @@ export const unfollowUser = async (request, response) => {
 
 };
 
+export const searchUsers = async (request, response) => {
+    const { username } = request.body;
+    let users;
+    try {
+        users = await User.find({
+            $or: [
+                { name: { $regex: username, $options: "i" } },
+                { surname: { $regex: username, $options: "i" } },
+                { username: { $regex: username, $options: "i" } },
+            ],
+        });
+
+        if (!users) {
+            // return empty array
+            return response.status(200).send({
+                message: "Users found",
+                users: []
+            });
+        }
+
+    } catch (e) {
+        return response.status(500).send({
+            message: e.message,
+        });
+    }
+
+    const userPayloads = users.map((user) => {
+        return userPayload(user);
+    });
+
+    console.log(userPayloads);
+    return response.status(200).send({
+        message: "Users found",
+        users: userPayloads
+    });
+};
+
 
 
 
