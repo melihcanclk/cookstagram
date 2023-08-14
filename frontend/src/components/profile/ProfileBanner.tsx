@@ -18,6 +18,16 @@ export const ProfileBanner = (props: ProfileBannerProps) => {
         console.log('options menu clicked');
     }
 
+    const handleFollow = () => {
+        // TODO: connect to backend
+        console.log('follow clicked');
+    }
+
+    const handleUnfollow = () => {
+        // TODO: connect to backend
+        console.log('unfollow clicked');
+    }
+
     useEffect(() => {
         const fetchImage = async () => {
             if (user) {
@@ -130,12 +140,23 @@ export const ProfileBanner = (props: ProfileBannerProps) => {
                                             </Button>
                                         </>
                                         :
-                                        <Button
-                                            variant='outlined'
-                                            onClick={() => console.log('follow clicked')}
-                                        >
-                                            Follow
-                                        </Button>
+                                        userLoggedIn.following.some((userIdObject: Followers) => (userIdObject.id === user?.id)) ?
+                                            <Button
+                                                variant='outlined'
+                                                onClick={handleUnfollow}
+                                            >
+                                                Unfollow
+
+                                            </Button>
+                                            :
+                                            <Button
+
+                                                variant='outlined'
+                                                onClick={handleFollow}
+                                            >
+                                                Follow
+                                            </Button>
+
 
                                 }
 

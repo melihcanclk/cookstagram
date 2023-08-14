@@ -27,7 +27,7 @@ const getUser = async (username: string) => {
 export const Profile = () => {
     const { username } = useParams();
 
-    const [user, setUser] = useState<UserType | null>(null);
+    const [user, setUser] = useState<UserType>();
 
 
     useEffect(() => {
@@ -74,7 +74,7 @@ export const Profile = () => {
                         }}
                     >
                         <ProfileBanner
-                            user={user}
+                            user={user!}
                             posts={posts}
                         />
 

@@ -16,7 +16,22 @@ type LoginResponse = {
     token: string,
 }
 
+
+interface Accept {
+    id: string;
+}
+
+
+interface Followers extends Accept {
+}
+
+interface Following extends Accept {
+}
+
+
+
 type UserType = {
+    id: string,
     name: string,
     surname: string,
     username: string,
@@ -26,8 +41,8 @@ type UserType = {
     },
     createdAt: string,
     token: string,
-    followers: UserType[],
-    following: UserType[],
+    followers: Followers[],
+    following: Following[],
     posts: IndividualPost[],
 }
 
@@ -129,6 +144,6 @@ type ProfileProps = {
 }
 
 type ProfileBannerProps = {
-    user: UserType | null;
+    user: UserType;
     posts: IndividualPost[];
 }
