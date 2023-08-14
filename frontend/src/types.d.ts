@@ -26,6 +26,9 @@ type UserType = {
     },
     createdAt: string,
     token: string,
+    followers: UserType[],
+    following: UserType[],
+    posts: IndividualPost[],
 }
 
 
@@ -123,4 +126,9 @@ interface SearchBarOptionsType {
 
 type ProfileProps = {
     user?: UserType | null;
-} 
+}
+
+type ProfileBannerProps = {
+    user: UserType | null;
+    posts: IndividualPost[];
+}

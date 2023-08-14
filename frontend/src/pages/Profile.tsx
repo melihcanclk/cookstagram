@@ -3,9 +3,10 @@ import { Layout } from '../components/layout/Layout'
 import { getCookie } from '../utils/getCookie';
 import { IndividualPost } from '../components/post/IndividualPost';
 
-import { Grid, Typography, Box } from '@mui/material';
+import { Grid, Box } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { handleDelete } from '../utils/handleDeletePost';
+import { ProfileBanner } from '../components/profile/ProfileBanner';
 
 
 const getUser = async (username: string) => {
@@ -28,6 +29,7 @@ export const Profile = () => {
 
     const [user, setUser] = useState<UserType | null>(null);
 
+
     useEffect(() => {
         const fetchUser = async () => {
             if (username) {
@@ -35,6 +37,7 @@ export const Profile = () => {
                 setUser(user);
             }
         }
+
         fetchUser();
     }, [username]);
 
@@ -70,7 +73,10 @@ export const Profile = () => {
                             my: 2
                         }}
                     >
-                        {/* <Typography variant='h4' sx={{ fontWeight: 'bold' }}>Your Posts</Typography> */}
+                        <ProfileBanner
+                            user={user}
+                            posts={posts}
+                        />
 
                     </Box>
                     <Grid container spacing={1}>

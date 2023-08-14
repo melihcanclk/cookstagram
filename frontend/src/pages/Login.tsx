@@ -41,6 +41,9 @@ export const Login = () => {
                     email: data.user.email,
                     picture: data.user.picture.fileName,
                     createdAt: data.user.createdAt,
+                    posts: data.user.posts,
+                    following: data.user.following,
+                    followers: data.user.followers,                    
                 }
             )}; path=/`;
             navigate('/');
