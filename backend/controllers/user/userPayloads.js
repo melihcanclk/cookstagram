@@ -12,6 +12,17 @@ export const userPayload = (user) => (
             return {
                 id: post._id,
             }
-        })
+        }),
+        followers: user.followers?.map((follower) => {
+            return {
+                id: follower._id,
+            }
+        }),
+        following: user.following?.map((following) => {
+            return {
+                id: following._id,
+            }
+        }),
+
     }
 )
