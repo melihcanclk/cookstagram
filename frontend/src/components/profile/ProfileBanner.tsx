@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Box, Typography, Button, Avatar, Card, CardContent, Divider, Hidden } from '@mui/material';
 import { GearIcon } from '../svg/GearIcon';
 import { getImage } from '../../utils/getImage';
@@ -157,16 +157,25 @@ export const ProfileBanner = (props: ProfileBannerProps) => {
                         >
                             <Typography
                                 fontSize={18}
+                                sx={{
+                                    textAlign: { xs: 'center', sm: 'left' }
+                                }}
                             >
                                 {posts.length} Posts
                             </Typography>
                             <Typography
                                 fontSize={18}
+                                sx={{
+                                    textAlign: { xs: 'center', sm: 'left' }
+                                }}
                             >
                                 {user?.followers?.length} Followers
                             </Typography>
                             <Typography
                                 fontSize={18}
+                                sx={{
+                                    textAlign: { xs: 'center', sm: 'left' }
+                                }}
                             >
                                 {user?.following?.length} Following
                             </Typography>
@@ -174,6 +183,6 @@ export const ProfileBanner = (props: ProfileBannerProps) => {
                     </CardContent>
                 </Card>
             </Hidden>
-        </div>
+        </div >
     )
 }
