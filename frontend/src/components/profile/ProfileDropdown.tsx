@@ -36,7 +36,7 @@ const ProfileDropdown = () => {
     }
 
     const handleProfile = () => {
-        navigate("/profile");
+        navigate("/profile/" + user.username);
     }
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);

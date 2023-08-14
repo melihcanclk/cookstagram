@@ -16,14 +16,13 @@ import { useForm } from 'react-hook-form';
 import { FormFieldError } from '../components/error/FormFieldErrors';
 import { IndividualPost } from '../components/post/IndividualPost';
 import { useGetFeed } from '../hooks/useGetFeed';
-import { useUser } from '../hooks/useUser';
+import { handleDelete } from '../utils/handleDeletePost';
 
 export const Home = () => {
     const [open, setOpen] = useState(false);
 
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const [feed] = useGetFeed();
-    const [user] = useUser();
+    const { feed, setFeed } = useGetFeed();
 
     const handleClose = () => setOpen(false);
     const handleOpen = () => setOpen(true);
@@ -47,7 +46,23 @@ export const Home = () => {
             }
         ).then(response => response.json())
             .then(data => {
-                console.log(data);
+                // add data to feed
+                setFeed((prev) => {
+                    const dataPayload = {
+                        ...data.post,
+                        id: data.post._id,
+                        user: {
+                            username: data.user.username,
+                            name: data.user.name,
+                            surname: data.user.surname,
+                            picture: {
+                                ...data.user.picture
+                            }
+                        }
+                    }
+                    return [dataPayload, ...prev];
+                })
+
                 handleClose();
             })
 
@@ -137,11 +152,14 @@ export const Home = () => {
 
                 <Box>
                     {feed?.map((post: IndividualPost, key: number) => {
+                        console.log({ post })
                         return (
                             <IndividualPost
                                 key={key}
                                 post={post}
-                                user={user}
+                                handleDelete={() => {
+                                    handleDelete(post.id, setFeed)
+                                }}
                             />
                         )
                     })}

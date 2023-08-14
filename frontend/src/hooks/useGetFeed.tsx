@@ -21,8 +21,12 @@ export const useGetFeed = () => {
         getFeed()
     }, [])
 
-    return [
+    return {
         // define as IndividualFeed[] to avoid undefined error
-        feed as IndividualPost[],
-    ]
+        feed,
+        setFeed
+    } as {
+        feed: IndividualPost[],
+        setFeed: React.Dispatch<React.SetStateAction<IndividualPost[]>>
+    }
 }

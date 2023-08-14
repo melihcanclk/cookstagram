@@ -4,6 +4,7 @@ import { IconButton } from "@mui/material";
 import { makeStyles } from '@mui/styles'
 import { useEffect, useState } from "react";
 import { getImage } from "../../utils/getImage";
+import { getCookie } from "../../utils/getCookie";
 
 const useStyles = makeStyles({
     card: {
@@ -25,8 +26,9 @@ const useStyles = makeStyles({
 });
 
 export const IndividualPost = (props: IndividualPostProps) => {
-    const { post, user }: IndividualPostProps = props;
+    const { post, handleDelete }: IndividualPostProps = props;
     const [image, setImage] = useState<any>(null);
+    const userLoggedIn = getCookie('user') ? JSON.parse(getCookie('user')).username : null;
 
     useEffect(() => {
         if (post) {
@@ -39,9 +41,7 @@ export const IndividualPost = (props: IndividualPostProps) => {
 
     const classes = useStyles();
 
-    const handleDelete = () => {
-        console.log('delete')
-    }
+
 
     return (
         <>
@@ -80,9 +80,11 @@ export const IndividualPost = (props: IndividualPostProps) => {
                             </Box>
                         </Box>
                         {
-                            user?.username === post.user.username && (
+                            userLoggedIn && userLoggedIn === post.user.username && (
                                 <Box>
-                                    <IconButton onClick={handleDelete}>
+                                    <IconButton onClick={
+                                        () => handleDelete(post.id)
+                                    }>
                                         <DeleteIcon
                                             sx={{
                                                 cursor: 'pointer',

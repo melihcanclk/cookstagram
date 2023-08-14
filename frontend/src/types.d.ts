@@ -83,6 +83,7 @@ interface NavbarItemProps {
 }
 
 interface IndividualPost {
+    id: string;
     title: string;
     content: string;
     createdAt: string;
@@ -98,5 +99,28 @@ interface GetImageProps {
 interface IndividualPostProps {
     key: number;
     post: IndividualPost;
-    user: UserType | null;
+    handleDelete: (id: string) => void;
 }
+
+interface MainTextMatchedSubstrings {
+    offset: number;
+    length: number;
+}
+interface StructuredFormatting {
+    main_text: string;
+    secondary_text: string;
+    main_text_matched_substrings?: readonly MainTextMatchedSubstrings[];
+}
+interface PlaceType {
+    description: string;
+    structured_formatting: StructuredFormatting;
+}
+
+interface SearchBarOptionsType {
+    label: string;
+    value: string;
+}
+
+type ProfileProps = {
+    user?: UserType | null;
+} 
