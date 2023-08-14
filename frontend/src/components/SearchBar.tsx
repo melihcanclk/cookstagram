@@ -92,7 +92,9 @@ export const SearchBar = () => {
                         }
                     }
                 }}
+                noOptionsText="No users found"
                 renderOption={(props, option) => {
+                   
                     return (
                         <li {...props}>
                             <div>
