@@ -5,6 +5,7 @@ import { IndividualPost } from '../components/post/IndividualPost';
 
 import { Grid, Typography, Box } from '@mui/material';
 import { useParams } from 'react-router-dom';
+import { handleDelete } from '../utils/handleDeletePost';
 
 
 const getUser = async (username: string) => {
@@ -79,6 +80,7 @@ export const Profile = () => {
                                 <IndividualPost
                                     post={post}
                                     key={key}
+                                    handleDelete={() => handleDelete(post.id, setPosts)}
                                 />
                             ))
                         }

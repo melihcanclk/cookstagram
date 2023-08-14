@@ -26,7 +26,7 @@ const useStyles = makeStyles({
 });
 
 export const IndividualPost = (props: IndividualPostProps) => {
-    const { post }: IndividualPostProps = props;
+    const { post, handleDelete }: IndividualPostProps = props;
     const [image, setImage] = useState<any>(null);
     const userLoggedIn = getCookie('user') ? JSON.parse(getCookie('user')).username : null;
 
@@ -41,9 +41,7 @@ export const IndividualPost = (props: IndividualPostProps) => {
 
     const classes = useStyles();
 
-    const handleDelete = () => {
-        console.log('delete')
-    }
+
 
     return (
         <>
@@ -84,7 +82,9 @@ export const IndividualPost = (props: IndividualPostProps) => {
                         {
                             userLoggedIn && userLoggedIn === post.user.username && (
                                 <Box>
-                                    <IconButton onClick={handleDelete}>
+                                    <IconButton onClick={
+                                        () => handleDelete(post.id)
+                                    }>
                                         <DeleteIcon
                                             sx={{
                                                 cursor: 'pointer',

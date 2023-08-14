@@ -16,14 +16,13 @@ import { useForm } from 'react-hook-form';
 import { FormFieldError } from '../components/error/FormFieldErrors';
 import { IndividualPost } from '../components/post/IndividualPost';
 import { useGetFeed } from '../hooks/useGetFeed';
-import { useUser } from '../hooks/useUser';
+import { handleDelete } from '../utils/handleDeletePost';
 
 export const Home = () => {
     const [open, setOpen] = useState(false);
 
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const [feed] = useGetFeed();
-    const [user] = useUser();
+    const { feed, setFeed } = useGetFeed();
 
     const handleClose = () => setOpen(false);
     const handleOpen = () => setOpen(true);
@@ -141,6 +140,9 @@ export const Home = () => {
                             <IndividualPost
                                 key={key}
                                 post={post}
+                                handleDelete={() => {
+                                    handleDelete(post.id, setFeed)
+                                }}
                             />
                         )
                     })}

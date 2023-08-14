@@ -83,6 +83,7 @@ interface NavbarItemProps {
 }
 
 interface IndividualPost {
+    id: string;
     title: string;
     content: string;
     createdAt: string;
@@ -98,6 +99,7 @@ interface GetImageProps {
 interface IndividualPostProps {
     key: number;
     post: IndividualPost;
+    handleDelete: (id: string) => void;
 }
 
 interface MainTextMatchedSubstrings {
