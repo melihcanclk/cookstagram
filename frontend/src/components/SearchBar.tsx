@@ -5,15 +5,11 @@ import { CircularProgress } from "@mui/material";
 import { getCookie } from "../utils/getCookie";
 import { useNavigate } from "react-router-dom";
 
-interface OptionsType {
-    label: string;
-    value: string;
-}
 
 export const SearchBar = () => {
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [options, setOptions] = useState<OptionsType[]>([]);
+    const [options, setOptions] = useState<SearchBarOptionsType[]>([]);
     const [value, setValue] = useState<string>('');
     const navigate = useNavigate();
 

@@ -114,3 +114,8 @@ interface PlaceType {
   description: string;
   structured_formatting: StructuredFormatting;
 }
+
+interface SearchBarOptionsType {
+    label: string;
+    value: string;
+}
