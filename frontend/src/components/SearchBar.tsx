@@ -1,9 +1,8 @@
-import { Autocomplete } from "@mui/material";
+import { Autocomplete, Typography } from "@mui/material";
 import { TextField } from "@mui/material";
 import { useState, useEffect } from "react";
 import { CircularProgress } from "@mui/material";
 import { getCookie } from "../utils/getCookie";
-import { useNavigate } from "react-router-dom";
 
 
 export const SearchBar = () => {
@@ -11,7 +10,6 @@ export const SearchBar = () => {
     const [loading, setLoading] = useState(false);
     const [options, setOptions] = useState<SearchBarOptionsType[]>([]);
     const [value, setValue] = useState<string>('');
-    const navigate = useNavigate();
 
     useEffect(() => {
         // get users with username
@@ -59,7 +57,7 @@ export const SearchBar = () => {
             <Autocomplete
                 id="asynchronous-demo"
                 sx={{
-                    width: '300px'
+                    minWidth: '200px',
                 }}
                 open={open}
                 onOpen={() => {
@@ -77,17 +75,46 @@ export const SearchBar = () => {
                         return option.value
                     })
                 }
+                clearText="Clear"
                 isOptionEqualToValue={(option, value) => option.value === value.value}
                 loading={loading}
                 getOptionLabel={(option) => option.label}
                 // when user selects an option
                 onChange={(event, value) => {
-                    // navigate to user profile
-                    if (value)
-                        navigate(`/profile/${value.value}`);
+                    if (value) {
+                        // if we are not on the profile page
+                        if (window.location.pathname !== `/profile/${value.value}`) {
+                            // navigate to the profile page
+                            window.location.href = `/profile/${value.value}`;
+                        } else {
+                            // reload the page
+                            window.location.reload();
+                        }
+                    }
+                }}
+                renderOption={(props, option) => {
+                    return (
+                        <li {...props}>
+                            <div>
+                                <Typography sx={{ fontSize: 14 }}>{option.label}</Typography>
+                                <Typography sx={{ fontSize: 12 }}>{option.value}</Typography>
+                            </div>
+                        </li>
+                    )
                 }}
 
-                renderInput={(params) => <TextField {...params} label="Search..." />}
+                renderInput={(params) => <TextField {...params} label="Search..."
+                    InputProps={{
+                        ...params.InputProps,
+                        endAdornment: (
+                            <>
+                                {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                                {params.InputProps.endAdornment}
+                            </>
+                        ),
+                    }}
+
+                />}
             />
 
         </div>

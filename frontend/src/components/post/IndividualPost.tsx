@@ -30,8 +30,6 @@ export const IndividualPost = (props: IndividualPostProps) => {
     const [image, setImage] = useState<any>(null);
     const userLoggedIn = getCookie('user') ? JSON.parse(getCookie('user')).username : null;
 
-    console.log(userLoggedIn)
-
     useEffect(() => {
         if (post) {
             // if post has property user by checking type guard
