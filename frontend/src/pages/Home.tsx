@@ -88,6 +88,7 @@ export const Home = () => {
                         width='100%'
                         text='Create Post'
                         margin='10px 0px 10px 0px'
+                        type='button'
                         onClick={handleOpen}
                     />
                 </Box>
@@ -142,6 +143,7 @@ export const Home = () => {
                                         width='100%'
                                         text='Create Post'
                                         margin='10px 0px 10px 0px'
+                                        type='submit'
                                     />
                                 </Grid>
                             </Grid>

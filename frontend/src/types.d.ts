@@ -59,6 +59,7 @@ interface ButtonProps {
     onSubmit?: () => void;
     onClick?: () => void;
     width?: string;
+    type?: 'submit' | 'button' | 'reset';
     variant?: 'contained' | 'outlined' | 'text';
     margin?: string;
 
