@@ -73,7 +73,6 @@ export const Home = () => {
             <Box
                 component="div"
                 sx={{
-                    width: '75%',
                     margin: 'auto',
                     my: 2
                 }}
