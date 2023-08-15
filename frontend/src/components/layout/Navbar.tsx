@@ -170,7 +170,6 @@ export const Navbar = (props: NavbarProps) => {
                             borderRadius: '50%',
                             objectFit: 'cover',
                             objectPosition: 'center',
-                            mr: 2,
                         }}
                         alt="avatar"
                         src="/src/assets/_logo.png"
@@ -192,27 +191,7 @@ export const Navbar = (props: NavbarProps) => {
                         }}
                     >
                     </Typography>
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: "flex-end" }}>
-                        {/* {pages.map((page) => (
-                            <Button
-                                key={page}
-                                onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: 'white', display: 'block' }}
-                            >
-                                <Typography
-                                    variant="span"
-                                    component="a"
-                                    href={`/${page.toLowerCase()}`}
-                                    sx={{
-                                        color: 'inherit',
-                                        textDecoration: 'none',
-                                    }}
-                                >
-                                    {page}
-                                </Typography>
-                            </Button>
-                        ))} */}
-
+                    <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: "flex-end" }}>
                         <SearchBar />
                     </Box>
 
