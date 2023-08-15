@@ -3,6 +3,7 @@ import { Layout } from '../../components/layout/Layout'
 import { Box, Button, Grid, TextField, } from '@mui/material'
 import { getUserLoggedIn } from '../../utils/getUserLoggedIn';
 import { PurpleButton } from '../../components/button/Buttons';
+import { getCookie } from '../../utils/getCookie';
 
 export const ProfileEdit = () => {
 
@@ -15,7 +16,38 @@ export const ProfileEdit = () => {
     const [passwordConfirm, setPasswordConfirm] = useState<string>('');
 
     const handleSubmit = () => {
-        console.log('submit')
+        const editUser = async () => {
+
+            const session = getCookie('session')
+            try {
+                if (password !== passwordConfirm) {
+                    throw new Error('Passwords do not match')
+                }
+            } catch (error) {
+                console.log(error)
+            }
+
+            if (session) {
+
+                const res = await fetch('http://localhost:3000/users/' + user?.username, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${session}`
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        surname: surname,
+                        username: username,
+                        email: email,
+                        password: password
+                    })
+                })
+                const data = await res.json()
+                console.log(data)
+            }
+        }
+        editUser()
     }
 
     const handleReset = () => {
@@ -26,7 +58,7 @@ export const ProfileEdit = () => {
         setPassword('')
         setPasswordConfirm('')
     }
-    
+
 
     useEffect(() => {
         getUserLoggedIn(setUser);
@@ -175,8 +207,9 @@ export const ProfileEdit = () => {
                             variant='contained'
                             width='75%'
                             text='Submit'
+                            type='submit'
                             margin='10px 0px 10px 0px'
-                            onClick={handleSubmit}
+                            onSubmit={handleSubmit}
                         />
                     </Box>
                 </Grid>
