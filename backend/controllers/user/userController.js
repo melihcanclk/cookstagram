@@ -175,13 +175,12 @@ export const followUser = async (request, response) => {
         if (!userToFollow) {
             throw new Error("User to follow not found")
         }
-
+        console.log({ userToFollow })
 
         // check if the user is already following the user
-        const isFollowing = user.following.find(async (followingUserId) => {
-            const followingUser = await User.findOne({ _id: followingUserId });
-            return followingUser.username === username;
-        });
+        const isFollowing = user.following.find((followingUserId) => {
+            return followingUserId.toString() === userToFollow._id.toString();
+        })
 
         if (isFollowing) {
             throw new Error("User is already following the user")
