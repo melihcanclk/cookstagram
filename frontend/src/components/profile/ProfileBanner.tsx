@@ -8,9 +8,30 @@ import { getCookie } from '../../utils/getCookie';
 
 
 export const ProfileBanner = (props: ProfileBannerProps) => {
-    const { user, posts }: ProfileBannerProps = props;
+    const { user, setUser, posts }: ProfileBannerProps = props;
+    console.log({ user })
 
-    const userLoggedIn: UserType = JSON.parse(getCookie('user'));
+    // get userLoggedIn from api
+    const [userLoggedIn, setUserLoggedIn] = useState<UserType | null>(null);
+    const userCookie = getCookie('user');
+    const fetchUserLoggedIn = async () => {
+        const session = getCookie('session');
+        const res = await fetch('http://localhost:3000/users/' + JSON.parse(userCookie).username, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${session}`
+            },
+        })
+        const data = await res.json();
+        setUserLoggedIn(data.user);
+    }
+
+
+    useEffect(() => {
+        fetchUserLoggedIn();
+    }, [userCookie]);
+
 
     const [image, setImage] = useState<string>('');
 
@@ -20,12 +41,45 @@ export const ProfileBanner = (props: ProfileBannerProps) => {
 
     const handleFollow = () => {
         // TODO: connect to backend
-        console.log('follow clicked');
+        const follow = async () => {
+            const session = getCookie('session');
+            const res = await fetch(`http://localhost:3000/follow/${user?.username}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${session}`
+                },
+            })
+            const data = await res.json();
+            //TODO: Followed popup
+            fetchUserLoggedIn();
+        }
+        if (user) {
+            follow();
+        }
+
     }
 
     const handleUnfollow = () => {
         // TODO: connect to backend
         console.log('unfollow clicked');
+        const unfollow = async () => {
+            const session = getCookie('session');
+            const res = await fetch(`http://localhost:3000/unfollow/${user?.username}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${session}`
+                },
+            })
+            const data = await res.json();
+            const users = data.users;
+            setUserLoggedIn(users);
+            console.log({ userLoggedIn })
+        }
+        if (user) {
+            unfollow();
+        }
     }
 
     useEffect(() => {
@@ -114,7 +168,7 @@ export const ProfileBanner = (props: ProfileBannerProps) => {
                                 }}
                             >
                                 {
-                                    userLoggedIn.username === user?.username ?
+                                    userLoggedIn && userLoggedIn !== undefined && userLoggedIn.username === user?.username ?
                                         <>
                                             <Button
                                                 variant='outlined'
@@ -140,7 +194,7 @@ export const ProfileBanner = (props: ProfileBannerProps) => {
                                             </Button>
                                         </>
                                         :
-                                        userLoggedIn.following.some((userIdObject: Followers) => (userIdObject.id === user?.id)) ?
+                                        userLoggedIn && userLoggedIn !== undefined && userLoggedIn.following.some((userIdObject: Followers) => (userIdObject.id === user?.id)) ?
                                             <Button
                                                 variant='outlined'
                                                 onClick={handleUnfollow}

@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Layout } from '../components/layout/Layout'
-import { getCookie } from '../utils/getCookie';
-import { IndividualPost } from '../components/post/IndividualPost';
+import { Layout } from '../../components/layout/Layout'
+import { getCookie } from '../../utils/getCookie';
+import { IndividualPost } from '../../components/post/IndividualPost';
 
 import { Grid, Box } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import { handleDelete } from '../utils/handleDeletePost';
-import { ProfileBanner } from '../components/profile/ProfileBanner';
+import { handleDelete } from '../../utils/handleDeletePost';
+import { ProfileBanner } from '../../components/profile/ProfileBanner';
 
 
 const getUser = async (username: string) => {
@@ -75,6 +75,7 @@ export const Profile = () => {
                     >
                         <ProfileBanner
                             user={user!}
+                            setUser={setUser}
                             posts={posts}
                         />
 
