@@ -14,7 +14,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile/:username" element={<Profile />} />
-        <Route path='/profile/:username/edit' element={<ProfileEdit />} />
+        <Route path='/profile/edit' element={<ProfileEdit />} />
         <Route path="*" element={<NoMatch />} />
       </Routes>
     </Router>

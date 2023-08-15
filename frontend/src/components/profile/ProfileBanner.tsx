@@ -176,7 +176,7 @@ export const ProfileBanner = (props: ProfileBannerProps) => {
                                                 }}
                                             >
                                                 <Link
-                                                    to={`/profile/${user?.username}/edit`}
+                                                    to={`/profile/edit`}
                                                     style={{
                                                         textDecoration: 'none',
                                                         color: 'inherit'
