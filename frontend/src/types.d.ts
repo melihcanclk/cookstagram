@@ -145,7 +145,7 @@ type ProfileProps = {
 
 type ProfileBannerProps = {
     user: UserType;
-    setUser: React.Dispatch<React.SetStateAction<UserType | undefined>>;
     posts: IndividualPost[];
 
 }
+

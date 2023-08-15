@@ -8,8 +8,7 @@ import { getCookie } from '../../utils/getCookie';
 
 
 export const ProfileBanner = (props: ProfileBannerProps) => {
-    const { user, setUser, posts }: ProfileBannerProps = props;
-    console.log({ user })
+    const { user, posts }: ProfileBannerProps = props;
 
     // get userLoggedIn from api
     const [userLoggedIn, setUserLoggedIn] = useState<UserType | null>(null);

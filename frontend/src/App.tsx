@@ -4,6 +4,7 @@ import { Login } from './pages/Login';
 import { NoMatch } from './pages/NoMatch';
 import { Register } from './pages/Register';
 import { Profile } from './pages/profile/Profile';
+import { ProfileEdit } from './pages/profile/ProfileEdit';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile/:username" element={<Profile />} />
+        <Route path='/profile/:username/edit' element={<ProfileEdit />} />
         <Route path="*" element={<NoMatch />} />
       </Routes>
     </Router>
