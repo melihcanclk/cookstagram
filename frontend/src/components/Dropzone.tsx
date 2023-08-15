@@ -1,9 +1,10 @@
 import { useDropzone } from 'react-dropzone';
 import '../styles/dropzone.css'
 import { useEffect } from 'react';
+import { Button } from '@mui/material';
 
 const Dropzone = (props: IDropzoneProps) => {
-    const { file, setFile } = props;
+    const { file, setFile, children } = props;
     const { getRootProps, getInputProps, open } = useDropzone({
         multiple: false,
         accept: {
@@ -23,7 +24,7 @@ const Dropzone = (props: IDropzoneProps) => {
     const removeFile = () => {
         setFile(null);
     };
-    
+
     const thumbs = (file: any) => (
         <div className='thumb-container'>
             <button onClick={removeFile}>Remove File</button>
@@ -53,15 +54,17 @@ const Dropzone = (props: IDropzoneProps) => {
                 {...getRootProps({ className: "dropzone" })}
                 onClick={(e) => e.stopPropagation}
             >
-                <input {...getInputProps()} />
-                <p>Drag 'n' drop some files here, or click to select files (only jpg, jpeg and png allowed)</p>
+                <Button type="button" onClick={open}>
+                    <input {...getInputProps()} />
+                    {
+                        children ? children :
+                            (<p>Drag 'n' drop some files here, or click to select files (only jpg, jpeg and png allowed)</p>)
+                    }
+
+                </Button>
                 <div className='dropzone-button-wrapper'>
                     {
-                        file ? thumbs(file) : (
-                            <button type="button" className={'js-form-btn'} onClick={open}>
-                                Choose File
-                            </button>
-                        )
+                        file && thumbs(file)
                     }
 
                 </div>

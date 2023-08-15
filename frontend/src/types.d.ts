@@ -51,7 +51,7 @@ type UserType = {
 interface IDropzoneProps {
     file: any;
     setFile: (file: any) => void;
-    accept?: Accept;
+    children?: React.ReactNode;
 }
 
 interface ButtonProps {
@@ -62,7 +62,7 @@ interface ButtonProps {
     type?: 'submit' | 'button' | 'reset';
     variant?: 'contained' | 'outlined' | 'text';
     margin?: string;
-
+    backgroundColor?: string;
 }
 
 interface PasswordProps {

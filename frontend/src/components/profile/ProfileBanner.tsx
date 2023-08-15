@@ -39,7 +39,6 @@ export const ProfileBanner = (props: ProfileBannerProps) => {
     }
 
     const handleFollow = () => {
-        // TODO: connect to backend
         const follow = async () => {
             const session = getCookie('session');
             const res = await fetch(`http://localhost:3000/follow/${user?.username}`, {
@@ -60,8 +59,6 @@ export const ProfileBanner = (props: ProfileBannerProps) => {
     }
 
     const handleUnfollow = () => {
-        // TODO: connect to backend
-        console.log('unfollow clicked');
         const unfollow = async () => {
             const session = getCookie('session');
             const res = await fetch(`http://localhost:3000/unfollow/${user?.username}`, {
@@ -74,7 +71,6 @@ export const ProfileBanner = (props: ProfileBannerProps) => {
             const data = await res.json();
             const users = data.users;
             setUserLoggedIn(users);
-            console.log({ userLoggedIn })
         }
         if (user) {
             unfollow();
