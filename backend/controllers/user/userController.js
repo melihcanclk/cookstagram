@@ -175,7 +175,6 @@ export const followUser = async (request, response) => {
         if (!userToFollow) {
             throw new Error("User to follow not found")
         }
-        console.log({ userToFollow })
 
         // check if the user is already following the user
         const isFollowing = user.following.find((followingUserId) => {
@@ -323,10 +322,33 @@ export const updateUser = async (request, response) => {
             throw new Error("User not found")
         }
 
+        if (request.body.password && request.body.password.length < 6) {
+            throw new Error("Password must be at least 6 characters long")
+        }
+
+        if (request.body.name && request.body.name.length < 2) {
+            throw new Error("Name must be at least 2 characters long")
+        }
+
+        if (request.body.surname && request.body.surname.length < 2) {
+            throw new Error("Surname must be at least 2 characters long")
+        }
+
+        // email verification with regex
+        if (request.body.email && !request.body.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+            throw new Error("Email is not valid")
+        }
+
         for (const key in request.body) {
             if (request.body[key]) {
                 user[key] = request.body[key];
             }
+        }
+
+        // if password is provided, hash it
+        if (request.body.password) {
+            const hashedPassword = await bcrypt.hash(request.body.password, 10);
+            user.password = hashedPassword;
         }
 
         if (request.file) {
