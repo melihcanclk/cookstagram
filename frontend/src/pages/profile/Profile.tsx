@@ -7,22 +7,9 @@ import { Grid, Box } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { handleDelete } from '../../utils/handleDeletePost';
 import { ProfileBanner } from '../../components/profile/ProfileBanner';
+import { getUser } from '../../utils/getUser';
 
 
-const getUser = async (username: string) => {
-    const session = getCookie('session');
-
-    const user = await fetch(`http://localhost:3000/users/${username}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${session}`
-        }
-    })
-
-    const userJson = await user.json();
-    return userJson.user as UserType;
-}
 
 export const Profile = () => {
     const { username } = useParams();
@@ -75,7 +62,6 @@ export const Profile = () => {
                     >
                         <ProfileBanner
                             user={user!}
-                            setUser={setUser}
                             posts={posts}
                         />
 
