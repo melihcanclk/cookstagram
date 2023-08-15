@@ -15,8 +15,8 @@ dotenv.config()
 const app = express();
 app.use(express.static('uploads'));
 
-const bodyParserJson = bodyParser.json();
-const bodyParserUrlencoded = bodyParser.urlencoded({ extended: true });
+const bodyParserJson = bodyParser.json({ limit: '50mb' });
+const bodyParserUrlencoded = bodyParser.urlencoded({ extended: true, limit: '50mb' });
 
 app.use(bodyParserJson);
 app.use(bodyParserUrlencoded);
