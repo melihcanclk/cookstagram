@@ -16,7 +16,22 @@ type LoginResponse = {
     token: string,
 }
 
+
+interface Accept {
+    id: string;
+}
+
+
+interface Followers extends Accept {
+}
+
+interface Following extends Accept {
+}
+
+
+
 type UserType = {
+    id: string,
     name: string,
     surname: string,
     username: string,
@@ -26,6 +41,9 @@ type UserType = {
     },
     createdAt: string,
     token: string,
+    followers: Followers[],
+    following: Following[],
+    posts: IndividualPost[],
 }
 
 
@@ -33,7 +51,7 @@ type UserType = {
 interface IDropzoneProps {
     file: any;
     setFile: (file: any) => void;
-    accept?: Accept;
+    children?: React.ReactNode;
 }
 
 interface ButtonProps {
@@ -41,9 +59,10 @@ interface ButtonProps {
     onSubmit?: () => void;
     onClick?: () => void;
     width?: string;
+    type?: 'submit' | 'button' | 'reset';
     variant?: 'contained' | 'outlined' | 'text';
     margin?: string;
-
+    backgroundColor?: string;
 }
 
 interface PasswordProps {
@@ -123,4 +142,11 @@ interface SearchBarOptionsType {
 
 type ProfileProps = {
     user?: UserType | null;
-} 
+}
+
+type ProfileBannerProps = {
+    user: UserType;
+    posts: IndividualPost[];
+
+}
+

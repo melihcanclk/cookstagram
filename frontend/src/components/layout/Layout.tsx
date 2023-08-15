@@ -50,7 +50,7 @@ export const Layout = ({ children }: LayoutProps) => {
             MuiAppBar: {
                 styleOverrides: {
                     colorPrimary: {
-                        backgroundColor: purple[700]
+                        backgroundColor: purple[800]
                     }
                 }
             },
@@ -75,6 +75,30 @@ export const Layout = ({ children }: LayoutProps) => {
                                 border: '1px solid' + purple[400],
                             },
                         },
+                    },
+                }
+            },
+            MuiAccordion: {
+                styleOverrides: {
+                    root: {
+                        '&.MuiAccordion-root': {
+                            background: 'transparent',
+                            
+
+                            '&.MuiPaper-elevation1': {
+                                boxShadow: 'none',
+                                border: '1px solid' + purple[900],
+                                borderRadius: '12px 12px 0px 12px',
+                                '&.Mui-expanded': {
+                                    margin: '0px',
+                                },
+                                ':hover': {
+                                    border: '1px solid' + purple[700],
+                                },
+                            }
+
+                        },
+                        
                     },
                 }
             }

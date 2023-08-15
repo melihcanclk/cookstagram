@@ -17,6 +17,7 @@ import { FormFieldError } from '../components/error/FormFieldErrors';
 import { IndividualPost } from '../components/post/IndividualPost';
 import { useGetFeed } from '../hooks/useGetFeed';
 import { handleDelete } from '../utils/handleDeletePost';
+import { purple } from '../styles/colors';
 
 export const Home = () => {
     const [open, setOpen] = useState(false);
@@ -73,7 +74,6 @@ export const Home = () => {
             <Box
                 component="div"
                 sx={{
-                    width: '75%',
                     margin: 'auto',
                     my: 2
                 }}
@@ -89,7 +89,9 @@ export const Home = () => {
                         width='100%'
                         text='Create Post'
                         margin='10px 0px 10px 0px'
+                        type='button'
                         onClick={handleOpen}
+                        backgroundColor={purple[800]}
                     />
                 </Box>
 
@@ -143,7 +145,8 @@ export const Home = () => {
                                         width='100%'
                                         text='Create Post'
                                         margin='10px 0px 10px 0px'
-                                    />
+                                        type='submit'
+                                        backgroundColor={purple[700]} />
                                 </Grid>
                             </Grid>
                         </form>
@@ -152,7 +155,6 @@ export const Home = () => {
 
                 <Box>
                     {feed?.map((post: IndividualPost, key: number) => {
-                        console.log({ post })
                         return (
                             <IndividualPost
                                 key={key}

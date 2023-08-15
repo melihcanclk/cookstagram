@@ -25,7 +25,7 @@ export const Footer = () => {
         <footer>
             <div
                 style={{
-                    backgroundColor: purple[700]
+                    backgroundColor: purple[800]
                 }}
                 className="footer-basic">
                 <div className="social">

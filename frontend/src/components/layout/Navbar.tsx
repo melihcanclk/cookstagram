@@ -17,7 +17,6 @@ import { deleteCookie } from "../../utils/deleteCookie";
 import { useUser } from "../../hooks/useUser";
 import { getImage } from "../../utils/getImage";
 import { SearchBar } from "../SearchBar";
-import { Slide, useScrollTrigger } from "@mui/material";
 
 interface NavbarProps {
     icon: React.ReactNode;
@@ -29,7 +28,7 @@ export const Navbar = (props: NavbarProps) => {
 
     const session = getCookie('session');
     const navigate = useNavigate();
-    const [user] = useUser();
+    const { user } = useUser();
     const [imageBase64, setImageBase64] = useState<string>("");
 
     useEffect(() => {
@@ -217,7 +216,9 @@ export const Navbar = (props: NavbarProps) => {
                         <SearchBar />
                     </Box>
 
-                    <IconButton onClick={handleThemeChange} >
+                    <IconButton onClick={
+                        () => handleThemeChange((current) => current === 'light' ? 'dark' : 'light')
+                    } >
                         {icon}
                     </IconButton>
                     <Box sx={{ flexGrow: 0 }}>

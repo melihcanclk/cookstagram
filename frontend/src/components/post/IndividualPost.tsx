@@ -8,7 +8,7 @@ import { getCookie } from "../../utils/getCookie";
 
 const useStyles = makeStyles({
     card: {
-        minWidth: 220,
+        minWidth: 150,
         margin: '0 10px 10px 10px'
     },
     media: {
@@ -45,7 +45,7 @@ export const IndividualPost = (props: IndividualPostProps) => {
 
     return (
         <>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid item xs={12} sm={6} md={4}>
                 <Card className={classes.card}>
                     <CardActionArea>
                         <CardMedia

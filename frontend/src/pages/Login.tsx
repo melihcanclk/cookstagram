@@ -35,12 +35,16 @@ export const Login = () => {
             // save user in cookie
             document.cookie = `user=${JSON.stringify(
                 {
+                    id: data.user.id,
                     name: data.user.name,
                     surname: data.user.surname,
                     username: data.user.username,
                     email: data.user.email,
                     picture: data.user.picture.fileName,
                     createdAt: data.user.createdAt,
+                    posts: data.user.posts,
+                    following: data.user.following,
+                    followers: data.user.followers,                    
                 }
             )}; path=/`;
             navigate('/');

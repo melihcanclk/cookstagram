@@ -32,8 +32,6 @@ export const createPost = async (req, res) => {
             user: user._id,
         });
 
-        console.log(post);
-
         const session = await mongoose.startSession();
         session.startTransaction();
         const postRes = await post.save();
