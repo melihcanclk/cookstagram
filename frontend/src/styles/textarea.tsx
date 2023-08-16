@@ -15,7 +15,7 @@ export const StyledTextarea = styled(TextareaAutosize)(
     padding: 12px;
     border-radius: 12px 12px 0 12px;
     color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
-    background: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};
+    background: ${theme.palette.mode === 'dark' ? 'transparent' : '#fff'};
     border: 1px solid ${purple[900]};
     box-shadow: 0px 1px 1px ${theme.palette.mode === 'dark' ? purple[900] : purple[100]};
   
