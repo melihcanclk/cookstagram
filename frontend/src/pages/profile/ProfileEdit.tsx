@@ -276,7 +276,6 @@ export const ProfileEdit = () => {
                                 margin='10px 0px 10px 0px'
                                 onClick={handleReset}
                                 backgroundColor={purple[800]}
-
                             />
                             <PurpleButton
                                 variant='contained'

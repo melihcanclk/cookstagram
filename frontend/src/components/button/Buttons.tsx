@@ -1,8 +1,7 @@
 
-import { Button } from '@mui/material';
-import { Typography } from '@mui/material';
+import { Box, Button } from '@mui/material';
 
-export const PurpleButton = ({ variant, width, margin, text, type, backgroundColor, ...overrides }: ButtonProps) => (
+export const PurpleButton = ({ variant, width, margin, text, color, type, backgroundColor, ...overrides }: ButtonProps) => (
     <Button
         variant={variant}
         style={{
@@ -13,14 +12,13 @@ export const PurpleButton = ({ variant, width, margin, text, type, backgroundCol
         {...overrides}
         type={type}
     >
-        <Typography
-            variant='button'
+        <Box
             sx={{
-                color: 'white'
+                color: color || 'white',
             }}
         >
             {text}
-        </Typography>
+        </Box>
 
     </Button>
 );

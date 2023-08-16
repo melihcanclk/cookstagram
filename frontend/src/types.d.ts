@@ -63,6 +63,7 @@ interface ButtonProps {
     variant?: 'contained' | 'outlined' | 'text';
     margin?: string;
     backgroundColor?: string;
+    color?: string;
 }
 
 interface PasswordProps {

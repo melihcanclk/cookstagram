@@ -47,12 +47,13 @@ const SocialIcon = ({ href, children }: SocialIconProps) => {
 }
 
 export const Footer = () => {
+    const themeColor = localStorage.getItem('theme');
 
     return (
         <footer>
             <Box
                 sx={{
-                    backgroundColor: purple[800],
+                    backgroundColor: themeColor === 'light' ? purple[300] : purple[800],
                     p: 2,
                 }}
 

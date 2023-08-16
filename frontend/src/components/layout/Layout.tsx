@@ -50,7 +50,7 @@ export const Layout = ({ children }: LayoutProps) => {
             MuiAppBar: {
                 styleOverrides: {
                     colorPrimary: {
-                        backgroundColor: purple[800]
+                        backgroundColor: themeMode === 'light' ? purple[300] : purple[800],
                     }
                 }
             },
