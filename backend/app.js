@@ -50,7 +50,7 @@ app.post("/search/users", auth, searchUsers)
 // with the post data
 // if we were sending a file, we would use multer().single('picture')
 // or upload.single('picture')
-app.post("/create-post", auth, multer().none(), createPost);
+app.post("/create-post", auth, upload.single('picture'), createPost);
 app.get("/feed", auth, getFeed);
 app.post("/follow/:username", auth, followUser);
 app.post("/unfollow/:username", auth, unfollowUser);

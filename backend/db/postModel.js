@@ -1,14 +1,58 @@
 import mongoose from "mongoose";
 
+const IngredientsSchema = mongoose.Schema({
+    name: {
+        type: String,
+        required: [true, "Please provide a name"],
+        unique: false
+    },
+    quantity: {
+        type: Number,
+        required: [true, "Please provide a quantity"],
+        unique: false
+    },
+    unit: {
+        type: String,
+        required: [true, "Please provide a unit"],
+        unique: false
+    }
+});
+
+
 const PostSchema = mongoose.Schema({
     title: {
         type: String,
         required: [true, "Please provide a title"],
         unique: false
     },
-    content: {
+    prepTimeInSeconds: {
+        type: Number,
+        required: [true, "Please provide a prep time"],
+        unique: false
+    },
+    cookTimeInSeconds: {
+        type: Number,
+        required: [true, "Please provide a cook time"],
+        unique: false
+    },
+    servings: {
+        type: Number,
+        required: [true, "Please provide a number of servings"],
+        unique: false
+    },
+    ingredients: {  
+        type: [IngredientsSchema],
+        required: [true, "Please provide ingredients"],
+        unique: false
+    },
+    directions: {
         type: String,
-        required: [true, "Please provide content"],
+        required: [true, "Please provide directions"],
+        unique: false
+    },
+    picture: {
+        type: String,
+        required: false,
         unique: false
     },
     createdAt: {
