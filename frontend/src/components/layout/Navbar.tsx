@@ -87,8 +87,11 @@ export const Navbar = (props: NavbarProps) => {
     return (
         <AppBar
             position="sticky"
+
         >
-            <Container maxWidth="xl">
+            <Container
+                maxWidth={false}
+            >
                 <Toolbar disableGutters>
                     <Typography
                         variant="h6"
@@ -113,7 +116,7 @@ export const Navbar = (props: NavbarProps) => {
 
                     </Typography>
 
-                    <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                    {/* <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
                             size="large"
                             aria-label="account of current user"
@@ -160,7 +163,7 @@ export const Navbar = (props: NavbarProps) => {
                                 </MenuItem>
                             ))}
                         </Menu>
-                    </Box>
+                    </Box> */}
                     <Box
                         component="img"
                         sx={{
@@ -170,7 +173,6 @@ export const Navbar = (props: NavbarProps) => {
                             borderRadius: '50%',
                             objectFit: 'cover',
                             objectPosition: 'center',
-                            mr: 2,
                         }}
                         alt="avatar"
                         src="/src/assets/_logo.png"
@@ -192,35 +194,39 @@ export const Navbar = (props: NavbarProps) => {
                         }}
                     >
                     </Typography>
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: "flex-end" }}>
-                        {/* {pages.map((page) => (
-                            <Button
-                                key={page}
-                                onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: 'white', display: 'block' }}
-                            >
-                                <Typography
-                                    variant="span"
-                                    component="a"
-                                    href={`/${page.toLowerCase()}`}
-                                    sx={{
-                                        color: 'inherit',
-                                        textDecoration: 'none',
-                                    }}
-                                >
-                                    {page}
-                                </Typography>
-                            </Button>
-                        ))} */}
-
+                    <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: "flex-end" }}>
                         <SearchBar />
                     </Box>
 
-                    <IconButton onClick={
-                        () => handleThemeChange((current) => current === 'light' ? 'dark' : 'light')
-                    } >
-                        {icon}
-                    </IconButton>
+                    <Box
+                        sx={{
+                            ml: 1,
+                        }}
+                    >
+                        <IconButton onClick={
+                            () => handleThemeChange((current) => current === 'light' ? 'dark' : 'light')
+                        } >
+                            {icon}
+                        </IconButton>
+                    </Box>
+                    <Box>
+                        {
+                            session && (
+                                <Typography
+                                    textAlign="center"
+                                    variant="h6"
+                                    sx={{
+                                        color: 'inherit',
+                                        textDecoration: 'none',
+                                        mx: 1,
+                                    }}
+                                >
+                                    {user?.username}
+                                </Typography>
+
+                            )
+                        }
+                    </Box>
                     <Box sx={{ flexGrow: 0 }}>
                         {session ? (
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

@@ -83,7 +83,6 @@ export const Layout = ({ children }: LayoutProps) => {
                     root: {
                         '&.MuiAccordion-root': {
                             background: 'transparent',
-                            
 
                             '&.MuiPaper-elevation1': {
                                 boxShadow: 'none',
@@ -98,10 +97,29 @@ export const Layout = ({ children }: LayoutProps) => {
                             }
 
                         },
-                        
+
+                    },
+                }
+            },
+            MuiTypography: {
+                styleOverrides: {
+                    root: {
+                        '&.MuiTypography-root': {
+                            color: themeMode === 'light' ? 'black' : 'white',
+                        },
+                    },
+                }
+            },
+            MuiIcon: {
+                styleOverrides: {
+                    root: {
+                        '&.MuiIcon-root': {
+                            color: themeMode === 'light' ? 'black' : 'white',
+                        },
                     },
                 }
             }
+
         }
     });
 

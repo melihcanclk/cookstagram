@@ -1,19 +1,20 @@
+import { Icon } from "@mui/material";
 import { FaTwitter, FaGithub, FaLinkedin } from "react-icons/fa";
 
 export const socialMediaAccounts = [
     {
         name: "twitter",
         link: "https://twitter.com/melihcanclk",
-        icon: <FaTwitter />
+        icon: <Icon component={FaTwitter} />
     },
     {
         name: "github",
         link: "https://github.com/melihcanclk",
-        icon: <FaGithub />
+        icon:  <Icon component={FaGithub} />
     },
     {
         name: "linkedin",
         link: "https://www.linkedin.com/in/melihcanclk/",
-        icon: <FaLinkedin />
+        icon: <Icon component={FaLinkedin} />
     }
 ];
