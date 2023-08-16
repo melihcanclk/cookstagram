@@ -9,8 +9,5 @@ export const postPayload = (post) => {
         directions: post.directions,
         picture: post.picture,
         createdAt: post.createdAt,
-        user: {
-            id: post.user._id,
-        },
     };
 };

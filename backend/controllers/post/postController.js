@@ -122,6 +122,7 @@ export const getPostsByUser = async (req, res) => {
     const postsPayload = posts.map((post) => {
         return {
             ...postPayload(post),
+            user: userPayload(user),
         };
     });
 
