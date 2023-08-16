@@ -54,7 +54,7 @@ import '@fontsource/roboto/700.css';
   min-height: 100vh;
   display: flex;
   align-items: center;
-  height: 100vh;
+  height: 100%;
   width: 100%;
 }
 
