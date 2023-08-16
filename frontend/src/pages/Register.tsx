@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
-import { set, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { useSession } from '../hooks/useSession';
 import { LeftArrow } from '../components/svg/LeftArrow';
 import { FormFieldError } from '../components/error/FormFieldErrors';
 import Dropzone from '../components/Dropzone';
@@ -13,7 +12,6 @@ import Snackbarie from '../components/Snackbar';
 
 export const Register = () => {
     const { register, handleSubmit, formState: { errors }, watch } = useForm();
-    const [session] = useSession();
     const navigate = useNavigate();
     const [file, setFile] = useState<any>(null);
     const [themeStorage, setThemeStorage] = useState<'light' | 'dark'>('dark');
@@ -279,12 +277,12 @@ export const Register = () => {
                                     }}
                                     onClick={() => navigate('/login')}>
                                     <LeftArrow
-                                        fill={themeStorage === 'dark' ? '#ffffff' : '#000000'}
+                                        fill={themeStorage === 'dark' ? 'white' : 'black'}
                                     />
                                 </IconButton>
                                 <Typography
                                     sx={{
-                                        color: themeStorage === 'dark' ? '#ffffff' : '#000000',
+                                        color: themeStorage === 'dark' ? 'white' : 'black',
                                         fontSize: '0.875rem',
                                         fontWeight: 'bold',
                                         textAlign: 'center',
