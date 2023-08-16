@@ -9,6 +9,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { useState } from "react";
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
+import { themeSelector } from "../../utils/themeSelector";
 
 export const Layout = ({ children }: LayoutProps) => {
     const [themeMode, setThemeMode] = useState<'light' | 'dark'>('dark');
@@ -37,10 +38,7 @@ export const Layout = ({ children }: LayoutProps) => {
         }
     }, []);
 
-    const themeSelector = {
-        'light': <Brightness7Icon />,
-        'dark': <Brightness4Icon />
-    }
+   
 
     const theme = createTheme({
         palette: {

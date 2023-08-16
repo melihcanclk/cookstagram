@@ -8,6 +8,7 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { purple } from '../styles/colors';
 import { PurpleButton } from '../components/button/Buttons';
+import { themeSelector } from '../utils/themeSelector';
 
 
 export const Login = () => {
@@ -64,7 +65,6 @@ export const Login = () => {
     }
 
 
-
     const onSubmit = (data: any) => {
         // post data to backend
         fetch('http://localhost:3000/login', {
@@ -107,10 +107,7 @@ export const Login = () => {
         });
 
     }
-    const themeSelector = {
-        light: <Brightness7Icon />,
-        dark: <Brightness4Icon />
-    }
+    
 
     return (
         <>
@@ -213,14 +210,13 @@ export const Login = () => {
                                 <PurpleButton
                                     variant='contained'
                                     width='75%'
-                                    text='Reset'
+                                    text='Register'
                                     color='white'
                                     margin='10px 0px 10px 0px'
                                     onClick={() => {
                                         navigate('/register');
                                     }}
                                     backgroundColor={purple[800]}
-
                                 />
                                 <PurpleButton
                                     variant='contained'
