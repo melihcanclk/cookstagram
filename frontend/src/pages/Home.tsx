@@ -153,7 +153,7 @@ export const Home = () => {
                     </Box>
                 </Modal>
 
-                <Box>
+                <Grid container spacing={1}>
                     {feed?.map((post: IndividualPost, key: number) => {
                         return (
                             <IndividualPost
@@ -165,7 +165,7 @@ export const Home = () => {
                             />
                         )
                     })}
-                </Box>
+                </Grid>
             </Box>
 
         </Layout>

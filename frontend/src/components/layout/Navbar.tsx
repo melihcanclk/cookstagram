@@ -14,7 +14,7 @@ import Avatar from "@mui/material/Avatar";
 import { useNavigate } from "react-router-dom";
 import { deleteCookie } from "../../utils/deleteCookie";
 import { useUser } from "../../hooks/useUser";
-import { getImage } from "../../utils/getImage";
+import { getImageOfUser } from "../../utils/getImage";
 import { SearchBar } from "../SearchBar";
 
 interface NavbarProps {
@@ -32,7 +32,7 @@ export const Navbar = (props: NavbarProps) => {
 
     useEffect(() => {
         if (user) {
-            getImage({ setImageBase64, user });
+            getImageOfUser({ setImageBase64, user });
         }
 
     }, [user])

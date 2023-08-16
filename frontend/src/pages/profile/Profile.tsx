@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Layout } from '../../components/layout/Layout'
 import { getCookie } from '../../utils/getCookie';
 import { IndividualPost } from '../../components/post/IndividualPost';
-
 import { Grid, Box } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { handleDelete } from '../../utils/handleDeletePost';
@@ -15,7 +14,6 @@ export const Profile = () => {
     const { username } = useParams();
 
     const [user, setUser] = useState<UserType>();
-
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -30,7 +28,6 @@ export const Profile = () => {
 
 
     const [posts, setPosts] = useState<IndividualPost[]>([]);
-
     useEffect(() => {
         const fetchPosts = async () => {
             const session = getCookie('session');

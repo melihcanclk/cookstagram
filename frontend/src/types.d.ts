@@ -105,16 +105,31 @@ interface NavbarItemProps {
 interface IndividualPost {
     id: string;
     title: string;
-    content: string;
+    prepTimeInSeconds: number;
+    cookTimeInSeconds: number;
+    servings: number;
+    ingredients: string[];
+    steps: string[];
+    picture: string;
     createdAt: string;
-    user: UserType;
+    user: {
+        username: string;
+    };
 }
 
 interface GetImageProps {
     setImageBase64: React.Dispatch<React.SetStateAction<string>>;
+}
+
+interface UserImageProps extends GetImageProps {
     user: UserType;
 }
 
+interface PostImageProps extends GetImageProps {
+    post: IndividualPost;
+}
+
+type ImageProps = UserImageProps | PostImageProps;
 
 interface IndividualPostProps {
     key: number;

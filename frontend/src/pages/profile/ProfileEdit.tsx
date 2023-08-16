@@ -4,7 +4,7 @@ import { Accordion, AccordionDetails, AccordionSummary, Box, Grid, IconButton, T
 import { getUserLoggedIn } from '../../utils/getUserLoggedIn';
 import { PurpleButton } from '../../components/button/Buttons';
 import { getCookie } from '../../utils/getCookie';
-import { getImage } from '../../utils/getImage';
+import {  getImageOfUser } from '../../utils/getImage';
 import { purple } from '@mui/material/colors';
 import { useForm } from 'react-hook-form';
 import { FormFieldError } from '../../components/error/FormFieldErrors';
@@ -104,7 +104,7 @@ export const ProfileEdit = () => {
 
     const fetchImage = async () => {
         if (user) {
-            await getImage({ setImageBase64: setImage, user: user })
+            await getImageOfUser({ setImageBase64: setImage, user: user })
         }
     }
 
