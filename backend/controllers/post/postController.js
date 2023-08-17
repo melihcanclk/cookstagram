@@ -9,7 +9,6 @@ export const createPost = async (req, res) => {
 
     const data = req.body;
     const picture = req.file;
-    
     let post;
     let user;
     try {
@@ -22,11 +21,11 @@ export const createPost = async (req, res) => {
         const recipeData = {
             ...data,
             picture: picture ? picture.filename : null,
-            user: user._id
+            user: user._id,
         }
 
         post = new Post(recipeData)
-
+        console.log(post);
         const session = await mongoose.startSession();
         session.startTransaction();
         const postRes = await post.save();

@@ -3,9 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useSession } from '../hooks/useSession';
 import { LeftArrow } from '../components/svg/LeftArrow';
-import { Box, Button, CssBaseline, IconButton, ScopedCssBaseline, TextField, ThemeProvider, createTheme, darkScrollbar } from '@mui/material';
-import Brightness4Icon from '@mui/icons-material/Brightness4';
-import Brightness7Icon from '@mui/icons-material/Brightness7';
+import { Box, CssBaseline, IconButton, TextField, ThemeProvider, createTheme } from '@mui/material';
 import { purple } from '../styles/colors';
 import { PurpleButton } from '../components/button/Buttons';
 import { themeSelector } from '../utils/themeSelector';
@@ -107,7 +105,7 @@ export const Login = () => {
         });
 
     }
-    
+
 
     return (
         <>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Layout } from '../components/layout/Layout'
 import '../styles/home.css'
 import { Box } from '@mui/material';
@@ -31,30 +31,22 @@ export const Home = () => {
         name: "ingredients",
     })
     const { feed, setFeed } = useGetFeed();
+    console.log({ feed })
     const [file, setFile] = useState<any>(null);
     const [idCounter, setIdCounter] = useState<number>(0);
     const handleClose = () => {
         setOpen(false)
         setFile(null)
+        // clear form
         setValue('title', '')
         setValue('prepTimeInMins', '')
         setValue('cookTimeInMins', '')
         setValue('servings', '')
         setValue('directions', '')
-        for (let i = 0; i < ingredients.length; i++) {
-            setValue(`ingredients.${i}.name`, '')
-            setValue(`ingredients.${i}.quantity`, '')
-        }
-        setIngredients([{
-            name: '',
-            quantity: '',
-            unit: ''
-        }])
-
-
+        setValue('ingredients', [])
+        setIdCounter(0)
     };
     const handleOpen = () => setOpen(true);
-    const [ingredients, setIngredients] = useState<any>([]);
 
     const onSubmit = (data: any) => {
         // clear ingredient array if name, quantity, or unit is empty
@@ -62,47 +54,82 @@ export const Home = () => {
             return ingredient.name !== '' && ingredient.quantity !== '' && ingredient.unit !== ''
         })
         data.ingredients = ingredients;
-        console.log(data)
+        console.log({ data })
 
         const formData = new FormData();
         formData.append('title', data.title);
-        formData.append('content', data.content);
+        formData.append('prepTimeInMins', data.prepTimeInMins);
+        formData.append('cookTimeInMins', data.cookTimeInMins);
+        formData.append('servings', data.servings);
+        formData.append('directions', data.directions);
+        if (file) {
+            formData.append('picture', file);
+        } else {
+            formData.append('picture', '');
+        }
+        data.ingredients.map((ingredient: any, index: number) => {
+            formData.append(`ingredients[${index}][name]`, ingredient.name);
+            formData.append(`ingredients[${index}][quantity]`, ingredient.quantity);
+            formData.append(`ingredients[${index}][unit]`, ingredient.unit);
+        })
+
         const user = getCookie('user');
         const userJson = JSON.parse(user);
         formData.append('username', userJson.username);
         const session = getCookie('session');
 
-        // fetch("http://localhost:3000/create-post",
-        //     {
-        //         method: 'POST',
-        //         headers: {
-        //             'Authorization': `Bearer ${session}`
-        //         },
-        //         body: formData
-        //     }
-        // ).then(response => response.json())
-        //     .then(data => {
-        //         // add data to feed
-        //         setFeed((prev) => {
-        //             const dataPayload = {
-        //                 ...data.post,
-        //                 id: data.post._id,
-        //                 user: {
-        //                     username: data.user.username,
-        //                     name: data.user.name,
-        //                     surname: data.user.surname,
-        //                     picture: {
-        //                         ...data.user.picture
-        //                     }
-        //                 }
-        //             }
-        //             return [dataPayload, ...prev];
-        //         })
 
-        //         handleClose();
-        //     })
+        const postRecipe = async () => {
+            try {
+                const res = await fetch("http://localhost:3000/create-post",
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${session}`
+                        },
+                        body: formData
+                    }
+                )
+                const data = await res.json();
+                console.log({ data })
+                if (data) {
+                    const responseUserid = data.post.user.id;
+                    // fetch user by id
+                    const getUserById = async () => {
+                        try {
+                            const res = await fetch(`http://localhost:3000/users-by-id/${responseUserid}`, {
+                                method: 'GET',
+                                headers: {
+                                    'Authorization': `Bearer ${session}`
+                                }
+                            })
+                            const user = await res.json();
+                            if (user) {
+                                const updatedFeed = [{
+                                    ...data.post,
+                                    user: {
+                                        ...user.user,
+                                        posts: undefined
+                                    }
+                                }, ...feed]
 
-    };
+                                setFeed(updatedFeed)
+                            }
+
+                        } catch (error) {
+                            console.log({ error })
+                        }
+                    }
+                    getUserById();
+
+                }
+            } catch (error) {
+                console.log({ error })
+            }
+            handleClose();
+        };
+        postRecipe();
+    }
 
     return (
         <Layout>
@@ -130,7 +157,7 @@ export const Home = () => {
                                     alignItems: 'center',
                                 }}
                             >
-                                Create Post
+                                Create Recipe
                                 <AddIcon />
                             </Box>
                         }
@@ -151,7 +178,7 @@ export const Home = () => {
                         <Box display="flex" alignItems="center" mb={2}>
                             <Box flexGrow={1} >
                                 <Typography id="modal-modal-title" variant="h5" component="h2">
-                                    Create Post
+                                    Create New Recipe
                                 </Typography>
                             </Box>
                             <Box>
@@ -318,7 +345,7 @@ export const Home = () => {
                                                     alignItems: 'center',
                                                 }}
                                             >
-                                                Create Post
+                                                Create Recipe
                                                 <AddIcon />
                                             </Box>
                                         }

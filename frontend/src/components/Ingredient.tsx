@@ -1,5 +1,4 @@
-import { Box, Grid, Icon, MenuItem, TextField } from '@mui/material'
-import { FormFieldError } from './error/FormFieldErrors'
+import { Box, Grid, TextField } from '@mui/material'
 import { FieldErrors, FieldValues, UseFieldArrayRemove, UseFormRegister } from 'react-hook-form';
 import { PurpleButton } from './button/Buttons';
 import { purple } from '@mui/material/colors';
@@ -116,7 +115,6 @@ export const Ingredient = (props: IngredientProps) => {
                     }
                     type='button'
                     onClick={() => {
-                        // remove ingredient from ingredients array
                         remove(id)
                     }}
                     backgroundColor={purple[800]}
