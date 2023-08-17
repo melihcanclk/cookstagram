@@ -25,12 +25,12 @@ const PostSchema = mongoose.Schema({
         required: [true, "Please provide a title"],
         unique: false
     },
-    prepTimeInSeconds: {
+    prepTimeInMins: {
         type: Number,
         required: [true, "Please provide a prep time"],
         unique: false
     },
-    cookTimeInSeconds: {
+    cookTimeInMins: {
         type: Number,
         required: [true, "Please provide a cook time"],
         unique: false

@@ -2,8 +2,8 @@ export const postPayload = (post) => {
     return {
         id: post._id,
         title: post.title,
-        prepTimeInSeconds: post.prepTimeInSeconds,
-        cookTimeInSeconds: post.cookTimeInSeconds,
+        prepTimeInMins: post.prepTimeInMins,
+        cookTimeInMins: post.cookTimeInMins,
         servings: post.servings,
         ingredients: post.ingredients,
         directions: post.directions,
