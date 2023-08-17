@@ -252,7 +252,17 @@ export const Register = () => {
                                         variant='contained'
                                         width='75%'
                                         color='white'
-                                        text='Register'
+                                        children={
+                                            <Box
+                                                sx={{
+                                                    display: 'flex',
+                                                    justifyContent: 'center',
+                                                    alignItems: 'center',
+                                                }}
+                                            >
+                                                Register
+                                            </Box>
+                                        }
                                         type='submit'
                                         margin='10px 0px 10px 0px'
                                         backgroundColor={purple[800]}

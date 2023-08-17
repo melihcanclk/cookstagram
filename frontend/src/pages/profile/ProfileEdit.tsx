@@ -272,7 +272,7 @@ export const ProfileEdit = () => {
                             <PurpleButton
                                 variant='contained'
                                 width='75%'
-                                text='Reset'
+                                children='Reset'
                                 margin='10px 0px 10px 0px'
                                 onClick={handleReset}
                                 backgroundColor={purple[800]}
@@ -280,7 +280,7 @@ export const ProfileEdit = () => {
                             <PurpleButton
                                 variant='contained'
                                 width='75%'
-                                text='Submit'
+                                children='Submit'
                                 type='submit'
                                 margin='10px 0px 10px 0px'
                                 backgroundColor={purple[800]}

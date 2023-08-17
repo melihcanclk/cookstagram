@@ -210,7 +210,17 @@ export const Login = () => {
                                 <PurpleButton
                                     variant='contained'
                                     width='75%'
-                                    text='Register'
+                                    children={
+                                        <Box
+                                            sx={{
+                                                display: 'flex',
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                            }}
+                                        >
+                                            Register
+                                        </Box>
+                                    }
                                     color='white'
                                     margin='10px 0px 10px 0px'
                                     onClick={() => {
@@ -222,7 +232,17 @@ export const Login = () => {
                                     variant='contained'
                                     width='75%'
                                     color='white'
-                                    text='Submit'
+                                    children={
+                                        <Box
+                                            sx={{
+                                                display: 'flex',
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                            }}
+                                        >
+                                            Login
+                                        </Box>
+                                    }
                                     type='submit'
                                     margin='10px 0px 10px 0px'
                                     backgroundColor={purple[800]}
