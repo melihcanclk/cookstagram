@@ -18,7 +18,7 @@ export const Ingredient = (props: IngredientProps) => {
 
     const insertIngredient = (key: string) => {
         if (errors['ingredients'] && errors['ingredients'][id] && errors['ingredients'][id][key] && errors['ingredients'][id][key].message) {
-            console.log(errors['ingredients'][id][key].message)
+            // console.log(errors['ingredients'][id][key].message)
             return (<span className="error-msg">{errors['ingredients'][id][key].message}</span>)
         } else {
             return null
@@ -92,7 +92,7 @@ export const Ingredient = (props: IngredientProps) => {
                         variant="outlined"
                         placeholder='Unit'
                         sx={{
-                            width: '100px'
+                            width: '100%'
                         }}
                         {...register(
                             `ingredients.${id}.unit`,
@@ -106,7 +106,14 @@ export const Ingredient = (props: IngredientProps) => {
                 <PurpleButton
                     variant='contained'
                     height='50px'
-                    children={<Icon component={DeleteIcon} />}
+                    children={
+                        <DeleteIcon
+                            sx={{
+                                color: 'white',
+                            }}
+                        />
+
+                    }
                     type='button'
                     onClick={() => {
                         // remove ingredient from ingredients array
