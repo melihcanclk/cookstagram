@@ -85,14 +85,14 @@ export const IndividualPost = (props: IndividualPostProps) => {
                         <Typography variant="body2" color="textSecondary" component="p">
                             Preperation Time:
                             {
-                                convertSeconds(post.prepTimeInSeconds)
+                                convertSeconds(post.prepTimeInMins)
                             }
 
                         </Typography>
                         <Typography variant="body2" color="textSecondary" component="p">
                             Cook Time:
                             {
-                                convertSeconds(post.cookTimeInSeconds)
+                                convertSeconds(post.cookTimeInMins)
                             }
                         </Typography>
 

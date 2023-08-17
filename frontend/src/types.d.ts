@@ -55,10 +55,11 @@ interface IDropzoneProps {
 }
 
 interface ButtonProps {
-    text: string;
+    children: React.ReactNode;
     onSubmit?: () => void;
     onClick?: () => void;
     width?: string;
+    height?: string;
     type?: 'submit' | 'button' | 'reset';
     variant?: 'contained' | 'outlined' | 'text';
     margin?: string;
@@ -105,8 +106,8 @@ interface NavbarItemProps {
 interface IndividualPost {
     id: string;
     title: string;
-    prepTimeInSeconds: number;
-    cookTimeInSeconds: number;
+    prepTimeInMins: number;
+    cookTimeInMins: number;
     servings: number;
     ingredients: string[];
     steps: string[];
