@@ -42,3 +42,13 @@ main[class="input"] {
     flex-direction: column;
     width: 50%;
 }
+
+.error-msg {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    margin-left: 10px;
+    margin-top: 10px;
+    color: red;
+}

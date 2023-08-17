@@ -6,32 +6,26 @@ import { userPayload } from "../user/userPayloads.js";
 import { sortByDate } from "../../utils/sort.js";
 
 export const createPost = async (req, res) => {
-    const { title, content, username } = req.body;
 
-    if (!title || !content || !username) {
-        return res.status(400).send({
-            message: "Missing required fields",
-            field: !title ? "title" : !content ? "content" : "username",
-        });
-    }
-
+    const data = req.body;
+    const picture = req.file;
     let post;
     let user;
     try {
-        user = await User.findOne({ username: username });
+        user = await User.findOne({ username: data.username });
 
         if (!user) {
             throw new Error("User not found");
         }
 
-        post = new Post({
-            id: new mongoose.Types.ObjectId(),
-            title: title,
-            content: content,
-            createdAt: Date.now(),
+        const recipeData = {
+            ...data,
+            picture: picture ? picture.filename : null,
             user: user._id,
-        });
+        }
 
+        post = new Post(recipeData)
+        console.log(post);
         const session = await mongoose.startSession();
         session.startTransaction();
         const postRes = await post.save();
@@ -50,8 +44,7 @@ export const createPost = async (req, res) => {
 
     return res.status(201).send({
         message: "Post created successfully",
-        post: post,
-        user: userPayload(user),
+        post: postPayload(post),
     });
 };
 
@@ -65,6 +58,13 @@ export const getSinglePost = async (req, res) => {
     } catch (e) {
         return res.status(500).send({
             message: e.message,
+        });
+    }
+
+    // get user with id
+    if (!post) {
+        return res.status(404).send({
+            message: "Post not found",
         });
     }
 

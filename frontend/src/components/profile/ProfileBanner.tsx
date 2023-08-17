@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { Box, Typography, Button, Avatar, Card, CardContent, Divider, Hidden } from '@mui/material';
 import { GearIcon } from '../svg/GearIcon';
-import { getImage } from '../../utils/getImage';
+import { getImageOfUser } from '../../utils/getImage';
 import { Person } from '@mui/icons-material';
 import { getCookie } from '../../utils/getCookie';
 
@@ -80,7 +80,7 @@ export const ProfileBanner = (props: ProfileBannerProps) => {
     useEffect(() => {
         const fetchImage = async () => {
             if (user) {
-                await getImage({ setImageBase64: setImage, user: user })
+                await getImageOfUser({ setImageBase64: setImage, user: user })
             }
         }
 

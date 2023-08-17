@@ -55,10 +55,11 @@ interface IDropzoneProps {
 }
 
 interface ButtonProps {
-    text: string;
+    children: React.ReactNode;
     onSubmit?: () => void;
     onClick?: () => void;
     width?: string;
+    height?: string;
     type?: 'submit' | 'button' | 'reset';
     variant?: 'contained' | 'outlined' | 'text';
     margin?: string;
@@ -105,16 +106,31 @@ interface NavbarItemProps {
 interface IndividualPost {
     id: string;
     title: string;
-    content: string;
+    prepTimeInMins: number;
+    cookTimeInMins: number;
+    servings: number;
+    ingredients: string[];
+    steps: string[];
+    picture: string;
     createdAt: string;
-    user: UserType;
+    user: {
+        username: string;
+    };
 }
 
 interface GetImageProps {
     setImageBase64: React.Dispatch<React.SetStateAction<string>>;
+}
+
+interface UserImageProps extends GetImageProps {
     user: UserType;
 }
 
+interface PostImageProps extends GetImageProps {
+    post: IndividualPost;
+}
+
+type ImageProps = UserImageProps | PostImageProps;
 
 interface IndividualPostProps {
     key: number;

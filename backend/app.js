@@ -6,7 +6,7 @@ import { createPost, getPostByUser, getAllPosts, deletePost, getSinglePost, getP
 import multer from 'multer';
 import dotenv from 'dotenv'
 import { upload } from './middleware/upload.js';
-import { loginUser, registerUser, getUser, getFeed, followUser, unfollowUser, searchUsers } from './controllers/user/userController.js';
+import { loginUser, registerUser, getUser, getFeed, followUser, unfollowUser, searchUsers, getUserById } from './controllers/user/userController.js';
 import { getImageByName } from './controllers/image/imageController.js';
 import { updateUser } from './controllers/user/userController.js';
 
@@ -42,6 +42,7 @@ app.use((req, res, next) => {
 app.post("/register", upload.single('picture'), registerUser)
 app.post("/login", loginUser);
 app.get("/users/:username", auth, getUser);
+app.get("/users-by-id/:id", auth, getUserById);
 app.put("/users/:username", auth, upload.single('picture'), updateUser);
 app.post("/search/users", auth, searchUsers)
 
@@ -50,7 +51,7 @@ app.post("/search/users", auth, searchUsers)
 // with the post data
 // if we were sending a file, we would use multer().single('picture')
 // or upload.single('picture')
-app.post("/create-post", auth, multer().none(), createPost);
+app.post("/create-post", auth, upload.single('picture'), createPost);
 app.get("/feed", auth, getFeed);
 app.post("/follow/:username", auth, followUser);
 app.post("/unfollow/:username", auth, unfollowUser);

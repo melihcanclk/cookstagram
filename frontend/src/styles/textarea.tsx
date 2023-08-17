@@ -7,7 +7,7 @@ export const StyledTextarea = styled(TextareaAutosize)(
     width: 350px;
     max-width: 100%;
     min-width: 100%;
-    max-height: 420px;
+    max-height: 200px;
     font-family: IBM Plex Sans, sans-serif;
     font-size: 0.875rem;
     font-weight: 400;
