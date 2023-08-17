@@ -109,6 +109,27 @@ export const getUser = async (request, response) => {
     });
 };
 
+export const getUserById = async (request, response) => {
+    const { id } = request.params;
+    let user;
+    try {
+        user = await User.findOne({ _id: id }).populate("posts");
+        if (!user) {
+            throw new Error("User not found")
+        }
+
+    } catch (e) {
+        return response.status(500).send({
+            message: e.message,
+        });
+    }
+
+    return response.status(200).send({
+        message: "User found",
+        user: userPayload(user)
+    });
+};
+
 // get posts of followed users
 export const getFeed = async (request, response) => {
     const { username } = request.user;
