@@ -13,7 +13,7 @@ import AddIcon from '@mui/icons-material/Add';
 
 import { TextField } from '@mui/material';
 import { getCookie } from '../utils/getCookie';
-import { useForm } from 'react-hook-form';
+import { useFieldArray, useForm } from 'react-hook-form';
 import { FormFieldError } from '../components/error/FormFieldErrors';
 import { IndividualPost } from '../components/post/IndividualPost';
 import { useGetFeed } from '../hooks/useGetFeed';
@@ -25,7 +25,11 @@ import { Ingredient } from '../components/Ingredient';
 export const Home = () => {
     const [open, setOpen] = useState(false);
 
-    const { register, handleSubmit, formState: { errors }, setValue } = useForm();
+    const { control, register, handleSubmit, formState: { errors }, setValue } = useForm();
+    const { fields, append, remove } = useFieldArray({
+        control,
+        name: "ingredients",
+    })
     const { feed, setFeed } = useGetFeed();
     const [file, setFile] = useState<any>(null);
     const [idCounter, setIdCounter] = useState<number>(0);
@@ -42,15 +46,15 @@ export const Home = () => {
             setValue(`ingredients.${i}.quantity`, '')
         }
         setIngredients([{
-            id: 0,
+            name: '',
+            quantity: '',
+            unit: ''
         }])
 
 
     };
     const handleOpen = () => setOpen(true);
     const [ingredients, setIngredients] = useState<any>([]);
-
-
 
     const onSubmit = (data: any) => {
         // clear ingredient array if name, quantity, or unit is empty
@@ -118,7 +122,18 @@ export const Home = () => {
                     <PurpleButton
                         variant='contained'
                         width='100%'
-                        children='Create Post'
+                        children={
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                }}
+                            >
+                                Create Post
+                                <AddIcon />
+                            </Box>
+                        }
                         margin='10px 0px 10px 0px'
                         type='button'
                         onClick={handleOpen}
@@ -213,19 +228,28 @@ export const Home = () => {
                                         '&::-webkit-scrollbar-thumb': {
                                             backgroundColor: 'rgba(0,0,0,.1)',
                                             outline: '1px solid slategrey'
-                                        }
-
+                                        },
                                     }}
                                 >
                                     {
-                                        ingredients.map((ingredient: any) => {
+                                        fields.map((ingredient: any, index: number) => {
                                             return (
                                                 <Grid item xs={12} key={ingredient.id}>
-                                                    {ingredient.component}
+                                                    <Ingredient
+                                                        key={index}
+                                                        register={register}
+                                                        errors={errors}
+                                                        id={index}
+                                                        min={0}
+                                                        remove={remove}
+                                                    />
+
                                                 </Grid>
                                             )
                                         })
+
                                     }
+
                                 </Grid>
                                 <Box
                                     sx={{
@@ -253,19 +277,10 @@ export const Home = () => {
                                         onClick={() => {
                                             // add ingredient
                                             setIdCounter(idCounter + 1);
-                                            setIngredients((prev: any) => {
-                                                return [...prev, {
-                                                    id: idCounter + 1,
-                                                    component: <Ingredient
-                                                        key={idCounter + 1}
-                                                        register={register}
-                                                        errors={errors}
-                                                        id={idCounter + 1}
-                                                        min={0}
-                                                        setIngredients={setIngredients}
-                                                        setValue={setValue}
-                                                    />
-                                                }]
+                                            append({
+                                                name: '',
+                                                quantity: '',
+                                                unit: '',
                                             })
                                         }}
                                         backgroundColor={purple[800]}
@@ -281,7 +296,7 @@ export const Home = () => {
                                         defaultValue={""}
                                         {...register("directions", { required: true })}
                                     />
-                                    {FormFieldError({ errors, fieldname: 'content', placeholder: 'Content' })}
+                                    {FormFieldError({ errors, fieldname: 'directions', placeholder: 'Directions' })}
                                 </Grid>
                                 <Grid item xs={12}>
                                     <Dropzone
@@ -295,7 +310,18 @@ export const Home = () => {
                                     <PurpleButton
                                         variant='contained'
                                         width='100%'
-                                        children='Create Post'
+                                        children={
+                                            <Box
+                                                sx={{
+                                                    display: 'flex',
+                                                    justifyContent: 'center',
+                                                    alignItems: 'center',
+                                                }}
+                                            >
+                                                Create Post
+                                                <AddIcon />
+                                            </Box>
+                                        }
                                         margin='10px 0px 10px 0px'
                                         type='submit'
                                         backgroundColor={purple[700]} />
