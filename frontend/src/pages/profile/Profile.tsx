@@ -8,30 +8,27 @@ import { handleDelete } from '../../utils/handleDeletePost';
 import { ProfileBanner } from '../../components/profile/ProfileBanner';
 import { getUser } from '../../utils/getUser';
 
-
-
 export const Profile = () => {
-    const { username } = useParams();
-
+    const { id } = useParams();
     const [user, setUser] = useState<UserType>();
-
     useEffect(() => {
         const fetchUser = async () => {
-            if (username) {
-                const user = await getUser(username);
+            if (id) {
+                const user = await getUser(id);
                 setUser(user);
             }
         }
 
         fetchUser();
-    }, [username]);
+    }, [id]);
 
 
     const [posts, setPosts] = useState<IndividualPost[]>([]);
+
     useEffect(() => {
         const fetchPosts = async () => {
             const session = getCookie('session');
-            const res = await fetch(`http://localhost:3000/posts/user/${user?.username}`, {
+            const res = await fetch(`http://localhost:3000/posts/user/${user?.id}`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${session}`,

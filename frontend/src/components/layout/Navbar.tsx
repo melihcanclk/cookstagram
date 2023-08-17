@@ -43,11 +43,10 @@ export const Navbar = (props: NavbarProps) => {
         navigate('/login');
     }
 
-    const pages = ['Products', 'Pricing', 'Blog'];
     const settings = [
         {
             name: 'Profile',
-            function: () => navigate('/profile/' + user?.username),
+            function: () => navigate('/profile/' + user?.id),
         },
         {
             name: 'Settings',

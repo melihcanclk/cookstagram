@@ -41,23 +41,16 @@ app.use((req, res, next) => {
 // register endpoint
 app.post("/register", upload.single('picture'), registerUser)
 app.post("/login", loginUser);
-app.get("/users/:username", auth, getUser);
-app.get("/users-by-id/:id", auth, getUserById);
-app.put("/users/:username", auth, upload.single('picture'), updateUser);
+app.get("/users/:id", auth, getUser);
+app.put("/users/:id", auth, upload.single('picture'), updateUser);
 app.post("/search/users", auth, searchUsers)
 
-// the reason we use multer().none() is because we are
-// not sending any files, we are just sending a json object
-// with the post data
-// if we were sending a file, we would use multer().single('picture')
-// or upload.single('picture')
 app.post("/create-post", auth, upload.single('picture'), createPost);
 app.get("/feed", auth, getFeed);
-app.post("/follow/:username", auth, followUser);
-app.post("/unfollow/:username", auth, unfollowUser);
+app.post("/follow/:id", auth, followUser);
+app.post("/unfollow/:id", auth, unfollowUser);
 app.get("/posts", auth, getAllPosts);
-app.get("/posts/:id", auth, getPostByUser);
-app.get("/posts/user/:username", auth, getPostsByUser);
+app.get("/posts/user/:id", auth, getPostsByUser);
 app.get("/post/:id", auth, getSinglePost);
 app.delete("/posts/:id", auth, deletePost);
 app.get("/uploads/:imageName", getImageByName);

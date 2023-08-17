@@ -31,7 +31,6 @@ export const Home = () => {
         name: "ingredients",
     })
     const { feed, setFeed } = useGetFeed();
-    console.log({ feed })
     const [file, setFile] = useState<any>(null);
     const [idCounter, setIdCounter] = useState<number>(0);
     const handleClose = () => {
@@ -54,7 +53,6 @@ export const Home = () => {
             return ingredient.name !== '' && ingredient.quantity !== '' && ingredient.unit !== ''
         })
         data.ingredients = ingredients;
-        console.log({ data })
 
         const formData = new FormData();
         formData.append('title', data.title);
@@ -75,9 +73,8 @@ export const Home = () => {
 
         const user = getCookie('user');
         const userJson = JSON.parse(user);
-        formData.append('username', userJson.username);
+        formData.append('user_id', userJson.id);
         const session = getCookie('session');
-
 
         const postRecipe = async () => {
             try {
@@ -91,13 +88,12 @@ export const Home = () => {
                     }
                 )
                 const data = await res.json();
-                console.log({ data })
                 if (data) {
                     const responseUserid = data.post.user.id;
                     // fetch user by id
                     const getUserById = async () => {
                         try {
-                            const res = await fetch(`http://localhost:3000/users-by-id/${responseUserid}`, {
+                            const res = await fetch(`http://localhost:3000/users/${responseUserid}`, {
                                 method: 'GET',
                                 headers: {
                                     'Authorization': `Bearer ${session}`
@@ -112,7 +108,6 @@ export const Home = () => {
                                         posts: undefined
                                     }
                                 }, ...feed]
-
                                 setFeed(updatedFeed)
                             }
 

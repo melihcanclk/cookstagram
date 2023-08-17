@@ -12,8 +12,7 @@ export const createPost = async (req, res) => {
     let post;
     let user;
     try {
-        user = await User.findOne({ username: data.username });
-
+        user = await User.findOne({ _id: data.user_id });
         if (!user) {
             throw new Error("User not found");
         }
@@ -25,18 +24,16 @@ export const createPost = async (req, res) => {
         }
 
         post = new Post(recipeData)
-        console.log(post);
         const session = await mongoose.startSession();
         session.startTransaction();
         const postRes = await post.save();
-        const authorRes = await User.findOne({ username: user.username });
+        const authorRes = await User.findOne({ _id: user.id });
         authorRes.posts.push(postRes._id);
         await authorRes.save();
         await session.commitTransaction();
         session.endSession();
 
     } catch (e) {
-        console.log(e);
         return res.status(500).send({
             message: e.message,
         });
@@ -98,12 +95,12 @@ export const getAllPosts = async (req, res) => {
 }
 
 export const getPostsByUser = async (req, res) => {
-    const { username } = req.params;
+    const { id } = req.params;
     let posts;
     let user;
     try {
         // get user id with username
-        user = await User.findOne({ username: username }).populate("posts");
+        user = await User.findOne({ _id: id }).populate("posts");
         if (!user) {
             throw new Error("User not found")
         }

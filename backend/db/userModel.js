@@ -14,7 +14,8 @@ let UserSchema = new mongoose.Schema({
     username: {
         type: String,
         required: [true, "Please provide a username"],
-        unique: [true, "Username already exists"]
+        unique: [true, "Username already exists"],
+        minlength: [3, "Username must be at least 3 characters long"],
     },
     email: {
         type: String,
@@ -54,4 +55,4 @@ let UserSchema = new mongoose.Schema({
 });
 
 
-export default UserSchema = (mongoose.model.Users || mongoose.model("User", UserSchema))
+export default UserSchema = (mongoose.model("User", UserSchema))

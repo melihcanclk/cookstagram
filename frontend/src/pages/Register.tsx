@@ -16,6 +16,8 @@ export const Register = () => {
     const [file, setFile] = useState<any>(null);
     const [themeStorage, setThemeStorage] = useState<'light' | 'dark'>('dark');
     const [openSuccess, setOpenSuccess] = useState(false);
+    const [openError, setOpenError] = useState(false);
+    const [openErrorMessage, setOpenErrorMessage] = useState<string>('Unknown error');
 
     useEffect(() => {
         const theme = localStorage.getItem('theme');
@@ -72,24 +74,27 @@ export const Register = () => {
         formData.append('password', data.password);
         formData.append('picture', file);
 
-        // send FormData object to server
-        fetch('http://localhost:3000/register', {
-            method: 'POST',
-            body: formData
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.user) {
+        const postUser = async () => {
+            try {
+                const res = await fetch('http://localhost:3000/register', {
+                    method: 'POST',
+                    body: formData,
+                });
+                const data = await res.json();
+                if (data.status === 'success') {
                     setOpenSuccess(true);
-                    setTimeout(() => {
-                        navigate('/login');
-                    }, 2000);
+                    setTimeout(() => navigate('/login'), 2000);
+                } else {
+                    setOpenError(true);
+                    setOpenErrorMessage(data.message);
                 }
-            })
-            .catch(error => {
-                console.error(error);
-            })
-
+            } catch (error: any) {
+                console.log(error)
+                setOpenError(true);
+                setOpenErrorMessage(error);
+            }
+        }
+        postUser();
     }
 
     return (
@@ -308,6 +313,13 @@ export const Register = () => {
                             setOpen={setOpenSuccess}
                             message='User created successfully, redirecting to login page...'
                             severity='success'
+                            autoHideDuration={2000}
+                        />
+                        <Snackbarie
+                            open={openError}
+                            setOpen={setOpenError}
+                            message={openErrorMessage}
+                            severity='error'
                             autoHideDuration={2000}
                         />
 
