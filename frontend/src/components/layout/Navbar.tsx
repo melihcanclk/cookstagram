@@ -164,18 +164,21 @@ export const Navbar = (props: NavbarProps) => {
                         </Menu>
                     </Box> */}
                     <Box
-                        component="img"
-                        sx={{
-                            display: { xs: 'flex', md: 'none' },
-                            height: '50px',
-                            width: '50px',
-                            borderRadius: '50%',
-                            objectFit: 'cover',
-                            objectPosition: 'center',
-                        }}
-                        alt="avatar"
-                        src="/src/assets/_logo.png"
-                    />
+                        component="a"
+                        href="/"
+                    >
+                        <Box
+                            component="img"
+                            sx={{
+                                display: { xs: 'flex', md: 'none' },
+                                borderRadius: '50%',
+                                objectFit: 'cover',
+                                objectPosition: 'center',
+                            }}
+                            alt="avatar"
+                            src="/src/assets/_logo.png"
+                        />
+                    </Box>
                     <Typography
                         variant="h5"
                         noWrap
