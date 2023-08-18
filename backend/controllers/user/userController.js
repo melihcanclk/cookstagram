@@ -14,7 +14,10 @@ export const registerUser = async (request, response) => {
     let hashedPassword;
     let user;
     try {
+
         hashedPassword = await bcrypt.hash(password, 10);
+
+        // create user and if it fails, delete the image
         user = new User({
             name: name,
             surname: surname,
@@ -22,13 +25,15 @@ export const registerUser = async (request, response) => {
             email: email,
             picture: picture ? picture.filename : null,
             password: hashedPassword,
-            createdAt: Date.now(),
         });
 
+        const res = await user.save();
+        if (!res) {
+            throw new Error("User was not created")
+        }
 
-        await user.save();
-    }
-    catch (e) {
+    } catch (e) {
+        console.log(e.message);
         // delete the image if the user was not created
         if (request.file) {
             // delete the image
@@ -38,7 +43,6 @@ export const registerUser = async (request, response) => {
                 }
             });
         }
-
 
         return response.status(500).send({
             message: e.message,
@@ -88,11 +92,11 @@ export const loginUser = async (request, response) => {
 };
 
 export const getUser = async (request, response) => {
-    const { username } = request.params;
+    const { id } = request.params;
 
     let user;
     try {
-        user = await User.findOne({ username: username }).populate("posts");
+        user = await User.findOne({ _id: id }).populate("posts");
         if (!user) {
             throw new Error("User not found")
         }
@@ -180,7 +184,7 @@ export const getFeed = async (request, response) => {
 };
 
 export const followUser = async (request, response) => {
-    const { username } = request.params;
+    const { id } = request.params;
     const { userId } = request.user;
 
     let user;
@@ -192,7 +196,7 @@ export const followUser = async (request, response) => {
         }
 
         // check if the user to follow exists
-        userToFollow = await User.findOne({ username: username });
+        userToFollow = await User.findOne({ _id: id });
         if (!userToFollow) {
             throw new Error("User to follow not found")
         }
@@ -236,7 +240,7 @@ export const followUser = async (request, response) => {
 };
 
 export const unfollowUser = async (request, response) => {
-    const { username } = request.params;
+    const { id } = request.params;
     const { userId } = request.user;
 
     let user;
@@ -249,17 +253,14 @@ export const unfollowUser = async (request, response) => {
         }
 
         // check if the user to follow exists
-        userToUnfollow = await User.findOne({ username: username });
+        userToUnfollow = await User.findOne({ _id: id });
         if (!userToUnfollow) {
             throw new Error("User to follow not found")
         }
-
         // check if the user is already following the user
-        const isFollowing = user.following.find(async (followingUserId) => {
-            const followingUser = await User.findOne({ _id: followingUserId });
-            return followingUser.username === username;
-        });
-
+        const isFollowing = user.following.find((followingUserId) => (
+            followingUserId.toString() === userToUnfollow._id.toString()
+        ))
 
         if (!isFollowing) {
             throw new Error("User is not following the user")
@@ -334,11 +335,11 @@ export const searchUsers = async (request, response) => {
 
 
 export const updateUser = async (request, response) => {
-    const { username } = request.params;
+    const { id } = request.params;
 
     let user;
     try {
-        user = await User.findOne({ username: username });
+        user = await User.findOne({ _id: id });
         if (!user) {
             throw new Error("User not found")
         }

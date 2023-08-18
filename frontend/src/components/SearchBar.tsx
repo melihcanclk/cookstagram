@@ -30,7 +30,10 @@ export const SearchBar = () => {
                         const options = users.map((user: any) => {
                             return {
                                 label: user.name + ' ' + user.surname,
-                                value: user.username
+                                value: {
+                                    id: user.id,
+                                    username: user.username,
+                                }
                             }
                         })
 
@@ -72,20 +75,20 @@ export const SearchBar = () => {
                 }}
                 filterOptions={
                     (x) => x.filter((option) => {
-                        return option.value
+                        return option.value.username.toLowerCase().includes(value.toLowerCase())
                     })
                 }
                 clearText="Clear"
-                isOptionEqualToValue={(option, value) => option.value === value.value}
+                isOptionEqualToValue={(option, value) => option.value.id === value.value.id}
                 loading={loading}
                 getOptionLabel={(option) => option.label}
                 // when user selects an option
                 onChange={(event, value) => {
                     if (value) {
                         // if we are not on the profile page
-                        if (window.location.pathname !== `/profile/${value.value}`) {
+                        if (window.location.pathname !== `/profile/${value.value.id}`) {
                             // navigate to the profile page
-                            window.location.href = `/profile/${value.value}`;
+                            window.location.href = `/profile/${value.value.id}`;
                         } else {
                             // reload the page
                             window.location.reload();
@@ -99,7 +102,7 @@ export const SearchBar = () => {
                         <li {...props}>
                             <div>
                                 <Typography sx={{ fontSize: 14 }}>{option.label}</Typography>
-                                <Typography sx={{ fontSize: 12 }}>{option.value}</Typography>
+                                <Typography sx={{ fontSize: 12 }}>{option.value.username}</Typography>
                             </div>
                         </li>
                     )
@@ -122,10 +125,3 @@ export const SearchBar = () => {
         </div>
     )
 }
-
-function sleep(delay = 0) {
-    return new Promise((resolve) => {
-        setTimeout(resolve, delay);
-    });
-}
-

@@ -7,7 +7,6 @@ interface GetImageThisProps {
 }
 const getImage = async (props: GetImageThisProps) => {
     const { parameter, token, setImage } = props;
-
     try {
         const res = await fetch(`http://localhost:3000/uploads/${parameter}`, {
             method: 'GET',
@@ -29,7 +28,6 @@ const getImage = async (props: GetImageThisProps) => {
 
 export const getImageOfUser = async (props: ImageProps) => {
     const { setImageBase64, user }: UserImageProps = props as UserImageProps;
-
     if (!user.picture || !user.picture.fileName) return;
 
     const token = getCookie('session');

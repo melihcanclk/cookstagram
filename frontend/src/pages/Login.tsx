@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useSession } from '../hooks/useSession';
 import { LeftArrow } from '../components/svg/LeftArrow';
-import { Box, CssBaseline, IconButton, TextField, ThemeProvider, createTheme } from '@mui/material';
+import { Box, CssBaseline, IconButton, TextField, ThemeProvider, Typography, createTheme } from '@mui/material';
 import { purple } from '../styles/colors';
 import { PurpleButton } from '../components/button/Buttons';
 import { themeSelector } from '../utils/themeSelector';
@@ -156,6 +156,19 @@ export const Login = () => {
                         }}
 
                     >
+                        <Box>
+                            <Typography
+                                variant='h4'
+                                sx={{
+                                    color: themeStorage === 'dark' ? 'white' : 'black',
+                                    fontWeight: 'bold',
+                                    textAlign: 'center',
+                                    mb: 5,
+                                }}
+                            >
+                                Login
+                            </Typography>
+                        </Box>
                         <form onSubmit={
                             handleSubmit(onSubmit)
                         }

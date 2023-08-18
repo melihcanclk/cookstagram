@@ -114,6 +114,7 @@ interface IndividualPost {
     picture: string;
     createdAt: string;
     user: {
+        id: string;
         username: string;
     };
 }
@@ -154,7 +155,10 @@ interface PlaceType {
 
 interface SearchBarOptionsType {
     label: string;
-    value: string;
+    value: {
+        id: string;
+        username: string;
+    }
 }
 
 type ProfileProps = {

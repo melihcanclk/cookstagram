@@ -32,13 +32,15 @@ export const IndividualPost = (props: IndividualPostProps) => {
     const { post, handleDelete }: IndividualPostProps = props;
     const [image, setImage] = useState<any>(null);
     const [postImage, setPostImage] = useState<any>(null);
-    const userLoggedIn = getCookie('user') ? JSON.parse(getCookie('user')).username : null;
+    const user = getCookie('user');
+    const userLoggedIn = user ? JSON.parse(user).id : null;
     useEffect(() => {
         const getPost = async () => {
             if (post) {
                 // if post has property user by checking type guard
                 try {
-                    const user = await getUser(post.user.username);
+                    const user = await getUser(post.user.id);
+
                     getImageOfUser({
                         setImageBase64: setImage,
                         user: user
@@ -116,7 +118,7 @@ export const IndividualPost = (props: IndividualPostProps) => {
                         </Box>
                     </Box>
                     {
-                        userLoggedIn && userLoggedIn === post.user.username && (
+                        userLoggedIn && userLoggedIn === post.user.id && (
                             <Box>
                                 <IconButton onClick={
                                     () => handleDelete(post.id)

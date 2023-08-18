@@ -4,7 +4,7 @@ import { Accordion, AccordionDetails, AccordionSummary, Box, Grid, IconButton, T
 import { getUserLoggedIn } from '../../utils/getUserLoggedIn';
 import { PurpleButton } from '../../components/button/Buttons';
 import { getCookie } from '../../utils/getCookie';
-import {  getImageOfUser } from '../../utils/getImage';
+import { getImageOfUser } from '../../utils/getImage';
 import { purple } from '@mui/material/colors';
 import { useForm } from 'react-hook-form';
 import { FormFieldError } from '../../components/error/FormFieldErrors';
@@ -19,11 +19,16 @@ export const ProfileEdit = () => {
     const [user, setUser] = useState<UserType>();
     const [file, setFile] = useState<any>();
     const [image, setImage] = useState<string>('');
+    const [openAccordion, setOpenAccordion] = useState<boolean>(false);
     const [openSuccess, setOpensuccess] = useState<boolean>(false);
     const [openError, setOpenerror] = useState<boolean>(false);
     const [openPasswordError, setOpenPasswordError] = useState<boolean>(false);
     const [showPassword, setShowPassword] = useState(false);
     const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
+
+    const handleAccordion = () => {
+        setOpenAccordion(!openAccordion)
+    }
 
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
@@ -60,7 +65,7 @@ export const ProfileEdit = () => {
                 }
 
                 try {
-                    const res = await fetch('http://localhost:3000/users/' + user?.username, {
+                    const res = await fetch('http://localhost:3000/users/' + user?.id, {
                         method: 'PUT',
                         headers: {
                             'Authorization': `Bearer ${session}`
@@ -75,6 +80,7 @@ export const ProfileEdit = () => {
                         setValue('password', '')
                         setValue('password_confirm', '')
                         setOpensuccess(true)
+                        setOpenAccordion(false)
                     }
 
                 } catch (error) {
@@ -190,7 +196,10 @@ export const ProfileEdit = () => {
                     </Grid>
 
                     <Grid item xs={12} sm={12}>
-                        <Accordion>
+                        <Accordion
+                            expanded={openAccordion}
+                            onChange={handleAccordion}
+                        >
                             <AccordionSummary
                                 expandIcon={<ExpandMoreIcon />}
                                 aria-controls="panel1a-content"

@@ -1,3 +1,7 @@
+body {
+    width: 100%;
+}
+
 .home-container {
     display: flex;
     align-items: center;

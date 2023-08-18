@@ -6,9 +6,9 @@ export const getUserLoggedIn = (setUser: Dispatch<SetStateAction<any>>) => {
     const user = getCookie("user");
     if (!user) return null;
 
-    const username = JSON.parse(user).username;
+    const user_id = JSON.parse(user).id;
 
-    getUser(username).then((res) => {
+    getUser(user_id).then((res) => {
         setUser(res);
     });
 }
