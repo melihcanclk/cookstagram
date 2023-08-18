@@ -6,7 +6,7 @@ import { PurpleButton } from '../../components/button/Buttons';
 import { getCookie } from '../../utils/getCookie';
 import { getImageOfUser } from '../../utils/getImage';
 import { purple } from '@mui/material/colors';
-import { useForm } from 'react-hook-form';
+import { set, useForm } from 'react-hook-form';
 import { FormFieldError } from '../../components/error/FormFieldErrors';
 import { EditImage } from './EditImage';
 import Snackbarie from '../../components/Snackbar';
@@ -22,7 +22,7 @@ export const ProfileEdit = () => {
     const [openAccordion, setOpenAccordion] = useState<boolean>(false);
     const [openSuccess, setOpensuccess] = useState<boolean>(false);
     const [openError, setOpenerror] = useState<boolean>(false);
-    const [openPasswordError, setOpenPasswordError] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState<string>('Error updating profile');
     const [showPassword, setShowPassword] = useState(false);
     const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
 
@@ -42,18 +42,26 @@ export const ProfileEdit = () => {
     const { register, handleSubmit, formState: { errors }, watch, setValue } = useForm();
 
     const onSubmit = (data: any) => {
-        const { name, surname, username, email, password, password_confirm } = data;
+        const { password, password_confirm } = data
         const editUser = async () => {
             const session = getCookie('session')
             try {
                 if (password !== password_confirm) {
                     throw new Error('Passwords do not match')
                 }
-            } catch (error) {
+            } catch (error: any) {
                 setOpenerror(true)
+                setErrorMessage(error.message)
+                return
             }
 
             if (session) {
+                data.name = data.name.trim().toLowerCase()
+                data.surname = data.surname.trim().toLowerCase()
+                data.username = data.username.trim().toLowerCase()
+                data.email = data.email.trim().toLowerCase()
+                const { name, surname, username, email } = data
+
                 const formData = new FormData();
                 formData.append('name', name);
                 formData.append('surname', surname);
@@ -73,18 +81,27 @@ export const ProfileEdit = () => {
                         body: formData
                     })
                     const data = await res.json()
+                    if (!data.user) {
+                        throw new Error(data.message)
+                    }
+
                     if (file) {
                         window.location.reload()
                     } else {
                         setFile(null)
+                        setValue('name', data.user.name)
+                        setValue('surname', data.user.surname)
+                        setValue('username', data.user.username)
+                        setValue('email', data.user.email)
                         setValue('password', '')
                         setValue('password_confirm', '')
                         setOpensuccess(true)
                         setOpenAccordion(false)
                     }
 
-                } catch (error) {
+                } catch (error: any) {
                     setOpenerror(true)
+                    setErrorMessage(error.message)
                 }
             }
         }
@@ -307,13 +324,7 @@ export const ProfileEdit = () => {
             <Snackbarie
                 open={openError}
                 setOpen={setOpenerror}
-                message='Error updating profile'
-                severity='error'
-            />
-            <Snackbarie
-                open={openPasswordError}
-                setOpen={setOpenPasswordError}
-                message='Passwords do not match'
+                message={errorMessage}
                 severity='error'
             />
         </Layout >
