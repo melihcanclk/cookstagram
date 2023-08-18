@@ -48,10 +48,15 @@ body {
   width: 100%;
 }
 
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 508px) {
   body {
     padding: 0 !important;
     width: min-content;
+  }
+
+  #root {
+    min-height: 120vh!important;
+
   }
 }
 
@@ -69,6 +74,7 @@ body {
   height: 100%;
   width: 100%;
 }
+
 
 main {
   flex: 1;
