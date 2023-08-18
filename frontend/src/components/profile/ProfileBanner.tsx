@@ -178,22 +178,23 @@ export const ProfileBanner = (props: ProfileBannerProps) => {
                                 {
                                     userLoggedIn && userLoggedIn !== undefined && userLoggedIn.username === user?.username ?
                                         <>
-                                            <Button
-                                                variant='outlined'
-                                                sx={{
-                                                    mr: 1
+
+                                            <Link
+                                                to={`/profile/edit`}
+                                                style={{
+                                                    textDecoration: 'none',
+                                                    color: 'inherit'
                                                 }}
                                             >
-                                                <Link
-                                                    to={`/profile/edit`}
-                                                    style={{
-                                                        textDecoration: 'none',
-                                                        color: 'inherit'
+                                                <Button
+                                                    variant='outlined'
+                                                    sx={{
+                                                        mr: 1
                                                     }}
                                                 >
                                                     Edit Profile
-                                                </Link>
-                                            </Button>
+                                                </Button>
+                                            </Link>
                                             <Button
                                                 variant='outlined'
                                                 onClick={handleOptionsMenuClick}
