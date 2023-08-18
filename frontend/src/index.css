@@ -43,6 +43,18 @@ import '@fontsource/roboto/700.css';
   width: 100%;
 }
 
+body {
+  padding: 0 !important;
+  width: 100%;
+}
+
+@media screen and (max-width: 375px) {
+  body {
+    padding: 0 !important;
+    width: min-content;
+  }
+}
+
 .text {
   color: var(--textColor);
   opacity: var(--opacityForText);
