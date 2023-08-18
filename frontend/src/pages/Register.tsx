@@ -64,6 +64,13 @@ export const Register = () => {
     }
 
     const onSubmit = (data: any) => {
+        // make all data trim and lowercase
+        data.name = data.name && data.name.trim().toLowerCase();
+        data.surname = data.surname && data.surname.trim().toLowerCase();
+        data.username = data.username && data.username.trim().toLowerCase();
+        data.email = data.email && data.email.trim().toLowerCase();
+        data.password = data.password && data.password.trim().toLowerCase();
+        console.log({ data })
         // create FormData object
         const formData = new FormData();
         // append data to FormData object
@@ -80,8 +87,9 @@ export const Register = () => {
                     method: 'POST',
                     body: formData,
                 });
-                const data = await res.json();
-                if (data.status === 'success') {
+                const userData = await res.json();
+
+                if (userData.user) {
                     setOpenSuccess(true);
                     setTimeout(() => navigate('/login'), 2000);
                 } else {
