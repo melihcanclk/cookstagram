@@ -171,3 +171,12 @@ type ProfileBannerProps = {
 
 }
 
+type ThemeTypes = 'light' | 'dark';
+
+type LoginLayoutProps = {
+    children: React.ReactNode;
+    themeStorage: ThemeTypes,
+    setThemeStorage: Dispatch<SetStateAction<ThemeTypes>>,
+    maxHeight: string,
+    title: string,
+}

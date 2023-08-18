@@ -38,7 +38,7 @@ export const Layout = ({ children }: LayoutProps) => {
         }
     }, []);
 
-   
+
 
     const theme = createTheme({
         palette: {
@@ -72,7 +72,7 @@ export const Layout = ({ children }: LayoutProps) => {
                                 boxShadow: '0 0 0 3px' + purple[200],
                                 border: '1px solid' + purple[400],
                             },
-                        },
+                        }
                     },
                 }
             },

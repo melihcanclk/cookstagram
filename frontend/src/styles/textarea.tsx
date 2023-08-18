@@ -18,11 +18,10 @@ export const StyledTextarea = styled(TextareaAutosize)(
     background: ${theme.palette.mode === 'dark' ? 'transparent' : '#fff'};
     border: 1px solid ${purple[900]};
     box-shadow: 0px 1px 1px ${theme.palette.mode === 'dark' ? purple[900] : purple[100]};
-  
     &:hover {
       border-color: ${purple[400]};
     }
-  
+
     &:focus {
       border-color: ${purple[400]};
       outline: none;
