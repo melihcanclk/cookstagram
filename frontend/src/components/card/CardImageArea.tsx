@@ -30,7 +30,7 @@ export const CardImageArea = (props: CardImageAreaProps) => {
                     image={
                         image ? image : ''
                     }
-                    title="Image Not Found"
+                    title={post?.title}
                 >
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="h2">

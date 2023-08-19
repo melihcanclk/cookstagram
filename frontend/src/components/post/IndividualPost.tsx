@@ -1,4 +1,4 @@
-import { Grid, Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Box, Avatar } from "@mui/material"
+import { Grid, Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Box, Avatar, Link } from "@mui/material"
 import DeleteIcon from '@mui/icons-material/Delete';
 import { IconButton } from "@mui/material";
 import { makeStyles } from '@mui/styles'
@@ -59,9 +59,11 @@ export const IndividualPost = (props: IndividualPostProps) => {
                 <CardImageArea clickable post={post} image={postImage} />
                 <CardActions className={classes.cardActions}>
                     <Box className={classes.author}>
-                        <Avatar src={
-                            image
-                        } />
+                        <Link href={`/profile/${post.user.id}`}>
+                            <Avatar src={
+                                image
+                            } />
+                        </Link>
                         <Box ml={1}>
                             <Typography variant="subtitle2" component="p">
                                 {
