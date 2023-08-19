@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { getImageOfPost, getImageOfUser } from "../../utils/getImage";
 import { getCookie } from "../../utils/getCookie";
 import { getUser } from "../../utils/getUser";
-import { convertSeconds } from "../../utils/convertSeconds";
 import { CardImageArea } from "../card/CardImageArea";
 
 

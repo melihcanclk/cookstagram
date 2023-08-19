@@ -8,13 +8,21 @@ import { ExpandMore } from '../components/card/ExpandMore';
 import { getCookie } from '../utils/getCookie';
 import { toUpperCase } from '../utils/toUpperCase';
 import { getImageOfPost } from '../utils/getImage';
+import { getUserLoggedIn } from '../utils/getUserLoggedIn';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { IconButton } from "@mui/material";
+import { handleDelete, handleDeleteSinglePost } from '../utils/handleDeletePost';
+import Snackbarie from '../components/Snackbar';
 
 export const RecipeDetails = () => {
     const { id } = useParams();
     const [recipe, setRecipe] = useState<IndividualPost>();
     const [user, setUser] = useState<UserType>();
     const [image, setImage] = useState('');
-    console.log({ recipe })
+    const [userLoggedIn, setUserLoggedIn] = useState<UserType>();
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [openErrorSnackbar, setOpenErrorSnackbar] = useState(false);
+
     useEffect(() => {
         const fetchRecipe = async () => {
             const session = getCookie('session');
@@ -31,6 +39,7 @@ export const RecipeDetails = () => {
                 setImageBase64: setImage,
                 post: data.post
             })
+            getUserLoggedIn(setUserLoggedIn);
             fetchUser(data.post.user.id);
         }
 
@@ -53,7 +62,6 @@ export const RecipeDetails = () => {
 
     return (
         <Layout>
-
             <Card
                 sx={{
                     my: 3,
@@ -61,95 +69,155 @@ export const RecipeDetails = () => {
 
                 }}
             >
-                <CardContent >
-                    <Box>
-                        <Typography
-                            variant='h5'
-                            sx={{
-                                fontWeight: 'bold',
-                            }}
-                        >
-                            {recipe?.title}
-                        </Typography>
-                    </Box>
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'flex-start',
-                            alignItems: 'center',
-                            flexDirection: 'row',
-                        }}
-                    >
+                {recipe && user && userLoggedIn && (
+                    <>
+                        <CardContent >
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                }}
+                            >
+                                <Box>
+                                    <Box>
+                                        <Typography
+                                            variant='h5'
+                                            sx={{
+                                                fontWeight: 'bold',
+                                            }}
+                                        >
+                                            {recipe?.title}
+                                        </Typography>
+                                    </Box>
+                                    <Box
+                                        sx={{
+                                            display: 'flex',
+                                            justifyContent: 'flex-start',
+                                            alignItems: 'center',
+                                            flexDirection: 'row',
+                                        }}
+                                    >
 
-                        <Typography
-                            variant='body1'
-                            sx={{
-                                color: 'gray'
-                            }}
-                        >
-                            by {toUpperCase(user?.name) + ' ' + toUpperCase(user?.surname)}
-                        </Typography>
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                            }}
-                        >
-                            &nbsp; | &nbsp;
-                        </Box>
-
-                        <Typography
-                            variant='body1'
-                            sx={{
-                                color: 'gray'
-                            }}
-                        >
-                            {new Date(recipe?.createdAt as string).toLocaleDateString()}
-                        </Typography>
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                mt: 1
-                            }}
-                        >
-
-                        </Box>
-                    </Box>
-                </CardContent>
-                <Divider />
-                <CardContent>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12} sm={12} md={6}>
-                            <CardImageArea post={recipe!} image={image} />
-                        </Grid>
-                        <Grid item xs={12} sm={12} md={6}>
-                            <ExpandMore title={'Ingredients of ' + recipe?.title}>
-                                <Divider />
-                                {recipe?.ingredients.map((ingredient, index) => {
-                                    return (
-                                        <Box>
-                                            <ListItem
-                                                key={index}
-                                            >
-                                                <ListItemText primary={`🔔 ${ingredient.name} ${ingredient.quantity} ${ingredient.unit}`} />
-                                            </ListItem>
-                                            {index !== recipe.ingredients.length - 1 && <Divider />}
+                                        <Typography
+                                            variant='body1'
+                                            sx={{
+                                                color: 'gray'
+                                            }}
+                                        >
+                                            by {toUpperCase(user?.name) + ' ' + toUpperCase(user?.surname)}
+                                        </Typography>
+                                        <Box
+                                            sx={{
+                                                display: 'flex',
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                            }}
+                                        >
+                                            &nbsp; | &nbsp;
                                         </Box>
-                                    )
-                                })
-                                }
-                                <Divider />
-                            </ExpandMore>
-                            <ExpandMore title={'How To Make ' + recipe?.title}>
-                                {recipe?.directions}
-                            </ExpandMore>
-                        </Grid>
-                    </Grid>
-                </CardContent>
+
+                                        <Typography
+                                            variant='body1'
+                                            sx={{
+                                                color: 'gray'
+                                            }}
+                                        >
+                                            {new Date(recipe?.createdAt as string).toLocaleDateString()}
+                                        </Typography>
+                                    </Box>
+                                </Box>
+                                <Box
+                                    sx={{
+                                        display: 'flex',
+                                        justifyContent: 'flex-end',
+                                        alignItems: 'center',
+                                    }}
+                                >
+                                    <Typography
+                                        variant='body1'
+                                        sx={{
+                                            color: 'gray'
+                                        }}
+                                    >
+                                        {
+                                            userLoggedIn?.id === user?.id &&
+                                            <Box>
+                                                <IconButton onClick={
+                                                    () => handleDeleteSinglePost(recipe?.id as string, () => {
+                                                        setOpenSnackbar(true);
+                                                        setTimeout(() => {
+                                                            window.location.href = '/';
+                                                        }, 1000);
+                                                    })
+                                                }>
+                                                    <DeleteIcon
+                                                        sx={{
+                                                            cursor: 'pointer',
+                                                            color: 'red'
+                                                        }}
+                                                    />
+                                                </IconButton>
+
+                                            </Box>
+                                        }
+                                    </Typography>
+                                </Box>
+                            </Box>
+                        </CardContent>
+                        <Divider />
+                        <CardContent>
+                            <Grid container spacing={2}>
+                                <Grid item xs={12} sm={12} md={6}>
+                                    <CardImageArea post={recipe!} image={image} />
+                                </Grid>
+                                <Grid item xs={12} sm={12} md={6}>
+                                    <ExpandMore title={'Ingredients of ' + recipe?.title}>
+                                        <Divider />
+                                        {recipe?.ingredients.map((ingredient, index) => {
+                                            return (
+                                                <Box
+                                                    key={index}
+                                                >
+                                                    <ListItem
+                                                        key={index}
+                                                        disablePadding
+                                                        sx={{
+                                                            display: 'flex',
+                                                            justifyContent: 'flex-start',
+                                                            alignItems: 'center',
+                                                        }}
+                                                    >
+                                                        <ListItemText primary={`🔔 ${ingredient.name} ${ingredient.quantity} ${ingredient.unit}`} />
+                                                    </ListItem>
+                                                    {index !== recipe.ingredients.length - 1 && <Divider />}
+                                                </Box>
+                                            )
+                                        })
+                                        }
+                                        <Divider />
+                                    </ExpandMore>
+                                    <ExpandMore title={'How To Make ' + recipe?.title}>
+                                        {recipe?.directions}
+                                    </ExpandMore>
+                                </Grid>
+                            </Grid>
+                        </CardContent>
+                    </>
+                )}
             </Card>
+            <Snackbarie
+                open={openSnackbar}
+                setOpen={setOpenSnackbar}
+                message='Post deleted successfully'
+                severity='success'
+            />
+            <Snackbarie
+                open={openErrorSnackbar}
+                setOpen={setOpenErrorSnackbar}
+                message='Error occured while deleting post'
+                severity='error'
+            />
+
         </Layout>
     )
 }
