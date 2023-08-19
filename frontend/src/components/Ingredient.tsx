@@ -29,33 +29,12 @@ export const Ingredient = (props: IngredientProps) => {
             <Box
                 sx={{
                     display: 'flex',
+                    flexDirection: 'row',
+                    width: '100%',
                     gap: 1,
-                    margin: 1,
+                    padding: 1,
                 }}
             >
-                <Box
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                    }}
-                >
-                    <TextField
-                        key={`ingredients.${id}.name`}
-                        id={`ingredients.${id}.name`}
-                        defaultValue=""
-                        variant="outlined"
-                        fullWidth
-                        type='text'
-                        placeholder="Ingredient"
-                        {...register(
-                            `ingredients.${id}.name`,
-                            { required: 'Name is required' })}
-                    />
-
-                    {
-                        insertIngredient('name')
-                    }
-                </Box>
                 <Box
                     sx={{
                         display: 'flex',
@@ -69,7 +48,10 @@ export const Ingredient = (props: IngredientProps) => {
                         variant="outlined"
                         type='number'
                         placeholder="Quantity"
-
+                        inputProps={{
+                            step: "0.01",
+                            min: min,
+                        }}
                         {...register(
                             `ingredients.${id}.quantity`,
                             { required: 'Quantity is required', min: { value: min, message: `Min value is ${min}` } })}
@@ -90,9 +72,7 @@ export const Ingredient = (props: IngredientProps) => {
                         defaultValue="pack"
                         variant="outlined"
                         placeholder='Unit'
-                        sx={{
-                            width: '100%'
-                        }}
+                        
                         {...register(
                             `ingredients.${id}.unit`,
                             { required: 'Unit is required' })}
@@ -101,7 +81,30 @@ export const Ingredient = (props: IngredientProps) => {
                         insertIngredient('unit')
                     }
                 </Box>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        flexGrow: 1,
+                    }}
+                >
+                    <TextField
+                        key={`ingredients.${id}.name`}
+                        id={`ingredients.${id}.name`}
+                        defaultValue=""
+                        variant="outlined"
+                        fullWidth
+                        type='text'
+                        placeholder="Ingredient"
+                        {...register(
+                            `ingredients.${id}.name`,
+                            { required: 'Name is required' })}
+                    />
 
+                    {
+                        insertIngredient('name')
+                    }
+                </Box>
                 <PurpleButton
                     variant='contained'
                     height='50px'

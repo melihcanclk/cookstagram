@@ -51,7 +51,7 @@ app.post("/follow/:id", auth, followUser);
 app.post("/unfollow/:id", auth, unfollowUser);
 app.get("/posts", auth, getAllPosts);
 app.get("/posts/user/:id", auth, getPostsByUser);
-app.get("/post/:id", auth, getSinglePost);
+app.get("/posts/:id", auth, getSinglePost);
 app.delete("/posts/:id", auth, deletePost);
 app.get("/uploads/:imageName", getImageByName);
 
