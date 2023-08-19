@@ -1,28 +1,28 @@
 
-import { Button } from '@mui/material';
-import { purple } from '../../styles/colors';
-import { Typography } from '@mui/material';
+import { Box, Button } from '@mui/material';
 
-export const PurpleButton = ({ variant, width, margin, text, onClick, ...overrides }: ButtonProps) => (
+export const PurpleButton = ({ variant, width, height, margin, children, color, type, backgroundColor, ...overrides }: ButtonProps) => (
     <Button
         variant={variant}
         style={{
             width: width,
-            backgroundColor: purple[700],
+            backgroundColor: backgroundColor,
             margin: margin,
-            ...overrides
+            height: height || '100%'
         }}
-        onClick={onClick}
-        type='submit'
+        {...overrides}
+        type={type}
     >
-        <Typography
-            variant='button'
+        <Box
             sx={{
-                color: 'white'
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                color: color || 'white',
             }}
         >
-            {text}
-        </Typography>
+            {children}
+        </Box>
 
     </Button>
 );

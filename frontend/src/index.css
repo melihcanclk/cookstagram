@@ -43,6 +43,23 @@ import '@fontsource/roboto/700.css';
   width: 100%;
 }
 
+body {
+  padding: 0 !important;
+  width: 100%;
+}
+
+@media screen and (max-width: 508px) {
+  body {
+    padding: 0 !important;
+    width: min-content;
+  }
+
+  #root {
+    min-height: 120vh!important;
+
+  }
+}
+
 .text {
   color: var(--textColor);
   opacity: var(--opacityForText);
@@ -54,9 +71,10 @@ import '@fontsource/roboto/700.css';
   min-height: 100vh;
   display: flex;
   align-items: center;
-  height: 100vh;
+  height: 100%;
   width: 100%;
 }
+
 
 main {
   flex: 1;

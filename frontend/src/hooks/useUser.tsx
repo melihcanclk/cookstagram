@@ -3,7 +3,6 @@ import { getCookie } from "../utils/getCookie";
 
 export const useUser = () => {
     const [user, setUser] = useState<UserType | null>(null);
-
     useEffect(() => {
         // get user from cookie
         const userCookie = getCookie('user');
@@ -12,7 +11,7 @@ export const useUser = () => {
             const userJson = JSON.parse(userCookie);
             const session = getCookie('session');
 
-            fetch("http://localhost:3000/users/" + userJson.username, {
+            fetch("http://localhost:3000/users/" + userJson.id, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${session}`,
@@ -26,5 +25,5 @@ export const useUser = () => {
     }, []);
 
 
-    return [user];
+    return { user, setUser };
 }

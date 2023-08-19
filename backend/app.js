@@ -6,7 +6,7 @@ import { createPost, getPostByUser, getAllPosts, deletePost, getSinglePost, getP
 import multer from 'multer';
 import dotenv from 'dotenv'
 import { upload } from './middleware/upload.js';
-import { loginUser, registerUser, getUser, getFeed, followUser, unfollowUser, searchUsers } from './controllers/user/userController.js';
+import { loginUser, registerUser, getUser, getFeed, followUser, unfollowUser, searchUsers, getUserById } from './controllers/user/userController.js';
 import { getImageByName } from './controllers/image/imageController.js';
 import { updateUser } from './controllers/user/userController.js';
 
@@ -15,8 +15,8 @@ dotenv.config()
 const app = express();
 app.use(express.static('uploads'));
 
-const bodyParserJson = bodyParser.json();
-const bodyParserUrlencoded = bodyParser.urlencoded({ extended: true });
+const bodyParserJson = bodyParser.json({ limit: '50mb' });
+const bodyParserUrlencoded = bodyParser.urlencoded({ extended: true, limit: '50mb' });
 
 app.use(bodyParserJson);
 app.use(bodyParserUrlencoded);
@@ -41,23 +41,17 @@ app.use((req, res, next) => {
 // register endpoint
 app.post("/register", upload.single('picture'), registerUser)
 app.post("/login", loginUser);
-app.get("/users/:username", auth, getUser);
-app.put("/users/:username", auth, upload.single('picture'), updateUser);
+app.get("/users/:id", auth, getUser);
+app.put("/users/:id", auth, upload.single('picture'), updateUser);
 app.post("/search/users", auth, searchUsers)
 
-// the reason we use multer().none() is because we are
-// not sending any files, we are just sending a json object
-// with the post data
-// if we were sending a file, we would use multer().single('picture')
-// or upload.single('picture')
-app.post("/create-post", auth, multer().none(), createPost);
+app.post("/create-post", auth, upload.single('picture'), createPost);
 app.get("/feed", auth, getFeed);
-app.post("/follow/:username", auth, followUser);
-app.post("/unfollow/:username", auth, unfollowUser);
+app.post("/follow/:id", auth, followUser);
+app.post("/unfollow/:id", auth, unfollowUser);
 app.get("/posts", auth, getAllPosts);
-app.get("/posts/:id", auth, getPostByUser);
-app.get("/posts/user/:username", auth, getPostsByUser);
-app.get("/post/:id", auth, getSinglePost);
+app.get("/posts/user/:id", auth, getPostsByUser);
+app.get("/posts/:id", auth, getSinglePost);
 app.delete("/posts/:id", auth, deletePost);
 app.get("/uploads/:imageName", getImageByName);
 

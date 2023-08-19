@@ -1,3 +1,7 @@
+body {
+    width: 100%;
+}
+
 .home-container {
     display: flex;
     align-items: center;
@@ -41,4 +45,14 @@ main[class="input"] {
     justify-content: center;
     flex-direction: column;
     width: 50%;
+}
+
+.error-msg {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    margin-left: 10px;
+    margin-top: 10px;
+    color: red;
 }

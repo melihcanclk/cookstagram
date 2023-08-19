@@ -1,18 +1,16 @@
-import { Grid, Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Box, Avatar } from "@mui/material"
+import { Grid, Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Box, Avatar, Link } from "@mui/material"
 import DeleteIcon from '@mui/icons-material/Delete';
 import { IconButton } from "@mui/material";
 import { makeStyles } from '@mui/styles'
 import { useEffect, useState } from "react";
-import { getImage } from "../../utils/getImage";
-import { getCookie } from "../../utils/getCookie";
+import { getImageOfPost, getImageOfUser } from "../../utils/getImage";
+import { CardImageArea } from "../card/CardImageArea";
+
 
 const useStyles = makeStyles({
     card: {
-        minWidth: 220,
+        minWidth: 150,
         margin: '0 10px 10px 10px'
-    },
-    media: {
-        height: 140,
     },
     cardActions: {
         display: 'flex',
@@ -26,79 +24,72 @@ const useStyles = makeStyles({
 });
 
 export const IndividualPost = (props: IndividualPostProps) => {
-    const { post, handleDelete }: IndividualPostProps = props;
+    const { post, handleDelete, user }: IndividualPostProps = props;
     const [image, setImage] = useState<any>(null);
-    const userLoggedIn = getCookie('user') ? JSON.parse(getCookie('user')).username : null;
+    const [postImage, setPostImage] = useState<any>(null);
 
     useEffect(() => {
-        if (post) {
-            // if post has property user by checking type guard
-            if ('user' in post) {
-                getImage({ setImageBase64: setImage, user: post.user })
+        const getPost = async () => {
+            if (post) {
+                // if post has property user by checking type guard
+                try {
+                    getImageOfUser({
+                        setImageBase64: setImage,
+                        user: user
+                    })
+                    getImageOfPost({ setImageBase64: setPostImage, post: post })
+                } catch (error) {
+                    console.log(error);
+                }
+
             }
         }
+        getPost();
     }, [post])
 
     const classes = useStyles();
-
-
-
     return (
-        <>
-            <Grid item xs={12} sm={6} md={3}>
-                <Card className={classes.card}>
-                    <CardActionArea>
-                        <CardMedia
-                            className={classes.media}
-                            image="https://images.pexels.com/photos/1181263/pexels-photo-1181263.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                            title="Contemplative Reptile"
-                        />
-                        <CardContent>
-                            <Typography gutterBottom variant="h5" component="h2">
-                                {post.title}
-                            </Typography>
-                            <Typography variant="body2" color="textSecondary" component="p">
-                                {post.content}
-                            </Typography>
-                        </CardContent>
-                    </CardActionArea>
-                    <CardActions className={classes.cardActions}>
-                        <Box className={classes.author}>
+        <Grid item xs={12} sm={6} >
+            <Card className={classes.card}>
+                <CardImageArea clickable post={post} image={postImage} />
+                <CardActions className={classes.cardActions}>
+                    <Box className={classes.author}>
+                        <Link href={`/profile/${post.user.id}`}>
                             <Avatar src={
                                 image
                             } />
-                            <Box ml={1}>
-                                <Typography variant="subtitle2" component="p">
-                                    {
-                                        // if post has property user by checking type guard
-                                        'user' in post ? post.user.username : ''
-                                    }
-                                </Typography>
-                                <Typography variant="subtitle2" color="textSecondary" component="p">
-                                    {new Date(post.createdAt).toDateString()}
-                                </Typography>
-                            </Box>
+                        </Link>
+                        <Box ml={1}>
+                            <Typography variant="subtitle2" component="p">
+                                {
+                                    // if post has property user by checking type guard
+                                    'user' in post ? post.user.username : ''
+                                }
+                            </Typography>
+                            <Typography variant="subtitle2" color="textSecondary" component="p">
+                                {new Date(post.createdAt).toDateString()}
+                            </Typography>
                         </Box>
-                        {
-                            userLoggedIn && userLoggedIn === post.user.username && (
-                                <Box>
-                                    <IconButton onClick={
-                                        () => handleDelete(post.id)
-                                    }>
-                                        <DeleteIcon
-                                            sx={{
-                                                cursor: 'pointer',
-                                                color: 'red'
-                                            }}
-                                        />
-                                    </IconButton>
+                    </Box>
+                    {
+                        user && user.id === post.user.id && (
+                            <Box>
+                                <IconButton onClick={
+                                    () => handleDelete(post.id)
+                                }>
+                                    <DeleteIcon
+                                        sx={{
+                                            cursor: 'pointer',
+                                            color: 'red'
+                                        }}
+                                    />
+                                </IconButton>
 
-                                </Box>
-                            )
-                        }
-                    </CardActions>
-                </Card>
-            </Grid>
-        </>
+                            </Box>
+                        )
+                    }
+                </CardActions>
+            </Card>
+        </Grid>
     )
 }

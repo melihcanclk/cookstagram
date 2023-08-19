@@ -1,42 +1,26 @@
 import { useEffect, useState } from 'react';
-import { Layout } from '../components/layout/Layout'
-import { getCookie } from '../utils/getCookie';
-import { IndividualPost } from '../components/post/IndividualPost';
-
-import { Grid, Typography, Box } from '@mui/material';
+import { Layout } from '../../components/layout/Layout'
+import { getCookie } from '../../utils/getCookie';
+import { IndividualPost } from '../../components/post/IndividualPost';
+import { Grid, Box } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import { handleDelete } from '../utils/handleDeletePost';
-
-
-const getUser = async (username: string) => {
-    const session = getCookie('session');
-
-    const user = await fetch(`http://localhost:3000/users/${username}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${session}`
-        }
-    })
-
-    const userJson = await user.json();
-    return userJson.user as UserType;
-}
+import { handleDelete } from '../../utils/handleDeletePost';
+import { ProfileBanner } from '../../components/profile/ProfileBanner';
+import { getUser } from '../../utils/getUser';
 
 export const Profile = () => {
-    const { username } = useParams();
-
-    const [user, setUser] = useState<UserType | null>(null);
-
+    const { id } = useParams();
+    const [user, setUser] = useState<UserType>();
     useEffect(() => {
         const fetchUser = async () => {
-            if (username) {
-                const user = await getUser(username);
+            if (id) {
+                const user = await getUser(id);
                 setUser(user);
             }
         }
+
         fetchUser();
-    }, [username]);
+    }, [id]);
 
 
     const [posts, setPosts] = useState<IndividualPost[]>([]);
@@ -44,7 +28,7 @@ export const Profile = () => {
     useEffect(() => {
         const fetchPosts = async () => {
             const session = getCookie('session');
-            const res = await fetch(`http://localhost:3000/posts/user/${user?.username}`, {
+            const res = await fetch(`http://localhost:3000/posts/user/${user?.id}`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${session}`,
@@ -70,7 +54,10 @@ export const Profile = () => {
                             my: 2
                         }}
                     >
-                        {/* <Typography variant='h4' sx={{ fontWeight: 'bold' }}>Your Posts</Typography> */}
+                        <ProfileBanner
+                            user={user!}
+                            posts={posts}
+                        />
 
                     </Box>
                     <Grid container spacing={1}>
@@ -81,6 +68,7 @@ export const Profile = () => {
                                     post={post}
                                     key={key}
                                     handleDelete={() => handleDelete(post.id, setPosts)}
+                                    user={user}
                                 />
                             ))
                         }

@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../styles/login.css'
 import { useForm } from 'react-hook-form';
 import { useSession } from '../hooks/useSession';
-import { handleFocus } from '../utils/handleFocus';
 import { LeftArrow } from '../components/svg/LeftArrow';
+import { Box, TextField, Typography } from '@mui/material';
+import { purple } from '../styles/colors';
+import { PurpleButton } from '../components/button/Buttons';
+import { LoginLayout } from '../components/layout/LoginLayout';
+
 
 export const Login = () => {
 
@@ -12,6 +15,7 @@ export const Login = () => {
     const navigate = useNavigate();
     const [error, setError] = useState(false);
     const [session] = useSession();
+    const [themeStorage, setThemeStorage] = useState<ThemeTypes>('dark');
 
     const onSubmit = (data: any) => {
         // post data to backend
@@ -35,12 +39,16 @@ export const Login = () => {
             // save user in cookie
             document.cookie = `user=${JSON.stringify(
                 {
+                    id: data.user.id,
                     name: data.user.name,
                     surname: data.user.surname,
                     username: data.user.username,
                     email: data.user.email,
                     picture: data.user.picture.fileName,
                     createdAt: data.user.createdAt,
+                    posts: data.user.posts,
+                    following: data.user.following,
+                    followers: data.user.followers,
                 }
             )}; path=/`;
             navigate('/');
@@ -53,63 +61,114 @@ export const Login = () => {
     }
 
     return (
-        <div className="container-wrapper">
-            <div className="container">
-                <div className="container-msg-modal">
-                    <div className="container-modal-content--success container-modal-content">
-                        <span>Welcome!</span>
-                    </div>
-                    <div className="container-modal-content--error container-modal-content"><span>Failed Login</span></div>
-                </div>
+        <LoginLayout themeStorage={themeStorage} setThemeStorage={setThemeStorage} maxHeight='400px' title='Login'>
 
-                <form onSubmit={
-                    handleSubmit(onSubmit)
-                }
-                    id='form'
+
+            <form onSubmit={
+                handleSubmit(onSubmit)
+            }
+                id='form'
+            >
+
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: 1
+                    }}
                 >
-
                     <div className="container-form-userName container-form-input">
-                        <label htmlFor="username">Username</label>
-                        <input
+                        <TextField
                             id="username"
                             placeholder="Username"
+                            fullWidth
+                            variant="outlined"
+                            sx={{
+
+                            }}
                             {...register("username", { required: true })}
                         />
                     </div>
                     {errors.username && <span className="error-msg">This field is required</span>}
 
                     <div className="container-form-userPassword container-form-input">
-                        <label htmlFor="password">Password</label>
-                        <input type="password" placeholder="Password" onFocus={handleFocus} required
+                        <TextField
+                            id="password"
+                            placeholder="Password"
+                            fullWidth
+                            variant="outlined"
+                            type="password"
                             {...register("password", { required: true })}
                         />
-                    </div>
-                    <div className='button-container'>
-                        <button type="button" onClick={
-                            () => {
-                                navigate('/register');
-                            }
-                        } className="js-form-btn">Register</button>
 
-                        <button type="submit" className="js-form-btn">Submit</button>
                     </div>
-                    {
-                        error && <span className="error-msg">Invalid username or password</span>
-                    }
+                </Box>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: 2,
+                        borderRadius: '12px',
+                    }}
 
-                    <div className="info-msg-container">
-                        {
-                            session && <span className="
-                        info-msg
-                    ">
-                                <a href="/"><LeftArrow height='24px' width='24px' /></a>
-                                You are already logged in</span>
+                >
+                    <PurpleButton
+                        variant='contained'
+                        width='75%'
+                        children={
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                }}
+                            >
+                                Register
+                            </Box>
                         }
-                    </div>
-                </form>
+                        color='white'
+                        margin='10px 0px 10px 0px'
+                        onClick={() => {
+                            navigate('/register');
+                        }}
+                        backgroundColor={purple[800]}
+                    />
+                    <PurpleButton
+                        variant='contained'
+                        width='75%'
+                        color='white'
+                        children={
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                }}
+                            >
+                                Login
+                            </Box>
+                        }
+                        type='submit'
+                        margin='10px 0px 10px 0px'
+                        backgroundColor={purple[800]}
+                    />
+                </Box>
+                {
+                    error && <span className="error-msg">Invalid username or password</span>
+                }
 
-
-            </div>
-        </div>
+                <div className="info-msg-container">
+                    {
+                        session && <span className="info-msg">
+                            <a href="/"><LeftArrow height='24px' width='24px' /></a>
+                            You are already logged in</span>
+                    }
+                </div>
+            </form>
+        </LoginLayout>
     );
 }

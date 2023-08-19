@@ -7,7 +7,6 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
@@ -15,9 +14,8 @@ import Avatar from "@mui/material/Avatar";
 import { useNavigate } from "react-router-dom";
 import { deleteCookie } from "../../utils/deleteCookie";
 import { useUser } from "../../hooks/useUser";
-import { getImage } from "../../utils/getImage";
+import { getImageOfUser } from "../../utils/getImage";
 import { SearchBar } from "../SearchBar";
-import { Slide, useScrollTrigger } from "@mui/material";
 
 interface NavbarProps {
     icon: React.ReactNode;
@@ -29,12 +27,12 @@ export const Navbar = (props: NavbarProps) => {
 
     const session = getCookie('session');
     const navigate = useNavigate();
-    const [user] = useUser();
+    const { user } = useUser();
     const [imageBase64, setImageBase64] = useState<string>("");
 
     useEffect(() => {
         if (user) {
-            getImage({ setImageBase64, user });
+            getImageOfUser({ setImageBase64, user });
         }
 
     }, [user])
@@ -45,11 +43,10 @@ export const Navbar = (props: NavbarProps) => {
         navigate('/login');
     }
 
-    const pages = ['Products', 'Pricing', 'Blog'];
     const settings = [
         {
             name: 'Profile',
-            function: () => navigate('/profile/' + user?.username),
+            function: () => navigate('/profile/' + user?.id),
         },
         {
             name: 'Settings',
@@ -88,8 +85,11 @@ export const Navbar = (props: NavbarProps) => {
     return (
         <AppBar
             position="sticky"
+
         >
-            <Container maxWidth="xl">
+            <Container
+                maxWidth={false}
+            >
                 <Toolbar disableGutters>
                     <Typography
                         variant="h6"
@@ -114,7 +114,7 @@ export const Navbar = (props: NavbarProps) => {
 
                     </Typography>
 
-                    <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                    {/* <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
                             size="large"
                             aria-label="account of current user"
@@ -161,21 +161,23 @@ export const Navbar = (props: NavbarProps) => {
                                 </MenuItem>
                             ))}
                         </Menu>
-                    </Box>
+                    </Box> */}
                     <Box
-                        component="img"
-                        sx={{
-                            display: { xs: 'flex', md: 'none' },
-                            height: '50px',
-                            width: '50px',
-                            borderRadius: '50%',
-                            objectFit: 'cover',
-                            objectPosition: 'center',
-                            mr: 2,
-                        }}
-                        alt="avatar"
-                        src="/src/assets/_logo.png"
-                    />
+                        component="a"
+                        href="/"
+                    >
+                        <Box
+                            component="img"
+                            sx={{
+                                display: { xs: 'flex', md: 'none' },
+                                borderRadius: '50%',
+                                objectFit: 'cover',
+                                objectPosition: 'center',
+                            }}
+                            alt="avatar"
+                            src="/src/assets/_logo.png"
+                        />
+                    </Box>
                     <Typography
                         variant="h5"
                         noWrap
@@ -193,33 +195,39 @@ export const Navbar = (props: NavbarProps) => {
                         }}
                     >
                     </Typography>
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: "flex-end" }}>
-                        {/* {pages.map((page) => (
-                            <Button
-                                key={page}
-                                onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: 'white', display: 'block' }}
-                            >
-                                <Typography
-                                    variant="span"
-                                    component="a"
-                                    href={`/${page.toLowerCase()}`}
-                                    sx={{
-                                        color: 'inherit',
-                                        textDecoration: 'none',
-                                    }}
-                                >
-                                    {page}
-                                </Typography>
-                            </Button>
-                        ))} */}
-
+                    <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: "flex-end" }}>
                         <SearchBar />
                     </Box>
 
-                    <IconButton onClick={handleThemeChange} >
-                        {icon}
-                    </IconButton>
+                    <Box
+                        sx={{
+                            ml: 1,
+                        }}
+                    >
+                        <IconButton onClick={
+                            () => handleThemeChange((current) => current === 'light' ? 'dark' : 'light')
+                        } >
+                            {icon}
+                        </IconButton>
+                    </Box>
+                    <Box>
+                        {
+                            session && (
+                                <Typography
+                                    textAlign="center"
+                                    variant="h6"
+                                    sx={{
+                                        color: 'inherit',
+                                        textDecoration: 'none',
+                                        mx: 1,
+                                    }}
+                                >
+                                    {user?.username}
+                                </Typography>
+
+                            )
+                        }
+                    </Box>
                     <Box sx={{ flexGrow: 0 }}>
                         {session ? (
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
