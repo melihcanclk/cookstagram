@@ -180,3 +180,10 @@ type LoginLayoutProps = {
     maxHeight: string,
     title: string,
 }
+
+type CardImageAreaProps = {
+    height?: string,
+    image: string | null,
+    post: IndividualPost | null,
+    clickable?: boolean
+}

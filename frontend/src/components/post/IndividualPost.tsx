@@ -7,15 +7,13 @@ import { getImageOfPost, getImageOfUser } from "../../utils/getImage";
 import { getCookie } from "../../utils/getCookie";
 import { getUser } from "../../utils/getUser";
 import { convertSeconds } from "../../utils/convertSeconds";
+import { CardImageArea } from "../card/CardImageArea";
 
 
 const useStyles = makeStyles({
     card: {
         minWidth: 150,
         margin: '0 10px 10px 10px'
-    },
-    media: {
-        height: 140,
     },
     cardActions: {
         display: 'flex',
@@ -45,17 +43,7 @@ export const IndividualPost = (props: IndividualPostProps) => {
                         setImageBase64: setImage,
                         user: user
                     })
-                    const res = await getImageOfPost({ setImageBase64: setPostImage, post: post })
-                    if (!res) {
-                        const token = getCookie('session');
-                        const defaultImage = await fetch(`http://localhost:3000/uploads/default_food.jpg`, {
-                            method: 'GET',
-                            headers: {
-                                'Authorization': `Bearer ${token}`
-                            }
-                        });
-                        setPostImage(defaultImage.url)
-                    }
+                    getImageOfPost({ setImageBase64: setPostImage, post: post })
                 } catch (error) {
                     console.log(error);
                 }
@@ -66,40 +54,10 @@ export const IndividualPost = (props: IndividualPostProps) => {
     }, [post])
 
     const classes = useStyles();
-
-
     return (
         <Grid item xs={12} sm={6} >
             <Card className={classes.card}>
-                <CardActionArea>
-                    <CardMedia
-                        className={classes.media}
-                        image={
-                            postImage ? postImage : ''
-                        }
-                        component="img"
-                        title="Image Not Found"
-                    />
-                    <CardContent>
-                        <Typography gutterBottom variant="h5" component="h2">
-                            {post.title}
-                        </Typography>
-                        <Typography variant="body2" color="textSecondary" component="p">
-                            Preperation Time:
-                            {
-                                convertSeconds(post.prepTimeInMins)
-                            }
-
-                        </Typography>
-                        <Typography variant="body2" color="textSecondary" component="p">
-                            Cook Time:
-                            {
-                                convertSeconds(post.cookTimeInMins)
-                            }
-                        </Typography>
-
-                    </CardContent>
-                </CardActionArea>
+                <CardImageArea clickable post={post} image={postImage} />
                 <CardActions className={classes.cardActions}>
                     <Box className={classes.author}>
                         <Avatar src={

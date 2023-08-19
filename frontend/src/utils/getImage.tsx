@@ -38,12 +38,29 @@ export const getImageOfUser = async (props: ImageProps) => {
 
 export const getImageOfPost = async (props: ImageProps) => {
     const { setImageBase64, post }: PostImageProps = props as PostImageProps;
-
-    if (!post.user || !post.picture) return;
-
     const token = getCookie('session');
-
+    
+    if (!post.picture) {
+        const defaultImage = await fetch(`http://localhost:3000/uploads/default_food.jpg`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        setImageBase64(defaultImage.url)
+        return;
+    };
     const parameter = post.picture;
-    return getImage({ parameter, token, setImage: setImageBase64 });
+    const res = await getImage({ parameter, token, setImage: setImageBase64 });
+    console.log(res)
+    if (!res) {
+        const defaultImage = await fetch(`http://localhost:3000/uploads/default_food.jpg`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        setImageBase64(defaultImage.url)
+    }
 }
 
