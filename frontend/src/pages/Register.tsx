@@ -1,12 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { LeftArrow } from '../components/svg/LeftArrow';
 import { FormFieldError } from '../components/error/FormFieldErrors';
 import Dropzone from '../components/Dropzone';
 import { purple } from '../styles/colors';
-import { Box, CssBaseline, IconButton, TextField, ThemeProvider, Typography, createTheme } from '@mui/material';
-import { themeSelector } from '../utils/themeSelector';
+import { Box, IconButton, TextField, Typography, } from '@mui/material';
 import { PurpleButton } from '../components/button/Buttons';
 import Snackbarie from '../components/Snackbar';
 import { LoginLayout } from '../components/layout/LoginLayout';
@@ -65,162 +64,162 @@ export const Register = () => {
 
     return (
         <LoginLayout themeStorage={themeStorage} setThemeStorage={setThemeStorage} maxHeight='800px' title='Register'>
-           
-                <form onSubmit={
-                    handleSubmit(onSubmit)
-                }
-                    id='form'
-                >
 
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            width: '100%',
-                            gap: 1
-                        }}
-                    >
-                        <div className="container-form-userName container-form-input">
-                            <TextField
-                                id="name"
-                                placeholder="Name"
-                                fullWidth
-                                variant="outlined"
-                                {...register("name", { required: true })}
-                            />
-                        </div>
-                        {FormFieldError({ errors, fieldname: 'name', placeholder: 'Name' })}
+            <form onSubmit={
+                handleSubmit(onSubmit)
+            }
+                id='form'
+            >
 
-                        <div className="container-form-userName container-form-input">
-                            <TextField
-                                id="surname"
-                                placeholder="Surname"
-                                fullWidth
-                                variant="outlined"
-                                {...register("surname", { required: true })}
-                            />
-                        </div>
-                        {FormFieldError({ errors, fieldname: 'surname', placeholder: 'Surname' })}
-                        <div className="container-form-userName container-form-input">
-                            <TextField
-                                id="username"
-                                placeholder="Username"
-                                fullWidth
-                                variant="outlined"
-                                {...register("username", { required: true })}
-                            />
-                        </div>
-                        {FormFieldError({ errors, fieldname: 'username', placeholder: 'Username' })}
-                        <div className="container-form-userName container-form-input">
-                            <TextField
-                                id="email"
-                                placeholder="Email"
-                                fullWidth
-                                variant="outlined"
-                                {...register("email", {
-                                    pattern: {
-                                        value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
-                                        message: "Invalid email pattern"
-                                    },
-                                    required: true
-                                })}
-                            />
-                        </div>
-                        {FormFieldError({ errors, fieldname: 'email', placeholder: 'Email' })}
-                        <div className="container-form-userPassword container-form-input">
-                            <TextField
-                                id="password"
-                                placeholder="Password"
-                                fullWidth
-                                variant="outlined"
-                                type="password"
-                                {...register("password", { required: true, minLength: 6 })}
-                            />
-                        </div>
-                        {FormFieldError({ errors, fieldname: 'password', placeholder: 'Password', min: 6 })}
-                        <div className="container-form-userPassword container-form-input">
-                            <TextField
-                                id="confirm_password"
-                                placeholder="Confirm Password"
-                                fullWidth
-                                variant="outlined"
-                                type="password"
-                                {...register("confirm_password", {
-                                    required: true,
-                                    minLength: 6,
-                                    validate: (value) => value === watch('password')
-                                })}
-                            />
-                        </div>
-
-                        {FormFieldError({ errors, fieldname: 'confirm_password', placeholder: 'Confirm Password', min: 6, validate: true })}
-                        <Dropzone setFile={setFile} file={file} />
-                    </Box>
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                        }}
-
-                    >
-                        <PurpleButton
-                            variant='contained'
-                            width='75%'
-                            color='white'
-                            children={
-                                <Box
-                                    sx={{
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                    }}
-                                >
-                                    Register
-                                </Box>
-                            }
-                            type='submit'
-                            margin='10px 0px 10px 0px'
-                            backgroundColor={purple[800]}
-                        />
-                    </Box>
-                </form>
                 <Box
                     sx={{
-                        position: 'absolute',
-                        top: '10px',
-                        left: '10px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '100%',
+                        gap: 1
+                    }}
+                >
+                    <div className="container-form-userName container-form-input">
+                        <TextField
+                            id="name"
+                            placeholder="Name"
+                            fullWidth
+                            variant="outlined"
+                            {...register("name", { required: true })}
+                        />
+                    </div>
+                    {FormFieldError({ errors, fieldname: 'name', placeholder: 'Name' })}
+
+                    <div className="container-form-userName container-form-input">
+                        <TextField
+                            id="surname"
+                            placeholder="Surname"
+                            fullWidth
+                            variant="outlined"
+                            {...register("surname", { required: true })}
+                        />
+                    </div>
+                    {FormFieldError({ errors, fieldname: 'surname', placeholder: 'Surname' })}
+                    <div className="container-form-userName container-form-input">
+                        <TextField
+                            id="username"
+                            placeholder="Username"
+                            fullWidth
+                            variant="outlined"
+                            {...register("username", { required: true })}
+                        />
+                    </div>
+                    {FormFieldError({ errors, fieldname: 'username', placeholder: 'Username' })}
+                    <div className="container-form-userName container-form-input">
+                        <TextField
+                            id="email"
+                            placeholder="Email"
+                            fullWidth
+                            variant="outlined"
+                            {...register("email", {
+                                pattern: {
+                                    value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
+                                    message: "Invalid email pattern"
+                                },
+                                required: true
+                            })}
+                        />
+                    </div>
+                    {FormFieldError({ errors, fieldname: 'email', placeholder: 'Email' })}
+                    <div className="container-form-userPassword container-form-input">
+                        <TextField
+                            id="password"
+                            placeholder="Password"
+                            fullWidth
+                            variant="outlined"
+                            type="password"
+                            {...register("password", { required: true, minLength: 6 })}
+                        />
+                    </div>
+                    {FormFieldError({ errors, fieldname: 'password', placeholder: 'Password', min: 6 })}
+                    <div className="container-form-userPassword container-form-input">
+                        <TextField
+                            id="confirm_password"
+                            placeholder="Confirm Password"
+                            fullWidth
+                            variant="outlined"
+                            type="password"
+                            {...register("confirm_password", {
+                                required: true,
+                                minLength: 6,
+                                validate: (value) => value === watch('password')
+                            })}
+                        />
+                    </div>
+
+                    {FormFieldError({ errors, fieldname: 'confirm_password', placeholder: 'Confirm Password', min: 6, validate: true })}
+                    <Dropzone setFile={setFile} file={file} />
+                </Box>
+                <Box
+                    sx={{
                         display: 'flex',
                         flexDirection: 'row',
                         alignItems: 'center',
+                        justifyContent: 'center',
+                    }}
+
+                >
+                    <PurpleButton
+                        variant='contained'
+                        width='75%'
+                        color='white'
+                        children={
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                }}
+                            >
+                                Register
+                            </Box>
+                        }
+                        type='submit'
+                        margin='10px 0px 10px 0px'
+                        backgroundColor={purple[800]}
+                    />
+                </Box>
+            </form>
+            <Box
+                sx={{
+                    position: 'absolute',
+                    top: '10px',
+                    left: '10px',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                }}
+            >
+                <IconButton
+                    sx={{
+                        height: '50px',
+                        width: '50px',
+                        borderRadius: '50%',
+                    }}
+                    onClick={() => navigate('/login')}>
+                    <LeftArrow
+                        fill={themeStorage === 'dark' ? 'white' : 'black'}
+                    />
+                </IconButton>
+                <Typography
+                    sx={{
+                        color: themeStorage === 'dark' ? 'white' : 'black',
+                        fontSize: '0.875rem',
+                        fontWeight: 'bold',
+                        textAlign: 'center',
                     }}
                 >
-                    <IconButton
-                        sx={{
-                            height: '50px',
-                            width: '50px',
-                            borderRadius: '50%',
-                        }}
-                        onClick={() => navigate('/login')}>
-                        <LeftArrow
-                            fill={themeStorage === 'dark' ? 'white' : 'black'}
-                        />
-                    </IconButton>
-                    <Typography
-                        sx={{
-                            color: themeStorage === 'dark' ? 'white' : 'black',
-                            fontSize: '0.875rem',
-                            fontWeight: 'bold',
-                            textAlign: 'center',
-                        }}
-                    >
-                        Login
-                    </Typography>
+                    Login
+                </Typography>
 
-                </Box>
+            </Box>
             <Snackbarie
                 open={openSuccess}
                 setOpen={setOpenSuccess}

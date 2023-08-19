@@ -6,7 +6,7 @@ import { PurpleButton } from '../../components/button/Buttons';
 import { getCookie } from '../../utils/getCookie';
 import { getImageOfUser } from '../../utils/getImage';
 import { purple } from '@mui/material/colors';
-import { set, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { FormFieldError } from '../../components/error/FormFieldErrors';
 import { EditImage } from './EditImage';
 import Snackbarie from '../../components/Snackbar';

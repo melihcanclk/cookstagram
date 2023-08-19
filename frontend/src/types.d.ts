@@ -109,7 +109,15 @@ interface IndividualPost {
     prepTimeInMins: number;
     cookTimeInMins: number;
     servings: number;
-    ingredients: string[];
+    ingredients: [
+        {
+            id: string;
+            name: string;
+            quantity: number;
+            unit: string;
+        }
+    ];
+    directions: string;
     steps: string[];
     picture: string;
     createdAt: string;

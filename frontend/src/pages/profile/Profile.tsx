@@ -68,7 +68,7 @@ export const Profile = () => {
                                     post={post}
                                     key={key}
                                     handleDelete={() => handleDelete(post.id, setPosts)}
-                                    user={user}
+                                    user={user!}
                                 />
                             ))
                         }

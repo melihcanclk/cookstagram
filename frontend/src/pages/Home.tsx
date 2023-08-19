@@ -363,6 +363,7 @@ export const Home = () => {
                                 handleDelete={() => {
                                     handleDelete(post.id, setFeed)
                                 }}
+                                //@ts-ignore
                                 user={feed[key].user}
                             />
                         )

@@ -1,6 +1,5 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
-import Snackbar, { SnackbarProps } from '@mui/material/Snackbar';
+import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { Alert } from '@mui/material';
@@ -16,7 +15,7 @@ interface SnackbarieProps {
 export default function Snackbarie(props: SnackbarieProps) {
     const { open, setOpen, autoHideDuration, message, severity } = props;
 
-    const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
+    const handleClose = (_: React.SyntheticEvent | Event, reason?: string) => {
         if (reason === 'clickaway') {
             return;
         }

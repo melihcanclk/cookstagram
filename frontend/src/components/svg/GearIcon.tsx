@@ -1,4 +1,4 @@
-export const GearIcon = props => (
+export const GearIcon = (props: any) => (
     <svg
         aria-label="Options"
         className="_8-yf5"

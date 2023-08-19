@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Layout } from '../components/layout/Layout';
-import { Avatar, Box, Button, Card, CardContent, Divider, Grid, ListItem, ListItemText, Typography } from '@mui/material';
+import { Box, Card, CardContent, Divider, Grid, ListItem, ListItemText, Typography } from '@mui/material';
 import { CardImageArea } from '../components/card/CardImageArea';
 import { ExpandMore } from '../components/card/ExpandMore';
 import { getCookie } from '../utils/getCookie';
@@ -11,7 +11,7 @@ import { getImageOfPost } from '../utils/getImage';
 import { getUserLoggedIn } from '../utils/getUserLoggedIn';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { IconButton } from "@mui/material";
-import { handleDelete, handleDeleteSinglePost } from '../utils/handleDeletePost';
+import { handleDeleteSinglePost } from '../utils/handleDeletePost';
 import Snackbarie from '../components/Snackbar';
 
 export const RecipeDetails = () => {

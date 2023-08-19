@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import "../../styles/navbar.css";
 import { getCookie } from "../../utils/getCookie";
 import AppBar from "@mui/material/AppBar";
@@ -59,28 +59,15 @@ export const Navbar = (props: NavbarProps) => {
 
     ];
 
-    const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
-    const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorElNav(event.currentTarget);
-    };
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
-    };
-
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
     };
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
-
-    const handleNavigate = (link: string) => {
-        navigate(link);
-        handleCloseNavMenu();
-    }
 
     return (
         <AppBar

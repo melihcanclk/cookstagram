@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useSession } from '../hooks/useSession';
 import { LeftArrow } from '../components/svg/LeftArrow';
-import { Box, TextField, Typography } from '@mui/material';
+import { Box, TextField } from '@mui/material';
 import { purple } from '../styles/colors';
 import { PurpleButton } from '../components/button/Buttons';
 import { LoginLayout } from '../components/layout/LoginLayout';

@@ -7,8 +7,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { purple } from "../../styles/colors";
 import CssBaseline from '@mui/material/CssBaseline';
 import { useState } from "react";
-import Brightness4Icon from '@mui/icons-material/Brightness4';
-import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { themeSelector } from "../../utils/themeSelector";
 
 export const Layout = ({ children }: LayoutProps) => {

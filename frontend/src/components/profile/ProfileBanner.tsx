@@ -53,6 +53,9 @@ export const ProfileBanner = (props: ProfileBannerProps) => {
                     },
                 })
                 const data = await res.json();
+                if(data.error){
+                    throw new Error(data.error);
+                }
                 fetchUserLoggedIn();
                 setOpenFollowed(true);
             } catch (error) {

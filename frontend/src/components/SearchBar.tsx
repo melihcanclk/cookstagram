@@ -70,7 +70,7 @@ export const SearchBar = () => {
                     setOpen(false);
                 }}
                 options={options}
-                onInputChange={(event, newValue) => {
+                onInputChange={(_, newValue) => {
                     setValue(newValue);
                 }}
                 filterOptions={
@@ -83,7 +83,7 @@ export const SearchBar = () => {
                 loading={loading}
                 getOptionLabel={(option) => option.label}
                 // when user selects an option
-                onChange={(event, value) => {
+                onChange={(_, value) => {
                     if (value) {
                         // if we are not on the profile page
                         if (window.location.pathname !== `/profile/${value.value.id}`) {

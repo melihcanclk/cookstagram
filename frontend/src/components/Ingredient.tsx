@@ -15,9 +15,12 @@ interface IngredientProps {
 export const Ingredient = (props: IngredientProps) => {
     const { register, errors, id, min, remove } = props;
 
+    
     const insertIngredient = (key: string) => {
+        //@ts-ignore
         if (errors['ingredients'] && errors['ingredients'][id] && errors['ingredients'][id][key] && errors['ingredients'][id][key].message) {
             // console.log(errors['ingredients'][id][key].message)
+            //@ts-ignore
             return (<span className="error-msg">{errors['ingredients'][id][key].message}</span>)
         } else {
             return null
@@ -72,7 +75,7 @@ export const Ingredient = (props: IngredientProps) => {
                         defaultValue="pack"
                         variant="outlined"
                         placeholder='Unit'
-                        
+
                         {...register(
                             `ingredients.${id}.unit`,
                             { required: 'Unit is required' })}
