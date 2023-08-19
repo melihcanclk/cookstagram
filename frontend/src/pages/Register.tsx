@@ -27,7 +27,6 @@ export const Register = () => {
         data.username = data.username && data.username.trim().toLowerCase();
         data.email = data.email && data.email.trim().toLowerCase();
         data.password = data.password && data.password.trim().toLowerCase();
-        console.log({ data })
         // create FormData object
         const formData = new FormData();
         // append data to FormData object

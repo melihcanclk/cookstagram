@@ -52,7 +52,6 @@ export const getImageOfPost = async (props: ImageProps) => {
     };
     const parameter = post.picture;
     const res = await getImage({ parameter, token, setImage: setImageBase64 });
-    console.log(res)
     if (!res) {
         const defaultImage = await fetch(`http://localhost:3000/uploads/default_food.jpg`, {
             method: 'GET',
