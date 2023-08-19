@@ -63,7 +63,7 @@ const Dropzone = (props: IDropzoneProps) => {
                         width: '100%',
                         height: '100%',
                     }}
-                type="button" onClick={open}>
+                    type="button" onClick={open}>
                     <input {...getInputProps()} />
                     {
                         children ? children :
@@ -77,14 +77,13 @@ const Dropzone = (props: IDropzoneProps) => {
                     }
 
                 </Button>
-                <div className='dropzone-button-wrapper'>
-                    {
-                        file && thumbs(file)
-                    }
-
-                </div>
             </div>
+            <div className='dropzone-button-wrapper'>
+                {
+                    file && thumbs(file)
+                }
 
+            </div>
         </section>
     )
 }
