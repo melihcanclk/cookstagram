@@ -82,6 +82,7 @@ export const RecipeDetails = () => {
                                     <Box>
                                         <Typography
                                             variant='h5'
+                                            component={'span'}
                                             sx={{
                                                 fontWeight: 'bold',
                                             }}
@@ -100,6 +101,7 @@ export const RecipeDetails = () => {
 
                                         <Typography
                                             variant='body1'
+                                            component={'span'}
                                             sx={{
                                                 color: 'gray'
                                             }}
@@ -118,6 +120,7 @@ export const RecipeDetails = () => {
 
                                         <Typography
                                             variant='body1'
+                                            component={'span'}
                                             sx={{
                                                 color: 'gray'
                                             }}
@@ -135,6 +138,7 @@ export const RecipeDetails = () => {
                                 >
                                     <Typography
                                         variant='body1'
+                                        component={'span'}
                                         sx={{
                                             color: 'gray'
                                         }}
@@ -187,7 +191,7 @@ export const RecipeDetails = () => {
                                                             alignItems: 'center',
                                                         }}
                                                     >
-                                                        <ListItemText primary={`🔔 ${ingredient.name} ${ingredient.quantity} ${ingredient.unit}`} />
+                                                        <ListItemText primary={`⚫ ${ingredient.name} ${ingredient.quantity} ${ingredient.unit}`} />
                                                     </ListItem>
                                                     {index !== recipe.ingredients.length - 1 && <Divider />}
                                                 </Box>
