@@ -48,7 +48,10 @@ export const Ingredient = (props: IngredientProps) => {
                         variant="outlined"
                         type='number'
                         placeholder="Quantity"
-
+                        inputProps={{
+                            step: "0.01",
+                            min: min,
+                        }}
                         {...register(
                             `ingredients.${id}.quantity`,
                             { required: 'Quantity is required', min: { value: min, message: `Min value is ${min}` } })}

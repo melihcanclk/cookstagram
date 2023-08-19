@@ -191,7 +191,7 @@ export const RecipeDetails = () => {
                                                             alignItems: 'center',
                                                         }}
                                                     >
-                                                        <ListItemText primary={`⚫ ${ingredient.name} ${ingredient.quantity} ${ingredient.unit}`} />
+                                                        <ListItemText primary={`⚫ ${ingredient.quantity} ${ingredient.unit} ${ingredient.name}`} />
                                                     </ListItem>
                                                     {index !== recipe.ingredients.length - 1 && <Divider />}
                                                 </Box>
