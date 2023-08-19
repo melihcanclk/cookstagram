@@ -1,7 +1,7 @@
 import { useDropzone } from 'react-dropzone';
 import '../styles/dropzone.css'
 import { useEffect } from 'react';
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 
 const Dropzone = (props: IDropzoneProps) => {
     const { file, setFile, children } = props;
@@ -53,12 +53,27 @@ const Dropzone = (props: IDropzoneProps) => {
             <div
                 {...getRootProps({ className: "dropzone" })}
                 onClick={(e) => e.stopPropagation}
+                style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                }}
             >
-                <Button type="button" onClick={open}>
+                <Button
+                    sx={{
+                        width: '100%',
+                        height: '100%',
+                    }}
+                type="button" onClick={open}>
                     <input {...getInputProps()} />
                     {
                         children ? children :
-                            (<p>Drag 'n' drop some files here, or click to select files (only jpg, jpeg and png allowed)</p>)
+                            (<Typography
+                                variant='body1'
+                                sx={{
+                                    color: 'text.secondary',
+                                    fontWeight: 'bold'
+                                }}
+                            >Drag 'n' drop some files here, or click to select files (only jpg, jpeg and png allowed)</Typography>)
                     }
 
                 </Button>
