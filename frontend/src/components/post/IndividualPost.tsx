@@ -4,8 +4,6 @@ import { IconButton } from "@mui/material";
 import { makeStyles } from '@mui/styles'
 import { useEffect, useState } from "react";
 import { getImageOfPost, getImageOfUser } from "../../utils/getImage";
-import { getCookie } from "../../utils/getCookie";
-import { getUser } from "../../utils/getUser";
 import { CardImageArea } from "../card/CardImageArea";
 
 
@@ -26,18 +24,15 @@ const useStyles = makeStyles({
 });
 
 export const IndividualPost = (props: IndividualPostProps) => {
-    const { post, handleDelete }: IndividualPostProps = props;
+    const { post, handleDelete, user }: IndividualPostProps = props;
     const [image, setImage] = useState<any>(null);
     const [postImage, setPostImage] = useState<any>(null);
-    const user = getCookie('user');
-    const userLoggedIn = user ? JSON.parse(user).id : null;
+
     useEffect(() => {
         const getPost = async () => {
             if (post) {
                 // if post has property user by checking type guard
                 try {
-                    const user = await getUser(post.user.id);
-
                     getImageOfUser({
                         setImageBase64: setImage,
                         user: user
@@ -77,7 +72,7 @@ export const IndividualPost = (props: IndividualPostProps) => {
                         </Box>
                     </Box>
                     {
-                        userLoggedIn && userLoggedIn === post.user.id && (
+                        user && user.id === post.user.id && (
                             <Box>
                                 <IconButton onClick={
                                     () => handleDelete(post.id)

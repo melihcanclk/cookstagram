@@ -33,6 +33,7 @@ export const Home = () => {
     const { feed, setFeed } = useGetFeed();
     const [file, setFile] = useState<any>(null);
     const [idCounter, setIdCounter] = useState<number>(0);
+
     const handleClose = () => {
         setOpen(false)
         setFile(null)
@@ -362,6 +363,7 @@ export const Home = () => {
                                 handleDelete={() => {
                                     handleDelete(post.id, setFeed)
                                 }}
+                                user={feed[key].user}
                             />
                         )
                     })}

@@ -137,6 +137,7 @@ interface IndividualPostProps {
     key: number;
     post: IndividualPost;
     handleDelete: (id: string) => void;
+    user: UserType;
 }
 
 interface MainTextMatchedSubstrings {
